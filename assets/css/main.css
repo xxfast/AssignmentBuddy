@@ -10,6 +10,7 @@
 
 /* Reset */
 
+
 	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
 		margin: 0;
 		padding: 0;
@@ -2361,6 +2362,7 @@
 			@media screen and (max-width: 480px) {
 
 				ul.actions {
+					clear: both; 
 					margin: 0 0 2em 0;
 				}
 
@@ -2690,7 +2692,7 @@
 			input[type="button"].alt:hover,
 			button.alt:hover,
 			.button.alt:hover {
-				background-color: rgba(144, 144, 144, 0.075);
+				background-color: rgba(81, 186, 164, 0.50);
 			}
 
 			input[type="submit"].alt:active,
@@ -2698,7 +2700,7 @@
 			input[type="button"].alt:active,
 			button.alt:active,
 			.button.alt:active {
-				background-color: rgba(144, 144, 144, 0.2);
+				background-color: rgba(81, 186, 164, 0.5);
 			}
 
 /* Feature */
@@ -2713,6 +2715,7 @@
 		-ms-align-items: center;
 		align-items: center;
 		margin-bottom: 6em;
+		border-radius: 20px;
 	}
 
 		.feature:last-child {
@@ -3610,7 +3613,6 @@
 	body {
 		padding-top: 3.125em;
 	}
-
 		body.landing {
 			padding-top: 0;
 		}
@@ -3622,6 +3624,11 @@
 			}
 
 		}
+
+	.assignment
+	{
+		color: rgb(81, 186, 164);
+	}
 
 	#header {
 		background: #07090c;
@@ -3706,6 +3713,13 @@
 				margin-right: 0;
 			}
 
+		#logo
+		{
+			width: 100%;
+ 			filter: invert(100%);
+    		-webkit-filter: invert(100%);
+		}
+
 	@media screen and (max-width: 980px) {
 
 		body {
@@ -3748,6 +3762,15 @@
 	}
 
 /* Nav */
+
+	nav ul li a img 
+	{
+		width: 15px;
+		vertical-align: middle;
+		filter: invert(100%);
+    	-webkit-filter: invert(100%);
+
+	}
 
 	#nav {
 		-moz-transform: translateX(20em);
@@ -4087,6 +4110,11 @@
 
 /* Main */
 
+	div .gstarting
+	{
+		text-align: center;;
+	}
+
 	#main {
 		padding: 5em 0 3em 0;
 	}
@@ -4114,6 +4142,45 @@
 			}
 
 		}
+
+/* About Us*/
+
+div .name
+{
+	padding-top: 20px;
+}
+div .profiles
+{
+	padding-left: 50px;
+	height: 120px;
+}
+div .profile
+{
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 20px;
+	display: block;
+	float: left;
+}
+
+div .repo
+{
+	clear: both;
+}
+
+div .profilepic
+{
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px;
+    border-color:  rgb(81, 186, 164);
+    background-size: 100%;
+    width: 150px;
+    height: 150px;
+}
+
 
 /* Footer */
 
@@ -4226,3 +4293,5 @@
 			}
 
 		}
+
+		
