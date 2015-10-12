@@ -1909,7 +1909,7 @@
 		-webkit-appearance: none;
 		-ms-appearance: none;
 		appearance: none;
-		border-radius: 4px;
+		border-radius: 6px;
 		border-style: solid;
 		border-width: 1px;
 		display: block;
@@ -1972,16 +1972,11 @@
 
 	input[type="checkbox"],
 	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
-		display: block;
-		float: left;
-		margin-right: -2em;
-		opacity: 0;
-		width: 1em;
-		z-index: -1;
+		border-radius: 6px;
+		border-style: solid;
+		border-width: 1px;
+		border-color: rgba(144, 144, 144, 0.25);
+	
 	}
 
 		input[type="checkbox"] + label,
@@ -2704,7 +2699,116 @@
 			}
 
 /* Feature */
+	.registerfeature {
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		-moz-align-items: center;
+		-webkit-align-items: center;
+		-ms-align-items: center;
+		align-items: center;
+		margin-bottom: 6em;
+		border-radius: 20px;
+		margin-top: -100px;
+	}
+	.registerfeature {
+		display: -moz-flex;
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		-moz-align-items: center;
+		-webkit-align-items: center;
+		-ms-align-items: center;
+		align-items: center;
+		margin-bottom: 6em;
+		border-radius: 20px;
+	}
 
+		.registerfeature:last-child {
+			margin-bottom: 2em;
+		}
+
+		.registerfeature.left {
+			-moz-flex-direction: row;
+			-webkit-flex-direction: row;
+			-ms-flex-direction: row;
+			flex-direction: row;
+		}
+
+		.registerfeature.right {
+			-moz-flex-direction: row-reverse;
+			-webkit-flex-direction: row-reverse;
+			-ms-flex-direction: row-reverse;
+			flex-direction: row-reverse;
+		}
+
+		.registerfeature .image {
+			width: 48%;
+		}
+
+			.registerfeature .image img {
+				max-width: 100%;
+			}
+
+		.registerfeature .content {
+			padding: 2em 3em 0.1em 3em;
+			width: 52%;
+		}
+
+		@media screen and (max-width: 1280px) {
+
+			.registerfeature {
+				margin-bottom: 4em;
+			}
+
+				.registerfeature .content {
+					padding: 1em 2em 0.1em 2em;
+				}
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+			.registerfeature.left, .registerfeature.right {
+				-moz-flex-direction: column;
+				-webkit-flex-direction: column;
+				-ms-flex-direction: column;
+				flex-direction: column;
+			}
+
+			.registerfeature .image {
+				width: 100%;
+			}
+
+				.registerfeature .image img {
+					width: 100%;
+				}
+
+			.registerfeature .content {
+				padding: 2em 2em 0.1em 2em;
+				width: 100%;
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			.registerfeature {
+				margin-bottom: 2em;
+			}
+
+				.registerfeature .content {
+					padding: 2em 1em 0.1em 1em;
+				}
+
+		}
+
+	.registerfeature {
+		background-color: #fff;
+	}
+
+	
 	.feature {
 		display: -moz-flex;
 		display: -webkit-flex;
@@ -4127,6 +4231,221 @@
 			}
 
 				#banner .icon {
+					font-size: 1.5em;
+				}
+
+		}
+		
+/* Banner Register Page */
+
+#banner_register {
+		padding: 8em 0 6em 0;
+		background-color: #1E2832;
+		color: rgba(255, 255, 255, 0.75);
+		background-attachment: fixed;
+		background-image: url("images/register_banner.jpg"), url("../../images/register_banner.jpg");
+		background-size: cover;
+		text-align: center;
+	}
+	
+
+		#banner_register input, #banner_register select, #banner_register textarea {
+			color: #fff;
+		}
+
+		#banner_register a {
+			color: #51BAA4;
+		}
+	
+		#banner_register strong, #banner_register b {
+			color: #fff;
+		}
+
+		#banner_register h1, #banner_register h2, #banner_register h3, #banner_register h4, #banner_register h5, #banner_register h6 {
+			color: #fff;
+		}
+
+		#banner_register blockquote {
+			border-left-color: transparent;
+		}
+
+		#banner_register code {
+			background: rgba(255, 255, 255, 0.05);
+			border-color: transparent;
+		}
+
+		#banner_register hr {
+			border-bottom-color: transparent;
+		}
+
+		#banner_register input[type="submit"],
+		#banner_register input[type="reset"],
+		#banner_register input[type="button"],
+		#banner_register button,
+		#banner_register .button {
+			background-color: #fff;
+			box-shadow: none;
+			color: #1E2832 !important;
+		}
+
+			#banner_register input[type="submit"].icon:before,
+			#banner_register input[type="reset"].icon:before,
+			#banner_register input[type="button"].icon:before,
+			#banner_register button.icon:before,
+			#banner_register .button.icon:before {
+				color: #a5a9ad;
+			}
+
+			#banner_register input[type="submit"]:hover,
+			#banner_register input[type="reset"]:hover,
+			#banner_register input[type="button"]:hover,
+			#banner_register button:hover,
+			#banner_register .button:hover {
+				background-color: white;
+			}
+
+			#banner_register input[type="submit"]:active,
+			#banner_register input[type="reset"]:active,
+			#banner_register input[type="button"]:active,
+			#banner_register button:active,
+			#banner_register .button:active {
+				background-color: #f2f2f2;
+			}
+
+			#banner_register input[type="submit"].special,
+			#banner_register input[type="reset"].special,
+			#banner_register input[type="button"].special,
+			#banner_register button.special,
+			#banner_register .button.special {
+				background-color: #51BAA4;
+				box-shadow: none;
+				color: #fff !important;
+			}
+
+				#banner_register input[type="submit"].special:hover,
+				#banner_register input[type="reset"].special:hover,
+				#banner_register input[type="button"].special:hover,
+				#banner_register button.special:hover,
+				#banner_register .button.special:hover {
+					background-color: #63c1ae;
+				}
+
+				#banner_register input[type="submit"].special:active,
+				#banner_register input[type="reset"].special:active,
+				#banner_register input[type="button"].special:active,
+				#banner_register button.special:active,
+				#banner_register .button.special:active {
+					background-color: #45ad97;
+				}
+
+			#banner_register input[type="submit"].alt,
+			#banner_register input[type="reset"].alt,
+			#banner_register input[type="button"].alt,
+			#banner_register button.alt,
+			#banner_register .button.alt {
+				background-color: transparent;
+				box-shadow: inset 0 0 0 2px #fff;
+				color: #fff !important;
+			}
+
+				#banner_register input[type="submit"].alt:hover,
+				#banner_register input[type="reset"].alt:hover,
+				#banner_register input[type="button"].alt:hover,
+				#banner_register button.alt:hover,
+				#banner_register .button.alt:hover {
+					background-color: rgba(255, 255, 255, 0.05);
+				}
+
+				#banner_register input[type="submit"].alt:active,
+				#banner_register input[type="reset"].alt:active,
+				#banner_register input[type="button"].alt:active,
+				#banner_register button.alt:active,
+				#banner_register .button.alt:active {
+					background-color: rgba(255, 255, 255, 0.1);
+				}
+
+		#banner_register h2 {
+			font-size: 2.5em;
+			margin: 0 0 0.5em 0;
+			padding: 0;
+			
+		}
+
+		#banner_register p {
+			color: #fff;
+			font-size: 1.5em;
+			margin-bottom: 1.75em;
+			text-transform: uppercase;
+		}
+
+		#banner_register .icon {
+			border-radius: 100%;
+			border: solid 2px #fff;
+			color: #fff;
+			display: inline-block;
+			font-size: 3em;
+			height: 2.25em;
+			line-height: 1.25em;
+			margin-bottom: 0.5em;
+			padding: 0.5em;
+			width: 2.25em;
+		}
+
+		@media screen and (max-width: 1680px) {
+
+			#banner_register {
+				padding: 11em 0 9em 0;
+			}
+	
+		}
+
+		@media screen and (max-width: 1280px) {
+
+			#banner_register {
+				padding: 9em 0 7em 0;
+			}
+
+				#banner_register h2 {
+					font-size: 2em;
+				}
+
+		}
+
+		@media screen and (max-width: 980px) {
+
+			#banner_register {
+				padding: 8em 2em 6em 2em;
+			}
+
+		}
+
+		@media screen and (max-width: 736px) {
+
+			#banner_register {
+				padding: 5em 2em 3em 2em;
+			}
+
+				#banner_register h2 {
+					font-size: 1.5em;
+				}
+
+				#banner_register p {
+					font-size: 1em;
+				}
+
+				#banner_register .icon {
+					font-size: 2em;
+				}
+
+		}
+
+		@media screen and (max-width: 480px) {
+
+			#banner_register {
+				padding: 5em 2em 3em 2em;
+			}
+
+				#banner_register .icon {
 					font-size: 1.5em;
 				}
 
