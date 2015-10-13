@@ -1,9 +1,12 @@
+<?php
+	@session_start();
+	if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
+		session_destroy();
+		header("Location: logout.php");
+		exit;
+	}
+?>
 <!DOCTYPE HTML>
-<!--
-	Retrospect by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
 <html>
 	<head>
 		<title>Login - AssignmentBuddy</title>
@@ -27,20 +30,10 @@
 			<?php require 'login_form.php';?>
 
 		<!-- Guest -->
-		<section id="three" class="wrapper style3 special">
-			<div class="inner">
-				<header class="major narrow	">
-					<h2>Browse the Lobby as Guest</h2>
-					<p>Dont want to register right away? Cool. Browse the lobby for Assignment group as a guest and see what's going on</p>
-				</header>
-				<ul class="actions">
-					<li><a href="#" class="button big alt">Browse Lobby as Guest</a></li>
-				</ul>
-			</div>
-		</section>
+			<?php require 'guest_login.php'; ?>
 
 		<!-- Footer -->
-			<?php require 'footer.php';?>
+			<?php require 'footer.php'; ?>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>

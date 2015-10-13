@@ -4239,6 +4239,34 @@
 
 /* Banner Login Page */
 
+div.error
+{
+	margin-top: 10px;
+	width: relative;
+	height: 40px;
+	padding-top: 10px;
+	border: 1px white solid;
+	border-radius: 10px;
+	color: white;
+	font-size: 14;
+	vertical-align: center; 
+	font-weight: inherit;
+	font-family: inherit;
+	font-style: inherit;
+	text-decoration: inherit;
+	text-align: center;
+	line-height: 1.3em;
+}
+
+img.erroricon 
+{
+	width: 15px;
+	vertical-align: middle;
+	background-color: rgb(0, 255, 255), url('images/icons/error.svg') ;
+	filter: invert(100%);
+	-webkit-filter: invert(100%);
+}
+
 #banner_login {
 		padding: 8em 0 6em 0;
 		background-color: #1E2832;
