@@ -13,14 +13,12 @@
 	<body class="landing">
 
 		<!-- Header -->
-			<header id="header" class="alt">
-				<h1><a href="index.html"><span class='assignment'>Assignment</span>Buddy</a></h1>
-				<a href="#nav">Menu</a>
-			</header>
+		<header id="header" class="alt">
+			<h1><a href="index.html"><span class='assignment'>Assignment</span>Buddy</a></h1>
+			<a href="#nav">Menu</a>
+		</header>
 
-		<?php 
-			include_once("navigation.php");
-		?>
+		<?php require ("navigation.php"); ?>
 
 		<!-- Banner -->
 			<section id="banner">
@@ -38,7 +36,7 @@
 			<section id="one" class="wrapper style1">
 				<div class="inner">
 					<div class='gstarting'>
-						<h2>Getting Started</h2>
+						<h2>Getting Started!</h2>
 					<div>
 					<article class="feature left">
 						<span class="image"><img src="images/pic01.png" alt="" /></span>
@@ -114,67 +112,11 @@
 				</div>
 			</section>
 
-		<!-- Three -->
-			<section id="three" class="wrapper style3 special">
-				<div class="inner">
-					<header class="major narrow	">
-						<h2>Browse the Lobby as Guest</h2>
-						<p>Dont want to register right away? Cool. Browse the lobby for Assignment group as a guest and see what's going on</p>
-					</header>
-					<ul class="actions">
-						<li><a href="#" class="button big alt">Browse Lobby as Guest</a></li>
-					</ul>
-				</div>
-			</section>
+		<?php require ("guest_login.php"); ?>
 
-		<!-- Four -->
-			<section id="four" class="wrapper style2 special">
-				<div class="inner">
-					<header class="major narrow">
-						<h2>Sign In</h2>
-					</header>
-					<form action="#" method="POST">
-						<div class="container 75%">
-							<div class="row uniform 50%">
-								<div class="6u 12u$(xsmall)">
-									<input name="username" placeholder="Email" type="text" />
-								</div>
-								<div class="6u$ 12u$(xsmall)">
-									<input name="password" placeholder="Password" type="password" />
-								</div>
-							</div>
-						</div>
-						<ul class="actions">
-							<li><input type="submit" class="special" value="Login" /></li>
-							<li><input type="reset" class="alt" value="Clear" /></li>
-						</ul>
-					</form>
-				</div>
-			</section>
+		<?php require ("login_form.php"); ?>
 
-		<!-- Footer -->
-			<footer id="footer">
-				<div class="inner">
-					<ul class="icons">
-						<li><a href="#" class="icon fa-facebook">
-							<span class="label">Facebook</span>
-						</a></li>
-						<li><a href="#" class="icon fa-twitter">
-							<span class="label">Twitter</span>
-						</a></li>
-						<li><a href="#" class="icon fa-instagram">
-							<span class="label">Instagram</span>
-						</a></li>
-						<li><a href="#" class="icon fa-linkedin">
-							<span class="label">LinkedIn</span>
-						</a></li>
-					</ul>
-					<ul class="copyright">
-						<li>2015 &copy; X Fast Games</li>
-						<li>Design by <a href="http://templated.co">templated.co</a>.</li>
-					</ul>
-				</div>
-			</footer>
+		<?php require ("footer.php"); ?>
 
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
