@@ -31,6 +31,6 @@
 				}
 			?>
 			
-			<li><a href="index.html#two"><img class='menuicon' src="images/icons/info.svg" alt="" /> About Us</a></li>
+			<li><a href="index.php#two"><img class='menuicon' src="images/icons/info.svg" alt="" /> About Us</a></li>
 		</ul>
 	</nav>
