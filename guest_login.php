@@ -7,7 +7,7 @@
 			<p>Dont want to register right away? Cool. Browse the lobby for Assignment group as a guest and see what's going on</p>
 		</header>
 		<ul class="actions">
-			<li><a href="#" class="button big alt">Browse Lobby as Guest</a></li>
+			<li><a href="login.php?guest=true" class="button big alt">Browse Lobby as Guest</a></li>
 		</ul>
 	</div>
 </section>
