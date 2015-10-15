@@ -1,9 +1,7 @@
 /*! This script will return all the units */
 /*! A user does in a given course */
-/*! <param $StudentID > */
+/*! <param $courseID > */
 
-SELECT * FROM Units
-WHERE Student s NATURAL JOIN CourseUnit cu
-ON s.CourseID=cu.CourseID
-NATURAL JOIN Unit u 
-On cu.UnitID = u.UnitID;
+SELECT u.UnitID, u.UnitCode, u.UnitName 
+FROM Unit u NATURAL JOIN CourseUnit cu NATURAL JOIN Course c 
+WHERE c.CourseID = $courseID;
