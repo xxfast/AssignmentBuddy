@@ -32,7 +32,8 @@ CREATE TABLE CourseUnit
 	CourseID INT NOT NULL,
 	UnitID INT NOT NULL,
 	FOREIGN KEY (CourseID) REFERENCES Course(CourseID) ON DELETE CASCADE,
-	FOREIGN KEY (UnitID) REFERENCES Unit(UnitID) ON DELETE CASCADE
+	FOREIGN KEY (UnitID) REFERENCES Unit(UnitID) ON DELETE CASCADE,
+	PRIMARY KEY (CourseID,UnitID)
 	/*! if eithe the university or the unit is deleted, the record will be deleted too*/
 );
 
@@ -83,6 +84,7 @@ CREATE TABLE StudentGroup
 	StudentID INT NOT NULL,
 	GroupID INT NOT NULL,
 	FOREIGN KEY (StudentID) REFERENCES Student(StudentID)  ON DELETE CASCADE,
-	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)  ON DELETE CASCADE
+	FOREIGN KEY (GroupID) REFERENCES Groups(GroupID)  ON DELETE CASCADE,
+	PRIMARY KEY (StudentID,GroupID)
 	/*! These records exist as long as the student or the group exist*/
 );
