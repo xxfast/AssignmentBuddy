@@ -18,7 +18,7 @@
 
 		<!-- Header -->
 			<header id="header" class="skel-layers-fixed">
-				<h1><a href="index.html">Retrospect</a></h1>
+				<h1><a href="index.html">Assignment buddy</a></h1>
 				<a href="#nav">Menu</a>
 			</header>
 
