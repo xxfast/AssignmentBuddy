@@ -31,16 +31,16 @@ INSERT INTO `Unit` (`UnitID`,`UnitCode`,`UnitName`) VALUES (170,"Z8N 1Z0","ornar
 INSERT INTO `Unit` (`UnitID`,`UnitCode`,`UnitName`) VALUES (180,"L7H 3N1","venenatis lacus. Etiam"),(181,"E2J 5B1","magnis dis parturient"),(182,"K3L 4X4","eu odio tristique"),(183,"T3G 8K0","in faucibus orci"),(184,"I8N 1N2","nec quam. Curabitur"),(185,"Z9W 6C0","hendrerit. Donec porttitor"),(186,"G5M 1U3","sem egestas blandit."),(187,"O8L 6E7","sagittis placerat. Cras"),(188,"M7Y 4D6","sapien imperdiet ornare."),(189,"K5I 7N5","Aliquam nisl. Nulla");
 INSERT INTO `Unit` (`UnitID`,`UnitCode`,`UnitName`) VALUES (190,"R5W 3N7","amet risus. Donec"),(191,"B6V 5C9","dignissim tempor arcu."),(192,"K1E 9G6","pretium et, rutrum"),(193,"T7H 9V2","cursus non, egestas"),(194,"A8D 1I4","semper egestas, urna"),(195,"M7B 9I2","quis urna. Nunc"),(196,"R2L 8T2","malesuada vel, venenatis"),(197,"Q1Q 9I9","non quam. Pellentesque"),(198,"Y5G 4I7","interdum. Sed auctor"),(199,"L2S 8I0","Cras eu tellus");
 
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (13,74),(69,99),(57,64),(96,72),(15,98),(46,10),(97,26),(7,48),(21,80),(20,98);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (34,45),(92,98),(40,31),(84,22),(65,84),(61,73),(55,12),(65,26),(59,63),(40,96);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (85,31),(1,52),(38,89),(89,53),(34,62),(84,64),(44,72),(45,59),(32,27),(48,22);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (37,63),(11,10),(36,69),(56,36),(12,1),(62,78),(6,94),(36,26),(85,37),(62,8);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (72,6),(84,83),(54,27),(5,74),(18,43),(29,97),(45,50),(94,78),(89,69),(90,99);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (41,74),(38,9),(71,22),(60,91),(62,60),(29,20),(99,21),(18,84),(11,63),(94,64);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (19,57),(11,53),(19,11),(84,80),(43,8),(14,14),(11,23),(50,93),(36,55),(16,51);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (89,32),(41,58),(46,38),(31,88),(82,35),(42,50),(24,12),(12,39),(43,56),(13,63);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (33,39),(53,17),(12,95),(91,31),(48,53),(40,22),(85,16),(7,10),(26,57),(92,26);
-INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (69,92),(70,33),(8,24),(7,64),(46,84),(59,50),(86,33),(42,83),(92,99),(35,14);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (135,114),(143,128),(109,146),(138,161),(197,189),(164,136),(191,102),(157,103),(100,155),(132,121);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (139,100),(190,163),(108,184),(170,147),(114,174),(192,188),(174,135),(199,172),(136,137),(181,122);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (162,137),(100,124),(134,107),(195,156),(174,150),(179,113),(172,111),(113,195),(182,105),(155,110);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (103,122),(155,110),(169,120),(146,199),(154,158),(135,123),(102,125),(134,110),(143,102),(145,102);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (115,139),(153,129),(169,175),(148,112),(171,102),(161,137),(178,107),(102,160),(145,196),(151,124);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (106,120),(138,100),(152,110),(113,177),(182,108),(157,133),(118,145),(106,190),(184,169),(181,191);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (136,171),(134,100),(147,126),(120,145),(174,123),(182,166),(151,197),(198,143),(107,140),(197,158);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (168,140),(143,107),(145,177),(168,199),(129,199),(128,175),(119,187),(148,155),(191,194),(139,142);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (102,115),(157,188),(169,195),(192,112),(174,118),(180,170),(182,145),(150,168),(111,108),(160,109);
+INSERT INTO `CourseUnit` (`CourseID`,`UnitID`) VALUES (136,157),(179,119),(100,193),(131,174),(173,111),(114,153),(196,182),(148,193),(174,119),(150,170);
 
 INSERT INTO `Assignment` (`AssignmentID`,`UnitID`,`AssignmentTitle`) VALUES (90,58,"mattis"),(88,91,"amet"),(29,73,"tellus non"),(77,97,"ac"),(98,25,"Aliquam nisl."),(85,53,"lacus. Quisque"),(61,91,"ipsum"),(91,82,"at"),(18,23,"Maecenas"),(59,73,"gravida. Aliquam");
 INSERT INTO `Assignment` (`AssignmentID`,`UnitID`,`AssignmentTitle`) VALUES (79,77,"eu, accumsan"),(1,84,"mauris"),(46,25,"sodales elit"),(63,18,"euismod"),(75,85,"libero. Proin"),(68,65,"imperdiet"),(29,15,"sed, sapien."),(55,97,"pede,"),(64,62,"volutpat ornare,"),(9,50,"habitant");
