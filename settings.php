@@ -1,5 +1,5 @@
 <?php
-	$host = "www.xfastgames.com";
+	$host = "localhost";
 	switch ($email) 
 	{
 		case 'guest':
