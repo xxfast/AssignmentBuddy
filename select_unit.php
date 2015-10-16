@@ -16,28 +16,13 @@
 	</head>
 	<body>
 
-		<!-- Header -->
-			<header id="header" class="skel-layers-fixed">
-				<h1><a href="index.html">Retrospect</a></h1>
-				<a href="#nav">Menu</a>
-			</header>
-
-		<!-- Nav -->
-			<nav id="nav">
-				<ul class="links">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="generic.html">Generic</a></li>
-					<li><a href="elements.html">Elements</a></li>
-				</ul>
-			</nav>
+		<?php require 'header.php'; ?>
+		<?php require 'navigation.php'; ?>
 
 		<!-- Main -->
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
-					
-
-						
 						
 						<h2>Create Group</h2>
 						<p></p>
