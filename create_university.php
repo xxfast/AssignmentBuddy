@@ -22,17 +22,17 @@
 		<section id="one" class="wrapper style1">
 				<div class="inner">
 					<form id="register" method="post" action="register_process.php" <!--novalidate = "novalidate"-->
-					<article class="registerfeature">
+					<article class="feature">
 							<div class="content">
 							<h2>Enter University*:</h2>
-							<p>
-							<input type="text" name="name" id="name" value="" placeholder="Enter University Name" required="required" />
+							<p><p><label for="university_name">University Name&#42;:</label>
+							<input type="text" name="university_name" id="university_name" value="" placeholder="Enter University Name" required="required" />
 							</p>
-							<p>
-							<input type="text" name="name" id="name" value="" placeholder="Enter University Location" required="required" />
+							<p><p><label for="university_location">University Location&#42;:</label>
+							<input type="text" name="university_location" id="university_location" value="" placeholder="Enter University Location" required="required" />
 							</p>
-							<p>
-							<input type="text" name="name" id="name" value="" placeholder="Enter University website" required="required" />
+							<p><p><label for="university_website">University Website&#42;:</label>
+							<input type="text" name="university_website" id="university_website" value="" placeholder="Enter University website" required="required" />
 							</p>
 							<ul class="actions">
 							<li class="actions">

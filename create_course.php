@@ -22,7 +22,7 @@
 		<section id="one" class="wrapper style1">
 				<div class="inner">
 					<form id="register" method="post" action="register_process.php" <!--novalidate = "novalidate"-->
-					<article class="registerfeature">
+					<article class="feature">
 								<div class="content">
 									<h2>Create Course</h2>
 									<p><label for="course_code">Course Code&#42;:</label>
