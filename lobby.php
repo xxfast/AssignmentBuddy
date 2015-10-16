@@ -26,7 +26,7 @@
 
 		<!-- Main -->
 		<?php 
-			$mode = 'default';
+			$mode = 'university';
 			if(isset($_GET['view']))
 			{
 				$mode = $_GET['view'];
@@ -37,23 +37,26 @@
 				<div class="container">
 					<header class="major special">
 						<h2>Lobby</h2>
-						<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
+						<p>Select the university you want to browse</p>
 					</header>
 
 					<!-- Table -->
 					<?php
-						$email = $_SESSION["email"];
+						$email = $_SESSION["username"];
 						include_once "settings.php";
-						$sql_table="Student";
 						$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 						if (!$conn)
 						{
 							echo "<p>Can't connect to server</>";
 							die();
 						}
-						//$query = "SELECT * FROM $sql_table WHERE email='$email'";
-						//$result = @mysqli_query($conn, $query);
-						//$info = mysqli_fetch_assoc($result);
+						else
+						{
+							if($email='guest')
+							{
+								$sql_table="University";
+							}
+						}
 					?>
 						<section>
 							<h3> 
@@ -61,9 +64,12 @@
 									switch ($mode) 
 									{
 									 	case 'university':
-									 		echo 'Courses';
+									 		echo 'Universities';
 									 		break;
 									 	case 'course':
+									 		echo 'Courses';
+									 		break;
+									 	case 'unit':
 									 		echo 'Units';
 									 		break;
 									 	default:
@@ -76,89 +82,82 @@
 								<table>
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th>Description</th>
-											<th>Price</th>
+											<?php 
+												switch ($mode) {
+													case 'university':
+														echo "<th>Location</th><th>University</th>";
+														break;
+													case 'course':
+														echo "<th>Course Code</th><th>Course</th>";
+														break;
+													case 'unit':
+														echo "<th>Unit Code</th><th>Unit</th>";
+														break;
+													case 'assignment':
+														echo "<th>Assignment Code</th><th>Unit</th>";
+														break;
+													default:
+														# code...
+														break;
+												}
+											?>
+											
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>Item 1</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item 2</td>
-											<td>Vis ac commodo adipiscing arcu aliquet.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item 3</td>
-											<td> Morbi faucibus arcu accumsan lorem.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item 4</td>
-											<td>Vitae integer tempus condimentum.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item 5</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
+										<?php
+											if($mode=='university')
+											{
+												$query = "SELECT * FROM University;";
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												while ($row) 
+												{
+													echo "<tr>";
+													echo "<td>{$row['Location']}</td>";
+													echo "<td>{$row['UniversityName']}</td>";
+													$universityID = $row['UniversityID'];
+													echo "<td><a href='lobby.php?view=course&university=$universityID'' class='button alt'>Browse</a></td>";
+													echo "</tr>";
+													$row = mysqli_fetch_assoc($result);
+												}
+											}
+											else if($mode=='course')
+											{
+												$universityID = $_GET['university'];
+												$query = "SELECT * FROM Course NATURAL JOIN  University WHERE UniversityID='$universityID';";
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												while ($row) 
+												{
+													echo "<tr>";
+													echo "<td>{$row['CourseCode']}</td>";
+													echo "<td>{$row['CourseName']}</td>";
+													$courseID = $row['CourseID'];
+													echo "<td><a href='lobby.php?view=unit&course=$courseID'' class='button alt'>Browse</a></td>";
+													echo "</tr>";
+													$row = mysqli_fetch_assoc($result);
+												}
+											}
+											else if($mode=='unit')
+											{
+												$courseID = $_GET['course'];
+												$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit WHERE CourseID='$courseID';";
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												while ($row) 
+												{
+													echo "<tr>";
+													echo "<td>{$row['UnitCode']}</td>";
+													echo "<td>{$row['UnitName']}</td>";
+													$assignmentCode = $row['AssignmentCode'];
+													echo "<td><a href='lobby.php?view=assignment&assignment=$assignmentCode'' class='button alt'>Browse</a></td>";
+													echo "</tr>";
+													$row = mysqli_fetch_assoc($result);
+												}
+											}
+										?>
 									</tbody>
-									<tfoot>
-										<tr>
-											<td colspan="2"></td>
-											<td>100.00</td>
-										</tr>
-									</tfoot>
-								</table>
-							</div>
-							<h4>Alternate</h4>
-							<div class="table-wrapper">
-								<table class="alt">
-									<thead>
-										<tr>
-											<th>Name</th>
-											<th>Description</th>
-											<th>Price</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Item 1</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item 2</td>
-											<td>Vis ac commodo adipiscing arcu aliquet.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item 3</td>
-											<td> Morbi faucibus arcu accumsan lorem.</td>
-											<td>29.99</td>
-										</tr>
-										<tr>
-											<td>Item 4</td>
-											<td>Vitae integer tempus condimentum.</td>
-											<td>19.99</td>
-										</tr>
-										<tr>
-											<td>Item 5</td>
-											<td>Ante turpis integer aliquet porttitor.</td>
-											<td>29.99</td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr>
-											<td colspan="2"></td>
-											<td>100.00</td>
-										</tr>
-									</tfoot>
 								</table>
 							</div>
 						</section>
@@ -167,7 +166,7 @@
 
 		<!-- Footer -->
 			<?php require ("footer.php"); ?>
-
+			<?php mysqli_close($conn); ?>
 		<!-- Scripts -->
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
