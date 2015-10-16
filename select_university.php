@@ -22,13 +22,12 @@
 		<section id="one" class="wrapper style1">
 				<div class="inner">
 					<form id="register" method="post" action="register_process.php" <!--novalidate = "novalidate"-->
-					<article class="registerfeature">
+					<article class="feature">
 							<div class="content">
-							<h2>Please select your university:</h2>
-							<form method="post" action="#">
-								<div class="row uniform 50%">
-									<div class="6u 12u$(xsmall)"></div>
-									<div class="6u$ 12u$(xsmall)"></div>
+							<h2>Select University:</h2>
+							
+									<p>
+									<label for="state">University&#42;:</label>
 									<div class="12u$">
 										<div class="select-wrapper">
 											<select name="category" id="category" required="required">
@@ -40,7 +39,9 @@
 											</select>
 										</div>
 									</div>
+									<p>
 									<h1>Can't Find the course you are looking for? <a href="create_university.php">Add</a> University</h1>
+									</p>
 														
 									<ul class="actions">
 										<li class="actions">
