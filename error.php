@@ -39,6 +39,7 @@
 							}
 						?>
 					</p>
+					<p><img src="images/error.png" alt="" /></p>
 				</header>	
 			</div>
 		</section>
@@ -53,7 +54,7 @@
 						<div class="content">
 							<h2>Return back to homepage</h2>
 							<p>
-								To get started, create your own profile using your university email address. Upload a profile picture, enter your details and customize it the way you want
+								Sorry for your inconvenience. We are already working on fixing your problem. Meanwhile, you can head over to the homepage.
 							</p>
 							<ul class="actions">
 								<li>
