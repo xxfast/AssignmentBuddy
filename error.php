@@ -39,7 +39,7 @@
 							}
 						?>
 					</p>
-					<p><img src="images/error.png" alt="" /></p>
+					<p><img src="images/error.png" width='35%' alt="" /></p>
 				</header>	
 			</div>
 		</section>
@@ -50,7 +50,7 @@
 						<h2>While we fix this, you can</h2>
 					<div>
 					<article class="feature left">
-						<span class="image"><img src="images/pic01.png" alt="" /></span>
+						<span class="image"><img src="images/pic02.png" alt="" /></span>
 						<div class="content">
 							<h2>Return back to homepage</h2>
 							<p>
