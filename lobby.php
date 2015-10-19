@@ -1,8 +1,24 @@
 <?php 
 	session_start();
+	$email = $_SESSION["username"];
+	include_once "settings.php";
+	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
+	if (!$conn)
+	{
+		header("location:error.php?type=database");
+		die();
+	}
+	else
+	{
+		if($email='guest')
+		{
+			$sql_table="University";
+		}
+	}
 	if(!isset ($_SESSION["username"]))
 	{
 		header("location:login.php");
+		die();
 	}
 ?>
 <!DOCTYPE HTML>
@@ -41,23 +57,7 @@
 					</header>
 
 					<!-- Table -->
-					<?php
-						$email = $_SESSION["username"];
-						include_once "settings.php";
-						$conn = mysqli_connect($host, $user, $pwd, $sql_db);
-						if (!$conn)
-						{
-							echo "<p>Can't connect to server</>";
-							die();
-						}
-						else
-						{
-							if($email='guest')
-							{
-								$sql_table="University";
-							}
-						}
-					?>
+
 						<section>
 							<h3> 
 								<?php 
