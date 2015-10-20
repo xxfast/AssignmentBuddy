@@ -19,81 +19,64 @@
 		
 		<!-- Register -->
 		
-		<section id="one" class="wrapper style1">
+			<!-- Form -->
+			<section id="one" class="wrapper style1">
 				<div class="inner">
-					<form id="register" method="post" action="register_process.php" <!--novalidate = "novalidate"-->
-					<article class="feature">
-								<div class="content">
-									<h2>Personal Details</h2>
-									<p>
-									<label for="pfname">First Name&#42;:</label>
-									<input type="text" name="pfname" id="pfname" size="20" pattern="[A-Za-z]+" required="required" placeholder="Enter First Name" />
-									</p>
-									<p>
-									<label for="plname">Last Name&#42;:</label>
-									<input type="text" name="plname" id="plname"  size="20" pattern="[A-Za-z]+" required="required" placeholder="Enter Last Name" />
-									</p>
-									<p>
-									<label for="pdob">Date of Birth&#42;:</label>
-									<input type="text" name="pdob" id="pdob"  placeholder="yyyy-mm-dd"  required="required" />
-									</p>
-									<p>
-									<Label>Gender&#42;:</label>	
-									<div class="4u 12u$(xsmall)">
-										<input type="radio" id="priority-low" name="pgender">
-										<label for="priority-low">Male</label>
+					<div class='gstarting'>
+						<h2>Signup for AssignmentBuddy!</h2>
+					<div>
+					<article class="feature right">
+						<span class="image"><img src="images/pic01.png" alt="" /></span>
+						<div class="content">
+							<fieldset>
+								<legend>Step 01: Personal Information</legend>
+							<form method="post" action="#" validate='validate'>
+								<div class="row uniform 50%">
+									<div class="6u 12u$(xsmall)">
+										<input type="text" name="pfname" id="pfname" size="20" pattern="[A-Za-z]+" required="required" placeholder="First Name" />
 									</div>
-									<div class="4u 12u$(xsmall)">
-										<input type="radio" id="priority-normal" name="pgender">
-										<label for="priority-normal">Female</label>
-									</div>									
-									</p>
-									<!--
-									<p>
-									<label for="state">University&#42;:</label>
+									<div class="6u 12u$(xsmall)">
+										<input type="text" name="plname" id="plname"  size="20" pattern="[A-Za-z]+" required="required" placeholder="Last Name" />
+									</div>
 									<div class="12u$">
-										<div class="select-wrapper">
-										<select name="university" id="university" class="university" required="required">
-											<option value ="DEAKIN">Deakin University</option>
-											<option value ="MONASH">Monash University</option>
-											<option value ="RMIT">RMIT University</option>
-											<option value ="FEDUNI">Federation University</option>
-											<option value ="SWINBURNE" selected="selected">Swinburne University Of Technology</option>
-											<option value ="MELBOURNE">University Of Melbourne</option>
-											<option value ="LATROBE">La Trobe University</option>
-											<option value ="VU">Victoria University</option>
-											<option value ="ACU">Australia Catholic University</option>
-										</select>
-										</div>
+										<input type="email" name="pemail" id="pemail" placeholder="student@university.edu" pattern="/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD" required="required" />
 									</div>
-									</p>
-									-->
-									<p>
-										<label for="pmphone">Mobile Phone Number:</label>
-										<input type="tel" name="pmphone" id="pmphone" placeholder="04########" pattern="[0-9]{10}" maxlength="10" size="12" required="required" />
-									</p>
-									<p>
-										<p><label for="aaddress">Address:</label>
-										<input type="text" name="aaddress" id="aaddress"  required="required" placeholder="Enter Your Address" /></p>
-									</p>
-									<p>
-										<label for="pemail">University Email Address&#42;:</label>
-										<input type="email" name="pemail" id="pemail" placeholder="123456789@student.swin.edu.au" required="required" />
-									</p>
-									
-									<ul class="actions">
-										<li class="actions">
-											<li><input type="submit" class="special" value="Next" /></li>
-											<li><input type="reset" class="alt" value="Reset" /></li>
-										</li>
-									</ul>
+									<div class="6u 12u$(xsmall)">
+										<input type="text" name="pdob" id="pdob"  placeholder="yyyy-mm-dd" pattern="[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])" required="required" />
+									</div>
+									<div class="6u 12u$(xsmall)">
+										<input type="radio" id="male" name="gender" style="display:none"/>
+										<label for="male">Male</label>
+										<input type="radio" id="female" name="gender"  style="display:none"/>
+										<label for="female">Female</label>
+									</div>
+									<div class="12u$">
+									<input type="text" name="pmphone" id="pmphone" placeholder="Phone Number (+00)0000000000" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{10}" maxlength="10" size="12" required="required" />
+									</div>
+									<div class="8u 12u$(xsmall)">
+									<input type="text" name="adress" id="adress" placeholder="Address" /></p>
+									</div>
+									<div class="4u 12u$(xsmall)">
+										<?php include_once 'ISO_SelectCountry.php'; ?>
+									</div>
+									<div class="12u$">
+											<input type="checkbox" id="tos" name="tos" style="display:none">
+											<label for="tos">I agree for</label>
+											<a href="#">terms of service</a>
+									</div>
+									<div class="12u$">
+										<input type="submit" class="special" value="Next" />
+										<input type="reset" class="alt" value="Reset" />
+									</div>
 								</div>
+							</form>
+							</fieldset>
+						</div>
 					</article>
-					</form>
 				</div>
 			</section>
-		
 
+			
 		<!-- Footer -->
 			<?php require 'footer.php'; ?>
 
