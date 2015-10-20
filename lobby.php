@@ -1,5 +1,10 @@
 <?php 
 	session_start();
+	if(!isset($_SESSION["username"]))
+	{
+		header("location:login.php?error=you need to login to view requested page");
+		die();
+	}
 	$email = $_SESSION["username"];
 	include_once "settings.php";
 	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
