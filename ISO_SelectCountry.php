@@ -1,4 +1,4 @@
-<select>
+<select name="pcountry">
 	<option value="AF">Afghanistan</option>
 	<option value="AX">Åland Islands</option>
 	<option value="AL">Albania</option>

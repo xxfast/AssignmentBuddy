@@ -1,4 +1,4 @@
-<?
+<?php 
 /**
 * sanitiser.php
 * -----------------
@@ -7,7 +7,7 @@
 * @~author : Isuru 
 */
 
-class sanitiser 
+class Sanitiser 
 {
 	
 	function __construct()

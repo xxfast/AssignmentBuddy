@@ -1,127 +1,117 @@
 <?php
 	
-	include_once 'Sanitiser.php'; // create sanitise objects
+	session_start();
+	
+	require_once 'sanitiser.php'; // create sanitise objects
+	require_once 'validator.php'; // create sanitise objects
+	require_once 'post_request.php'; // a cool function
+
 	$sanitiser = new Sanitiser();
-	
-	$email = $_SESSION["username"];
-	require_once ("settings.php"); //connection info
-	
+	$validator = new Validator();
+
+	$email = null;
+	if (isset($_SESSION["username"])) {
+		$email = $_SESSION["username"];
+		//problamatic request, redirects to
+		header("location:error.php?type=already-registered");
+		die();
+	}
+
 	if(!isset($_POST["pfname"]))
 	{
+		//invalid request, redirects to
 		header("location:register_form.php");
 		die();
 	}
 
-	$hfname = $sanitiser->sanitise($_POST["pfname"]);
-	$hlname = $sanitiser->sanitise($_POST["plname"]);
-	
-	echo"<div id='resultsPage'>";
-	echo"<h1>Hello $hfname $hlname, Welcome!</h1>";
-	echo"<br/>";
-	
-	"<br/>";
-	echo"</div>";
+	require_once ("settings.php"); //connection info
 
+	//global errors
+	
 	$errors = "";
 	
 	// Validate firstName 
 	function fName($value)
 	{
-		
-		$fnlength = strlen($value);
-
-		if($value=="") 
+		global $errors;
+		global $validator;
+		if(strlen($value)<=0)
 		{
-			$errors += "Your first name is empty\n";
+			$errors .= "<li>Your first name is empty</li>";
 		}
-		if(!preg_match("/^[a-zA-Z ]*$/",$value))
+		if($validator->CheckValidName($value))
 		{
-			$errors += "Only letters and spaces allowed\n";
+			$errors .= "<li>Only letters and spaces allowed</li>";
 		} 
-		if($fnlength > 12)
+		if(! $validator->CheckValueInRange(strlen($value),1,20))
 		{
-			echo"<p>*First Name Cannot be more than 12 characters</p>";
+			$errors  .= "<li>Please keep the first name less than 20 characters</li>";
 		}
-		else 
-		{
-			echo"<p></p>";
-		}				
+		if(strlen($errors)>0) return false;
+		return true;			
 	}
-	
-	
 	
 	//Validate LastName
 	function lName($value)
 	{
-		$lnlength = strlen($value);	
-		
-		if($value=="") 
+		global $errors;
+		global $validator;
+		if(strlen($value)<=0) 
 		{
-			echo "<p>*Please Enter your Last Name</p>";
-			return false;
+			$errors  .= "<li>Your last name is empty</li>";
 		}
-		if(!preg_match("/^[a-zA-Z ]*$/",$value))
+		if($validator->CheckValidName($value))
 		{
-			echo"<p>*Last Name: Only letters and spaces allowed.</p>";
-			return false;
+			$errors .= "<li>Only letters and spaces allowed in last name</li>";
 		} 
-		if($lnlength > 20)
+		if(! $validator->CheckValueInRange(strlen($value),1,20))
 		{
-			echo"<p>*Last Name Cannot be more than 20 characters</p>";
-			return false;
+			$errors .= "<li>Please keep the last name less than 20 characters</li>";
 		}
-		else 
-		{
-			echo"<p></p>";
-			return true;
-			
-		}			
-	}
-				
-
-	
+		if(strlen($errors)>0) return false;
+		return true;			
+	}		
 	
 	//Validate dob
 	function dob($value)
 	{
-
-		
-		if(!preg_match('/^(19|20)\d\d([-])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])*$/',$value))
+		global $errors;
+		global $validator;
+		if($validator->CheckValidDate($value))
 		{
-			echo"<p>*Please Enter your Date of birth in the format yyyy-mm-dd.</p>";
+			$errors .= "<li> Please Enter your Date of birth in the format dd-mm-yyy</li>";
 			return false; 
 		} 
 		else 
 		{
 			return true;
 		}
-			
-	}
-				
+	}	
 		
 	//Validate gender
 	function sex($value)
 	{
-		 
-		if(!$value == '') 
+		global $errors;
+		global $validator;
+		if($validator->CheckValidDate($value)) 
 		{
-			echo "";
 			return true;
 		}
 		else
 		{
-			echo "<p>*Please Enter your Gender</p>";
+			$errors .= "<li> Please Enter your Gender </li>";
 			return false;
-		}
-			
+		}	
 	}
 				
 	//Validate email 
 	function email($value)
 	{
-		if(!filter_var($value,FILTER_VALIDATE_EMAIL)) 
+		global $errors;
+		global $validator;
+		if(!$validator->CheckValidEmail($value)) 
 		{
-			echo"<p>*Invalid email format</p>"; 
+			$errors .= "<li> Invalid email format </li>"; 
 			return false; 
 		}
 		else 
@@ -129,40 +119,34 @@
 			return true;
 		}
 	}
+
+	//Sanatise ALL the Data :D
+	$i_firstname = $sanitiser->sanitise($_POST["pfname"]);
+	$i_lastname = $sanitiser->sanitise($_POST["plname"]);
+	$i_email = $sanitiser->sanitise($_POST["pemail"]);
+	$i_dob = $sanitiser->sanitise($_POST["pdate"]."-".$_POST["pmonth"]."-".$_POST["pyear"]);
+	if(isset($_POST["pgender"])) $i_sex = $sanitiser->sanitise($_POST["pgender"]); else $i_sex = '';
+	$i_phone = $sanitiser->sanitise($_POST["pphone"]);
+	$i_adress = $sanitiser->sanitise($_POST["padress"]);
+	$i_country = $sanitiser->sanitise($_POST["pcountry"]);
+	if(isset($_POST["ptos"])) $i_tos = $sanitiser->sanitise($_POST["ptos"]); else $i_tos = '';
 	
+	//Start Validating :D
+	$valid = true;
+	$valid = fName($i_firstname) && $valid;
+	$valid = lName($i_lastname) && $valid;
+	$valid = dob($i_dob) && $valid;
+	$valid = sex($i_sex) && $valid;
+	$valid = email($i_email) && $valid; 
 	
-	//check whether the form fields in the register form are set
-	if(isset($_POST["pfname"])) 
-	{
-		$firstname = sanitise($_POST["pfname"]);
-		fName($firstname);
-		$lastname = sanitise($_POST["plname"]);
-		lName($lastname);
-		$birth = sanitise($_POST["pdob"]);
-		dob($birth);
-		@$gender = sanitise($_POST["pgender"]);
-		sex($gender);
-		$email = sanitise($_POST["pemail"]); 
-		//email($email);
+
+	if (!$valid) {
+		header("location:register_form.php?errors=$errors");
 	}
-	
-	// start the session
-	if (!isset ($_SESSION["pemail"])) 
-	{ // check if session variable exists
-	$storedEmail = $email;
-	$_SESSION["pemail"] = $email; // create and set the session variable
-	}
+	// start the whatever
+	//echo "$i_firstname $i_lastname $i_dob $i_sex $i_adress $i_country $i_email $i_phone";
 	
 	
-	//echo "$firstname $lastname $birth $gender $street $town $state $email $postal $phone";
-	if (@email($email))		
-	{
-		$query = "INSERT INTO $sql_table (fname, lname, dob, gender, email) 
-		VALUES 
-		('$firstname', '$lastname', '$birth', '$gender', '$email')";
-		$result = mysqli_query($conn, $query);
-			
-	}	
 	
 ?>
 	

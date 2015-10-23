@@ -2,7 +2,7 @@
 	session_start();
 	if(!isset($_SESSION["username"]))
 	{
-		header("location:login.php?error=you need to login to view requested page");
+		header("location:error.php?type=unauthorized");
 		die();
 	}
 	$email = $_SESSION["username"];
