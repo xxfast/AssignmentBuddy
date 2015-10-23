@@ -2,10 +2,10 @@
 
 /**
 * validator.php
-* =============
-* ~author Isuru Kusumal Rajapaske
-* This class creates validator objects, which can validate data
-*
+* -----------------
+* An object that can validate data, so they are
+* not invalid 
+* @~author : Isuru 
 */
 
 class Validator
@@ -15,9 +15,14 @@ class Validator
 		
 	}
 
-	public function FunctionName($value='')
+	public function CheckValidEmail($email)
 	{
-		return true;
+		return filter_var($email, FILTER_VALIDATE_EMAIL);
+	}
+
+	public function CheckValidEmailWithDomain($email, $domain)
+	{
+		return preg_match("/$domain/i", $email);
 	}
 }
 
