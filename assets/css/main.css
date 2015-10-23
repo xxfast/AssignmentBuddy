@@ -4258,6 +4258,18 @@ div.error
 	line-height: 1.3em;
 }
 
+div.errorlist
+{
+	border: 1px red solid;
+	border-radius: 10px;
+	color: red;
+	font-size: 14;
+	text-align: left;
+	line-height: 1.3em;
+	padding-left: 8px;
+	padding-top: 8px;
+}
+
 img.erroricon 
 {
 	width: 15px;
