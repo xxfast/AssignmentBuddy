@@ -1,3 +1,13 @@
+<?php 
+	session_start();
+
+	if (isset($_SESSION["username"])) {
+		//problamatic request, redirects to
+		header("location:error.php?type=already-registered");
+		die();
+	}
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -23,7 +33,10 @@
 			<section id="one" class="wrapper style1">
 				<div class="inner">
 					<div class='gstarting'>
-						<h2>Signup for AssignmentBuddy!</h2>
+						<h2><?php 
+						$email = $_SESSION["username"];
+						echo $email; 
+						?> Signup for AssignmentBuddy!</h2>
 					<div>
 					<article class="feature right">
 						<span class="image"><img src="images/pic01.png" alt="" /></span>

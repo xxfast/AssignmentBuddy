@@ -1,19 +1,34 @@
 <?php
 	
-	include_once 'Sanitiser.php'; // create sanitise objects
+	session_start();
+	
+	require_once 'sanitiser.php'; // create sanitise objects
+	require_once 'validator.php'; // create sanitise objects
+	
 	$sanitiser = new Sanitiser();
-	
-	$email = $_SESSION["username"];
-	require_once ("settings.php"); //connection info
-	
+	$validator = new Validator();
+
+	$email = null;
+	if (isset($_SESSION["username"])) {
+		$email = $_SESSION["username"];
+		//problamatic request, redirects to
+		header("location:error.php?type=already-registered");
+		die();
+	}
+
 	if(!isset($_POST["pfname"]))
 	{
+		//invalid request, redirects to
 		header("location:register_form.php");
 		die();
 	}
 
-	$hfname = $sanitiser->sanitise($_POST["pfname"]);
-	$hlname = $sanitiser->sanitise($_POST["plname"]);
+	require_once ("settings.php"); //connection info
+
+	//Sanatise ALL the Data :D
+	$i_firstname = $sanitiser->sanitise($_POST["pfname"]);
+	$i_lastname = $sanitiser->sanitise($_POST["plname"]);
+	$i_email = $sanitiser->sanitise($_POST["pemail"]);
 	
 	echo"<div id='resultsPage'>";
 	echo"<h1>Hello $hfname $hlname, Welcome!</h1>";

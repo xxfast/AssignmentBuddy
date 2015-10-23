@@ -1,5 +1,8 @@
 <?php 
 	session_start();
+	require_once 'sanitiser.php';
+	$sanitiser = new Sanitiser(); 
+	if (isset($_GET['type'])) $get = $sanitiser->sanitise($_GET['type']);
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -25,14 +28,19 @@
 		<section id="main" class="wrapper">
 			<div class="container">
 				<header class="major special">
-					<h2>Error</h2>
+					<h2>Error <?php if (isset($get)) if(strlen($get)<10)echo $get; ?></h2>
 					<p>
 						<?php
 							switch ($_GET['type']) {
 								case 'database':
 									echo "Can't connect to the database at the moment. Please Try again later. :(";
 									break;
-								
+								case 'already-registered':
+									echo "It seem's like you have already registed with us";
+									break;
+								case 'unauthorized':
+									echo "you need to login to view requested page";
+									break;
 								default:
 									echo "Something is wrong. Please Try again later. :(";
 									break;
@@ -40,6 +48,15 @@
 						?>
 					</p>
 					<p><img src="images/error.png" width='35%' alt="" /></p>
+					<ul class="actions">
+						<?php
+							if(isset ($_SESSION["username"]) && $get=='already-registered')
+							{
+								echo '<li><a href="logout.php" class="button big special">Sign out</a></li>';
+								echo '<li><a href="profile.php" class="button big special">Update your profile</a></li>';
+							}
+						?>
+					</ul>
 				</header>	
 			</div>
 		</section>

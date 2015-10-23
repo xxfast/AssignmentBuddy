@@ -24,6 +24,13 @@ class Validator
 	{
 		return preg_match("/$domain/i", $email);
 	}
+
+	public function CheckValidName($name)
+	{
+		return preg_match("/[a-z A-Z]+/i", $name);
+	}
+
+
 }
 
 ?>
