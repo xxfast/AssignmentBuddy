@@ -2,9 +2,9 @@
 	
 	session_start();
 	
-	require_once 'sanitiser.php'; // create sanitise objects
-	require_once 'validator.php'; // create sanitise objects
-	require_once 'post_request.php'; // a cool function
+	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+	require_once 'unit_tests/classes/validator.php'; // create sanitise objects
+	//require_once 'post_request.php'; // a cool function
 
 	$sanitiser = new Sanitiser();
 	$validator = new Validator();
