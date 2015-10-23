@@ -4551,8 +4551,9 @@ div .profiles
 {
 	width: 90%;
   	display: block;
-  	margin-left: auto;
-  	margin-right: auto;
+  	padding-left: 5%;
+  	margin-left: 5%;
+  	margin-right: 5%;
 	height: 120px;
 }
 div .profile
