@@ -1,7 +1,13 @@
 <?php
 
-require_once(realpath(dirname(__FILE__) . '../phpunit/autorun.php'));
-require_once(realpath(dirname(__FILE__) . '../validator.php'));
+$path = realpath(dirname(__FILE__));
+$path .= '/phpunit/autorun.php';
+echo "$path";
+require_once($path);
+$path = realpath(dirname(__FILE__));
+$path .= '/classes/validator.php';
+echo "$path";
+require_once($path);
 
 class TestOfLogging extends UnitTestCase {
 
