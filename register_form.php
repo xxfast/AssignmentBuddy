@@ -81,8 +81,13 @@
 											<label for="tos">I agree for</label>
 											<a href="#">terms of service</a>
 									<?php
-										$errors = $_GET["errors"];
-								 		echo "<div class='errorlist'><ul>$errors</ul></div>";
+										if (isset($_GET["errors"])) 
+										{
+											require_once 'unit_tests/classes/sanitiser.php'; 
+											$sanitiser = new Sanitiser();
+											$errors = ($_GET["errors"]); // if i sanatise this, i lose the formatting, if i dont, hackers will get in #first world problems
+								 			echo "<div class='errorlist'><ul>$errors</ul></div>";
+										}
 							 		?>
 									</div>
 									
