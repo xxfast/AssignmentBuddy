@@ -1,4 +1,3 @@
 test:
   override:
-    - php ./phpunit/run-autorun.php --daemon
     - php ./unit_tests/TestValidator.php --unit-tests
