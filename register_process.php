@@ -160,12 +160,13 @@
 
 	if (!$valid) {
 		header("location:register_form.php?errors=$errors");
+	}else
+	{
+		//create user in database
+		//save states in session
+		//and redirect to verify page
+		header("location:verify.php?email=$i_email");
 	}
-	// start the whatever
-	//echo "$i_firstname $i_lastname $i_dob $i_sex $i_adress $i_country $i_email $i_phone";
-	
-	
-	
 ?>
 	
 

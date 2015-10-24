@@ -48,7 +48,19 @@
 
 										</div>
 									</div>
-									
+
+									<div class="12u$">
+										<?php 
+											require_once 'unit_tests/classes/sanitiser.php'; 
+											$sanitiser = new Sanitiser();
+											if (isset($_GET['email'])) $get = $sanitiser->sanitise($_GET['email']); else $get = "";
+											if(isset($_GET['email']))
+											{
+												echo "<p>Mail sent to: <strong>$get</strong> </p>";
+											}
+										?>
+									</div>
+
 									<div class="12u$">
 										<p>Didn't get an email? <a href="#">Resent email</a></p>
 									</div>
