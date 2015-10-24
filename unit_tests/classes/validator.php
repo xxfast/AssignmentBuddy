@@ -27,7 +27,7 @@ class Validator
 
 	public function CheckValidName($name)
 	{
-		return preg_match("/[a-z A-Z]+/i", $name);
+		return preg_match("/^([A-Za-z ]+)$/", $name);
 	}
 
 	public function CheckValueInRange($value, $min, $max)
