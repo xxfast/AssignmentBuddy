@@ -39,7 +39,7 @@
 		{
 			$errors .= "<li>Your first name is empty</li>";
 		}
-		if($validator->CheckValidName($value))
+		if(!$validator->CheckValidName($value))
 		{
 			$errors .= "<li>Only letters and spaces allowed in first name</li>";
 		} 
@@ -60,7 +60,7 @@
 		{
 			$errors  .= "<li>Your last name is empty</li>";
 		}
-		if($validator->CheckValidName($value))
+		if(!$validator->CheckValidName($value))
 		{
 			$errors .= "<li>Only letters and spaces allowed in last name</li>";
 		} 
@@ -77,9 +77,9 @@
 	{
 		global $errors;
 		global $validator;
-		if($validator->CheckValidDate($value))
+		if(!$validator->CheckValidDate($value))
 		{
-			$errors .= "<li> Please Enter your Date of birth in the format dd-mm-yyy</li>";
+			$errors .= "<li> Please enter your correct date of birth in the format dd-mm-yyyy</li>";
 			return false; 
 		} 
 		else 
@@ -93,7 +93,7 @@
 	{
 		global $errors;
 		global $validator;
-		if($validator->CheckValidDate($value)) 
+		if($validator->CheckValidSex($value)) 
 		{
 			return true;
 		}
@@ -152,9 +152,9 @@
 	$valid = true;
 	$valid = fName($i_firstname) && $valid;
 	$valid = lName($i_lastname) && $valid;
+	$valid = email($i_email) && $valid; 
 	$valid = dob($i_dob) && $valid;
 	$valid = sex($i_sex) && $valid;
-	$valid = email($i_email) && $valid; 
 	$valid = tos() && $valid; 
 	
 
