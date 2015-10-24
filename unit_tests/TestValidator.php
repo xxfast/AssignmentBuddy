@@ -32,7 +32,7 @@ class TestOfLogging extends UnitTestCase {
 
     function TestInvaidNames() {
         $validator = new Validator();
-        $sanitiser = new Sanitiser();
+        $sanitiser = new Sanitiser(); // tested with the sanitiser
         $name = $sanitiser->sanitise('Isuru Kusumal Rajapakse');
         $this->assertTrue(1==$validator->CheckValidName($name));
         $name = $sanitiser->sanitise('<h1>troll name</h1>');
