@@ -1,6 +1,6 @@
 <?php 
 	session_start();
-	require_once 'sanitiser.php';
+	require_once 'unit_tests/classes/sanitiser.php';
 	$sanitiser = new Sanitiser(); 
 	if (isset($_GET['type'])) $get = $sanitiser->sanitise($_GET['type']);
 ?>
@@ -40,6 +40,9 @@
 									break;
 								case 'unauthorized':
 									echo "you need to login to view requested page";
+									break;
+								case 'already-verfied':
+									echo "You are already verified";
 									break;
 								default:
 									echo "Something is wrong. Please Try again later. :(";

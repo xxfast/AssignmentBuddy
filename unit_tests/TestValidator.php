@@ -26,5 +26,6 @@ class TestOfLogging extends UnitTestCase {
 		$this->assertTrue($validator->CheckValidEmailWithDomain('test@test.edu.au','.edu'));
 		$this->assertFalse($validator->CheckValidEmailWithDomain('testtest.com','.edu'));
     }
+
 }
 ?>

@@ -41,7 +41,7 @@
 		}
 		if($validator->CheckValidName($value))
 		{
-			$errors .= "<li>Only letters and spaces allowed</li>";
+			$errors .= "<li>Only letters and spaces allowed in first name</li>";
 		} 
 		if(! $validator->CheckValueInRange(strlen($value),1,20))
 		{
@@ -120,6 +120,21 @@
 		}
 	}
 
+	//Validate tos 
+	function tos()
+	{
+		global $errors;
+		if(!isset($_POST["ptos"])) 
+		{
+			$errors .= "<li> Please agree for terms of service  </li>"; 
+			return false; 
+		}
+		else 
+		{
+			return true;
+		}
+	}
+
 	//Sanatise ALL the Data :D
 	$i_firstname = $sanitiser->sanitise($_POST["pfname"]);
 	$i_lastname = $sanitiser->sanitise($_POST["plname"]);
@@ -131,6 +146,8 @@
 	$i_country = $sanitiser->sanitise($_POST["pcountry"]);
 	if(isset($_POST["ptos"])) $i_tos = $sanitiser->sanitise($_POST["ptos"]); else $i_tos = '';
 	
+	//Must agree to terms of service
+	
 	//Start Validating :D
 	$valid = true;
 	$valid = fName($i_firstname) && $valid;
@@ -138,6 +155,7 @@
 	$valid = dob($i_dob) && $valid;
 	$valid = sex($i_sex) && $valid;
 	$valid = email($i_email) && $valid; 
+	$valid = tos() && $valid; 
 	
 
 	if (!$valid) {
