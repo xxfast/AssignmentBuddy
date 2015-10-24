@@ -39,5 +39,23 @@ class TestOfLogging extends UnitTestCase {
         $this->assertFalse(1==$validator->CheckValidName("$name"));
     }
 
+    function TestInvaidDate()
+    {
+        $validator = new Validator();
+        $this->assertTrue(1==$validator->CheckValidDate("12-02-1994"));
+        $this->assertTrue(1==$validator->CheckValidDate("20-02-2012"));
+        $this->assertFalse(1==$validator->CheckValidDate("42-02-1994"));
+        $this->assertFalse(1==$validator->CheckValidDate("1994-01-12"));
+    }
+
+    function TestInvaidSex() //lol :p
+    {
+        $validator = new Validator();
+        $this->assertTrue(1==$validator->CheckValidSex("male"));
+        $this->assertTrue(1==$validator->CheckValidSex("female"));
+        $this->assertFalse(1==$validator->CheckValidSex("pig"));
+        $this->assertFalse(1==$validator->CheckValidSex("tree"));
+    }
+
 }
 ?>
