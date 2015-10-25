@@ -57,5 +57,14 @@ class TestOfLogging extends UnitTestCase {
         $this->assertFalse(1==$validator->CheckValidSex("tree"));
     }
 
+    function TestInvalidPassword() //lol :p
+    {
+        $validator = new Validator();
+        $this->assertTrue(1==$validator->CheckValidPassword("AS2#fjas91"));
+        $this->assertTrue(1==$validator->CheckValidPassword("asD@#r345f"));
+        $this->assertFalse(1==$validator->CheckValidPassword("password"));
+        $this->assertFalse(1==$validator->CheckValidPassword("test"));
+    }
+
 }
 ?>

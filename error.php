@@ -31,7 +31,7 @@
 					<h2>Error <?php if (isset($get)) if(strlen($get)<10)echo $get; ?></h2>
 					<p>
 						<?php
-							switch ($_GET['type']) {
+							switch ($get) {
 								case 'database':
 									echo "Can't connect to the database at the moment. Please Try again later. :(";
 									break;
@@ -43,6 +43,9 @@
 									break;
 								case 'already-verfied':
 									echo "You are already verified";
+									break;
+								case 'user-exist':
+									echo "That user seems to be already registerd";
 									break;
 								default:
 									echo "Something is wrong. Please Try again later. :(";
@@ -57,6 +60,11 @@
 							{
 								echo '<li><a href="logout.php" class="button big special">Sign out</a></li>';
 								echo '<li><a href="profile.php" class="button big special">Update your profile</a></li>';
+							}
+
+							if(isset ($_GET['type']) && $get=='user-exist')
+							{
+								echo '<li><a href="login.php" class="button big special">Sign in</a></li>';
 							}
 						?>
 					</ul>

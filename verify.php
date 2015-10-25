@@ -1,10 +1,29 @@
 <?php 
 	session_start();
-
 	if (isset($_SESSION["username"])) {
 		//problamatic request, redirects to
-		//header("location:error.php?type=already-verfied");
-		//die();
+		header("location:error.php?type=already-verfied");
+		die();
+	}
+
+	if (!isset($_SESSION["i_email"])) {
+		//invalid request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+
+	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+	$sanitiser = new Sanitiser();
+	if(isset($_GET['error'])) $get_error = $sanitiser->sanitise($_GET['error']); else $get_error = false;
+
+	//generate code
+	if(!isset($_GET['error']))
+	{
+		require_once 'code_generator.php';
+		$code = generateRandomString(5);
+		$_SESSION['code'] = $code;
+		//sent email
+		//do something here.. idk lol
 	}
 ?>
 <!DOCTYPE HTML>
@@ -42,19 +61,24 @@
 									<div class="12u$">
 										<p>Take a minute to check your email and verify your email address by entering this 5 digit code that appear in your email</p>
 									</div>
+									<?php
+										if(isset($_GET['error']))
+										{
+											$code = '';
+											echo "<div class='12u$' style='display:inline-block;'>";
+											echo "<div style='color:red;'>Invalid code !</div>";
+											echo "</div>";
+										}
+									?>
 									<div class="12u$" style=" text-align: center;">
 										<div class="5u$" style="display:inline-block;">
-											<input type="text" name="code" id="code" size="5" pattern="[A-Za-z0-9]{5}" required="required" placeholder="31415" style="text-align: center;"/>
-
+											<?php echo "<input type='text' name='code' id='code' size='5' pattern='[A-Z0-9]{5}' value='$code' required='required' placeholder='XXXXX' style='text-align: center;'/>"?>
 										</div>
 									</div>
 
 									<div class="12u$">
 										<?php 
-											require_once 'unit_tests/classes/sanitiser.php'; 
-											$sanitiser = new Sanitiser();
-											if (isset($_GET['email'])) $get = $sanitiser->sanitise($_GET['email']); else $get = "";
-											if(isset($_GET['email']))
+											if(isset($_SESSION['email']))
 											{
 												echo "<p>Mail sent to: <strong>$get</strong> </p>";
 											}
