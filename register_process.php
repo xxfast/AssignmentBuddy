@@ -161,6 +161,24 @@
 		header("location:register_form.php?errors=$errors");
 	}else
 	{
+		//check user already exist
+		$email = 'guest';
+		include_once "settings.php";
+		$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
+		if (!$conn)
+		{
+			header("location:error.php?type=database");
+			die();
+		}
+		$query = "SELECT * FROM Student WHERE Email='$i_email';";
+		$result = @mysqli_query($conn, $query);
+												
+		if($result)
+		{
+			header("location:error.php?type=user-exist");
+			die();
+		}
+
 		//set session info
 		$key = '"V#(s30@Y*9#f92l_U3t,|,%845723';
 		include_once 'session_manager.php';

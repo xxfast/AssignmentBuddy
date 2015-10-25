@@ -45,6 +45,11 @@ class Validator
 		return ($value=="male" || $value=="female");
 	}
 
+	public function CheckValidPassword($value)
+	{
+		return preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/", $value);
+	}
+
 
 }
 
