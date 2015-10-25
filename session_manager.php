@@ -1,6 +1,6 @@
 <?php
 	//from register process
-	if($key != '"V#(s30@Y*9#f92l_U3t,|,%845723')
+	if($key != "V#(s30@Y*9#f92l_U3t,|,%845723")
 	{
 		header("location:error.php?type=unauthorized");
 		die();
@@ -18,5 +18,9 @@
 		$_SESSION['i_adress']=$i_adress;
 		$_SESSION['i_tos']=$i_tos;
 	}
-		
+	
+	if()
+	{
+
+	}	
 ?>

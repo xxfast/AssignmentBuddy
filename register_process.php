@@ -180,7 +180,7 @@
 		}
 
 		//set session info
-		$key = '"V#(s30@Y*9#f92l_U3t,|,%845723';
+		$key = "V#(s30@Y*9#f92l_U3t,|,%845723";
 		include_once 'session_manager.php';
 
 		//and redirect to verify page

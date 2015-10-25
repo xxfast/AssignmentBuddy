@@ -70,5 +70,5 @@
 		die();
 	}
 
-	
+	header("location:success.php");
 ?>
