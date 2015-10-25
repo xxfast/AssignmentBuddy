@@ -173,7 +173,7 @@
 		$query = "SELECT * FROM Student WHERE Email='$i_email';";
 		$result = @mysqli_query($conn, $query);
 												
-		if($result)
+		if(!$results->num_rows === 0)
 		{
 			header("location:error.php?type=user-exist");
 			die();
