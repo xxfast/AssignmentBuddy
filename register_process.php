@@ -23,8 +23,6 @@
 		die();
 	}
 
-	require_once ("settings.php"); //connection info
-
 	//global errors
 	
 	$errors = "";
@@ -138,7 +136,7 @@
 	$i_firstname = $sanitiser->sanitise($_POST["pfname"]);
 	$i_lastname = $sanitiser->sanitise($_POST["plname"]);
 	$i_email = $sanitiser->sanitise($_POST["pemail"]);
-	$i_dob = $sanitiser->sanitise($_POST["pdate"]."-".$_POST["pmonth"]."-".$_POST["pyear"]);
+	$i_dob = $sanitiser->sanitise($_POST["pyear"]."-".$_POST["pmonth"]."-".$_POST["pdate"]);
 	if(isset($_POST["pgender"])) $i_sex = $sanitiser->sanitise($_POST["pgender"]); else $i_sex = '';
 	$i_phone = $sanitiser->sanitise($_POST["pphone"]);
 	$i_adress = $sanitiser->sanitise($_POST["padress"]);
@@ -155,7 +153,6 @@
 	$valid = dob($i_dob) && $valid;
 	$valid = sex($i_sex) && $valid;
 	$valid = tos() && $valid; 
-	
 
 	if (!$valid) {
 		header("location:register_form.php?errors=$errors");
@@ -163,25 +160,35 @@
 	{
 		//check user already exist
 		$email = 'guest';
-		include_once "settings.php";
-		$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
+		include_once "settings_guest.php";
+		$conn = mysqli_connect($host, $user, $pwd, $sql_db);
+
 		if (!$conn)
 		{
 			header("location:error.php?type=database");
 			die();
 		}
-		$query = "SELECT * FROM Student WHERE Email='$i_email';";
-		$result = @mysqli_query($conn, $query);
-												
-		if(!$results->num_rows === 0)
+		
+		$query = "SELECT Email FROM Student WHERE Email='$i_email';";
+		$result = mysqli_query($conn, $query);
+		$row = mysqli_fetch_assoc($result);
+
+		if(count($row)>0)
 		{
 			header("location:error.php?type=user-exist");
 			die();
 		}
 
 		//set session info
-		$key = "V#(s30@Y*9#f92l_U3t,|,%845723";
-		include_once 'session_manager.php';
+		$_SESSION['i_firstname']=$i_firstname;
+		$_SESSION['i_lastname']=$i_lastname;
+		$_SESSION['i_email']=$i_email;
+		$_SESSION['i_dob']=$i_dob;
+		$_SESSION['i_sex']=$i_sex;
+		$_SESSION['i_country']=$i_country;
+		$_SESSION['i_phone']=$i_phone;
+		$_SESSION['i_adress']=$i_adress;
+		$_SESSION['i_tos']=$i_tos;
 
 		//and redirect to verify page
 		header("location:verify.php");

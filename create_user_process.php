@@ -39,7 +39,7 @@
 	$password = md5($password);
 
 	//get session information
-	$email = $_SESSION['$i_email'];
+	$i_email = $_SESSION['$i_email'];
 	$i_firstname = $_SESSION['i_firstname'];
 	$i_lastname = $_SESSION['i_lastname'];
 	$i_email = $_SESSION['i_email'];
@@ -61,7 +61,7 @@
 	}
 
 	//setup query
-	$query = "INSERT INTO Student (Email, Password, FirstName, LastName, DOB, Gender, TellNo, Address, Country) VALUES ('$email', '$password', '$i_firstname','$i_lastname','$i_dob','$i_sex','$i_phone','$i_adress','$i_country')";
+	$query = "INSERT INTO Student (Email, Password, FirstName, LastName, DOB, Gender, TellNo, Address, Country) VALUES ('$i_email', '$password', '$i_firstname','$i_lastname','$i_dob','$i_sex','$i_phone','$i_adress','$i_country')";
 	$result = @mysqli_query($conn, $query);
 
 	if(!$result)

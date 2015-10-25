@@ -1,4 +1,5 @@
 <?php
+	echo "<p>session manager loaded</p>";
 	//from register process
 	if($key != "V#(s30@Y*9#f92l_U3t,|,%845723")
 	{
