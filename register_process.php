@@ -162,8 +162,10 @@
 		header("location:register_form.php?errors=$errors");
 	}else
 	{
-		//create user in database
-		//save states in session
+		//set session info
+		$key = '"V#(s30@Y*9#f92l_U3t,|,%845723';
+		include_once 'session_manager.php';
+
 		//and redirect to verify page
 		header("location:verify.php?email=$i_email");
 	}
