@@ -167,7 +167,7 @@
 		include_once 'session_manager.php';
 
 		//and redirect to verify page
-		header("location:verify.php?email=$i_email");
+		header("location:verify.php");
 	}
 ?>
 	

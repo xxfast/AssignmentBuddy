@@ -3,9 +3,18 @@
 
 	if (isset($_SESSION["username"])) {
 		//problamatic request, redirects to
-		//header("location:error.php?type=already-verfied");
-		//die();
+		header("location:error.php?type=already-verfied");
+		die();
 	}
+
+	if (!isset($_SESSION["i_email"])) {
+		//invalid request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+
+	//sent email
+	require_once 'code_generator.php';
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -51,10 +60,7 @@
 
 									<div class="12u$">
 										<?php 
-											require_once 'unit_tests/classes/sanitiser.php'; 
-											$sanitiser = new Sanitiser();
-											if (isset($_GET['email'])) $get = $sanitiser->sanitise($_GET['email']); else $get = "";
-											if(isset($_GET['email']))
+											if(isset($_SESSION['email']))
 											{
 												echo "<p>Mail sent to: <strong>$get</strong> </p>";
 											}
