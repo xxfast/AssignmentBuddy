@@ -53,13 +53,31 @@
 										<input type="email" name="pemail" id="pemail" placeholder="student@university.edu" pattern="/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-[a-z0-9]+)*\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-[a-z0-9]+)*)|(?:\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\]))$/iD" required="required" />
 									</div>
 										<div class="2u 12u$(xsmall)">
-											<input type="text" name="pdate" id="pdobd"  placeholder="dd" required="required" />
+											<?php 
+												echo "<select name='pdate' required='required'>";
+											 	for ($i=1; $i <= 31; $i++) { 
+											 		echo "<option value='$i'>$i</option>";
+											 	}
+											 	echo "</select>";
+											?>
 										</div>
 										<div class="2u 12u$(xsmall)">
-											<input type="text" name="pmonth" id="pdobm"  placeholder="mm" required="required" />
+											<?php 
+												echo "<select name='pmonth' required='required'>";
+											 	for ($i=1; $i <= 12; $i++) { 
+											 		echo "<option value='$i'>$i</option>";
+											 	}
+											 	echo "</select>";
+											?>
 										</div>
 										<div class="2u 12u$(xsmall)">
-											<input type="text" name="pyear" id="pdoby"  placeholder="yyyy" required="required" />
+											<?php 
+												echo "<select name='pyear' required='required'>";
+											 	for ($i=1900; $i <= date("Y"); $i++) { 
+											 		echo "<option value='$i'>$i</option>";
+											 	}
+											 	echo "</select>";
+											?>
 										</div>
 									<div class="6u 12u$(xsmall)">
 										<input type="radio" id="male" name="pgender" value="male" style="display:none"/>
@@ -68,7 +86,7 @@
 										<label for="female">Female</label>
 									</div>
 									<div class="12u$">
-									<input type="text" name="pphone" id="pmphone" placeholder="Phone Number (+00)0000000000" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{10}" maxlength="10" size="12" required="required" />
+									<input type="text" name="pphone" id="pmphone" placeholder="Phone Number (+00)0000000000" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{10}" maxlength="20" size="12" required="required" />
 									</div>
 									<div class="8u 12u$(xsmall)">
 									<input type="text" name="padress" id="adress" placeholder="Address" /></p>

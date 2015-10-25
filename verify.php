@@ -78,9 +78,10 @@
 
 									<div class="12u$">
 										<?php 
-											if(isset($_SESSION['email']))
+											if(isset($_SESSION['i_email']))
 											{
-												echo "<p>Mail sent to: <strong>$get</strong> </p>";
+												$address = $_SESSION['i_email'];
+												echo "<p>Mail sent to: <strong>$address</strong> </p>";
 											}
 										?>
 									</div>
