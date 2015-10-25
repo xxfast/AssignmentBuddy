@@ -2,7 +2,6 @@
 	session_start();
 
 	//check valid request
-	
 
 	//set email request
 	$email = $i_email;
