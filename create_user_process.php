@@ -27,7 +27,7 @@
 	$sanitiser = new Sanitiser();
 	$validator = new Validator();
 
-	$password = $sanitiser->sanitise($_POST["password"]);
+	$password = $_POST["password"]);
 
 	if(!$validator->CheckValidPassword($password))
 	{

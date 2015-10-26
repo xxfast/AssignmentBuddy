@@ -33,9 +33,8 @@
 		<!-- Nav -->
 			<?php require 'navigation.php';?>
 		
-		<!-- Register -->
+		<!-- Successform -->
 		
-			<!-- Form -->
 			<section id="one" class="wrapper style1">
 				<div class="inner">
 					<div class='gstarting'>
@@ -48,7 +47,9 @@
 							<div class="12u$">
 								<p>You successfully created a profile, way to go :) Sign back in with your email and password to get things started</p>
 							</div>
-							<a href="login.php" class="button big special" style='margin-bottom:50px;'>Sign in</a>
+							<div class="12u$">
+								<a href="login.php" class="button big special" style='margin-bottom:50px;'>Sign in</a>
+							</div>
 						</div>
 					</article>
 				</div>
