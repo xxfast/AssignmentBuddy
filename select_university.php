@@ -2,17 +2,17 @@
 	session_start();
 	if (!isset($_SESSION["username"])) {
 		//invalid request, redirects to
-		//header("location:error.php?type=unauthorized");
-		//die();
+		header("location:error.php?type=unauthorized");
+		die();
 	}
 
 	if($_SESSION["username"]=="guest")
 	{
-		//header("location:error.php?type=unauthorized");
-		//die();
+		header("location:error.php?type=unauthorized");
+		die();
 	}
 
-	$parts = explode('@', "100041533@student.swin.edu.au");
+	$parts = explode('@', $_SESSION["username"]);
 	$parts = explode('.',$parts[1]);
 	switch (count($parts)) 
 	{
@@ -41,8 +41,8 @@
 	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
 	if(!$conn)
 	{
-		//header("location:error.php?type=database");
-		//die();
+		header("location:error.php?type=database");
+		die();
 	}
 	
 	$query = "SELECT * FROM University WHERE Website='$website'";
@@ -53,8 +53,8 @@
 	{
 		$location = $_SESSION["u_country"];
 		$query = "SELECT * FROM University WHERE Location='$location'";
-		$result = @mysqli_query($conn, $query);
-		$row2 = mysqli_fetch_assoc($result);
+		$result2 = @mysqli_query($conn, $query);
+		$row2 = true;
 	}
 ?>
 
@@ -87,7 +87,7 @@
 					<span class="image"> _ <img src="images/university.png" alt="" />_</span>
 					<div class="content">
 							<?php
-								if($row)
+								if($row && !isset($_GET['not']) && !isset($_GET['not-listed']))
 								{
 							?>
 									<h3>Time to get connected with everyone!</h3>
@@ -107,22 +107,31 @@
 										</div>
 
 										<div style='height:20px;'>
-											<a href="select_university.php?not=true">Not your University?</a>
+											<a href="select_university.php?not=true">This is not my University</a>
 										</div>	
 									</form>
 							<?php	
-								}else if ($row2 ){
+								}else if (($row2 || isset($_GET['not'])) && !isset($_GET['not-listed'])){
 							?>
 								<h3>Oh oh!</h3>
-								<p>We were unable to find your university based on your Email address. The list below, is based on your location. See if its listed below,</p>
+								<?php 
+									if(isset($_GET['not']))
+									{
+										echo "<p>Looks like we guessed that one wrong. The list below, is based on your location. See if your University listed below,</p>";
+									}else
+									{
+										echo "<p>We were unable to find your university based on your Email address. The list below, is based on your location. See if its listed below,</p>";
+									}
+								?>
 								<form action='select_university_process.php'>
 									<div class="12u$" style='margin-bottom:20px'>
 									<select name='universityID'>
 							<?php
-									for ($i=0; $i < count($row2); $i++) { 
+									while ($row2 = mysqli_fetch_assoc($result2)) { 
 										$universityID = $row2['UniversiyID'];
-										$universityName = $row2['UniversiyName'];
-										echo "<option value='$universityID'>$universityName</option>";
+										$universityName = $row2['UniversityName'];
+										$universityLocation = $row2['Location'];
+										echo "<option value='$universityID'>$universityName - $universityLocation</option>";
 									}
 							?>
 									</select>
@@ -131,7 +140,7 @@
 										<input type="submit" class="special" value="This is my University" />
 									</div>
 									<div style='height:20px;'>
-											<a href="login.php">Your University not listed?</a>
+											<a href="select_university.php?not-listed=true">My University not listed</a>
 									</div>
 								</form>
 							<?php
@@ -139,8 +148,8 @@
 								{
 							?>
 								<h3>looks like your University is not in our database!</h3>
-								<p>We were unable to find your university based on your Email address. The list below, is based on your location. See if its listed below,</p>
-								
+								<p>Don't worry, you can enter details of your university and get started right away</p>
+								<a href="create_university.php" class="button big special" style='margin-bottom:50px;'>Enter details</a>
 							<?php
 								}
 							?>
