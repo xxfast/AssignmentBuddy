@@ -12,7 +12,7 @@
 	$validator = new Validator();
 
 	$email = $sanitiser->sanitise($_POST["username"]);
-	$password = md5($_POST["Password"]); // dont sanitise passwords
+	$password = md5($_POST["password"]); // dont sanitise passwords
 	
 	if($email=='')
 	{
@@ -37,7 +37,7 @@
 		die();
 	}
 
-	$query = "SELECT Email, Password, FirstName FROM Student WHERE email='$email'";
+	$query = "SELECT Email FROM Student WHERE email='$email'";
 	$result = @mysqli_query($conn, $query);
 
 	if(!$result)
@@ -45,12 +45,31 @@
 		header("location:login.php?error='That username doesnt exist'");
 		die();
 	}
-	
+
+	$query = "SELECT * FROM Student WHERE email='$email'";
+	$result = @mysqli_query($conn, $query);
+
+	//set session
 	$row = mysqli_fetch_assoc($result);
 	if($row['Password']==$password)
 	{
+		session_destroy();
+		session_start();
 		$_SESSION["username"] = $email;
-		$_SESSION["name"] = $row['FirstName'];
+		$_SESSION["u_firstname"] = $row['FirstName'];
+		$_SESSION["u_lastname"] = $row['LastName'];
+		$_SESSION["u_dob"] = $row['TellNo'];
+		$_SESSION["u_address"] = $row['Address'];
+		$_SESSION["u_course"] = $row['CourseID'];
+		$_SESSION["u_university"] = $row['UniversityID'];
+		$_SESSION["u_gender"] = $row['Gender'];
+		$_SESSION["u_country"] = $row['Country'];
 		header("location:index.php");
 	}
+	else
+	{
+		header("location:login.php?error='Wrong password'");
+		die();
+	}
+
 ?>
