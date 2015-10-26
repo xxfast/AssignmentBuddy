@@ -64,7 +64,14 @@
 		$_SESSION["u_university"] = $row['UniversityID'];
 		$_SESSION["u_gender"] = $row['Gender'];
 		$_SESSION["u_country"] = $row['Country'];
-		header("location:index.php");
+
+		if(isset($_SESSION["u_university"],$_SESSION["u_course"]))
+		{
+			header("location:index.php");
+			die();
+		}
+
+		header("location:select_university.php");
 	}
 	else
 	{
