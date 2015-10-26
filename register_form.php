@@ -38,8 +38,6 @@
 					<article class="feature right">
 						<span class="image"><img src="images/pic01.png" alt="" /></span>
 						<div class="content">
-							<fieldset>
-								<legend>Step 01: Personal Information</legend>
 							
 							<form method="post" action="register_process.php" validate='validate'>
 								<div class="row uniform 50%">
@@ -70,7 +68,7 @@
 											 	echo "</select>";
 											?>
 										</div>
-										<div class="2u 12u$(xsmall)">
+										<div class="3u 12u$(xsmall)">
 											<?php 
 												echo "<select name='pyear' required='required'>";
 											 	for ($i=1900; $i <= date("Y"); $i++) { 
@@ -79,7 +77,7 @@
 											 	echo "</select>";
 											?>
 										</div>
-									<div class="6u 12u$(xsmall)">
+									<div class="5u 12u$(xsmall)">
 										<input type="radio" id="male" name="pgender" value="male" style="display:none"/>
 										<label for="male">Male</label>
 										<input type="radio" id="female" name="pgender" value="female" style="display:none"/>
@@ -116,7 +114,6 @@
 
 								</div>
 							</form>
-							</fieldset>
 						</div>
 					</article>
 				</div>
