@@ -29,30 +29,28 @@
 
 	include_once "settings.php";
 	$sql_table="users";
-	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
+	$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
-	$query = "SELECT firstName, email, password FROM Student WHERE email='$email'";
-	$result = @mysqli_query($conn, $query);
-	
 	if(!$conn)
 	{
-
+		header("location:login.php?error=Cant connect to database, please try again");
+		die();
 	}
+
+	$query = "SELECT Email, Password, FirstName FROM Student WHERE email='$email'";
+	$result = @mysqli_query($conn, $query);
 
 	if(!$result)
 	{
-
+		header("location:login.php?error='That username doesnt exist'");
+		die();
 	}
-		$row = mysqli_fetch_assoc($result);
-		if($row['password']==$password){
-				$_SESSION["email"] = $email;
-				$_SESSION["name"] = $row['firstName'];
-				echo "<p class='error'> Correct password </p>";
-				header("location:index.php");
-		}else{
-			header("location:login.php?error='Wrong username password combination'");
-		}
-	}else{
-		header("location:login.php?error=Cant connect to database, please try again");
+	
+	$row = mysqli_fetch_assoc($result);
+	if($row['Password']==$password)
+	{
+		$_SESSION["username"] = $email;
+		$_SESSION["name"] = $row['FirstName'];
+		header("location:index.php");
 	}
 ?>
