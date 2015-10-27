@@ -78,6 +78,7 @@
 												$website = 'www.'.$website;
 												break;
 										}
+										if($website == 'www.') $website = '';
 										echo "<input type='text' name='uweb' id='uweb' value='$website' placeholder='www.university.com.au' pattern='^[a-zA-Z0-9\-\.]+\.(org|net|edu)$\i' required='required' readonly/>";
 									?>
 									
