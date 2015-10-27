@@ -66,14 +66,5 @@ class TestOfLogging extends UnitTestCase {
         $this->assertFalse(1==$validator->CheckValidPassword("test"));
     }
 
-    function TestInvalidWebsites()
-    {
-        $validator = new Validator();
-        $this->assertTrue(1==$validator->CheckValidWebsite("www.example.edu"));
-        $this->assertTrue(1==$validator->CheckValidWebsite("www.example.net"));
-        $this->assertFalse(1==$validator->CheckValidWebsite("test123"));
-        $this->assertFalse(1==$validator->CheckValidWebsite(""));
-    }
-
 }
 ?>
