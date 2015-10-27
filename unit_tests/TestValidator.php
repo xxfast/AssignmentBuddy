@@ -42,10 +42,10 @@ class TestOfLogging extends UnitTestCase {
     function TestInvaidDate()
     {
         $validator = new Validator();
-        $this->assertTrue(1==$validator->CheckValidDate("12-02-1994"));
-        $this->assertTrue(1==$validator->CheckValidDate("20-02-2012"));
+        $this->assertTrue(1==$validator->CheckValidDate("1990-01-1"));
+        $this->assertTrue(1==$validator->CheckValidDate("1994-01-12"));
         $this->assertFalse(1==$validator->CheckValidDate("42-02-1994"));
-        $this->assertFalse(1==$validator->CheckValidDate("1994-01-12"));
+        $this->assertFalse(1==$validator->CheckValidDate("42-0x-1994"));
     }
 
     function TestInvaidSex() //lol :p
@@ -57,7 +57,7 @@ class TestOfLogging extends UnitTestCase {
         $this->assertFalse(1==$validator->CheckValidSex("tree"));
     }
 
-    function TestInvalidPassword() //lol :p
+    function TestInvalidPassword() 
     {
         $validator = new Validator();
         $this->assertTrue(1==$validator->CheckValidPassword("AS2#fjas91"));

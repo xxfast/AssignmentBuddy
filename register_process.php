@@ -76,7 +76,7 @@
 		global $validator;
 		if(!$validator->CheckValidDate($value))
 		{
-			$errors .= "<li> Please enter your correct date of birth in the format dd-mm-yyyy</li>";
+			$errors .= "<li> Please enter your correct date of birth in the format dd-mm-yyyy $value</li>";
 			return false; 
 		} 
 		else 
