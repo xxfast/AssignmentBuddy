@@ -56,6 +56,17 @@
 		$result2 = @mysqli_query($conn, $query);
 		$row2 = true;
 	}
+
+	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+	$sanitiser = new Sanitiser();
+
+	if(isset($_GET['duplicate']))
+	{
+		$duplicateID = $sanitiser->sanitise($_GET["duplicate"]);
+		$query = "SELECT * FROM University WHERE UniversityID='$duplicateID'";
+		$result3 = @mysqli_query($conn, $query);
+		$row3 = mysqli_fetch_assoc($result3);
+	}
 ?>
 
 <!DOCTYPE HTML>
@@ -84,10 +95,20 @@
 					<h2>Select your University</h2>
 				<div>
 				<article class="feature left">
-					<span class="image"> _ <img src="images/university.png" alt="" />_</span>
+					<?php  
+					if ($row && !isset($_GET['not']) && !isset($_GET['not-listed']))
+					{
+						?> <span class="image"> _ <img src="images/university.png" alt="" />_</span> <?php
+					} else
+					{
+					?>
+						<span class="image"> _ <img src="images/university_not_found.png" alt="" />_</span>
+					<?php 
+					}
+					?>
 					<div class="content">
 							<?php
-								if($row && !isset($_GET['not']) && !isset($_GET['not-listed']))
+								if($row && !isset($_GET['not']) && !isset($_GET['not-listed']) && !isset($_GET['duplicate']))
 								{
 							?>
 									<h3>Time to get connected with everyone!</h3>
@@ -111,7 +132,7 @@
 										</div>	
 									</form>
 							<?php	
-								}else if (($row2 || isset($_GET['not'])) && !isset($_GET['not-listed'])){
+								}else if (($row2 || isset($_GET['not'])) && !isset($_GET['not-listed']) && !isset($_GET['duplicate'])){
 							?>
 								<h3>Oh oh!</h3>
 								<?php 
@@ -144,7 +165,45 @@
 									</div>
 								</form>
 							<?php
-								}else 
+								}
+								else if (isset($_GET['duplicate']))
+								{
+							?>
+								<h3>Oh dang!</h3>
+								<p>Looks like the university you're creating already exist in our database</p>
+								<form action='select_university_process.php'>
+								<div class="row uniform 50%" >
+								<div class="5u 12u$(xsmall)" style="margin-bottom:10px;">
+								<?php 
+								$originalWeb = $row3['Website'];
+								echo "<input type='text' value='$originalWeb' style='text-align: center;' readonly/>";
+								?>
+								</div>
+								<div class="2u 12u$(xsmall)" style=" height: 50px; line-height: 50px;">matches</div>
+								<div class="5u 12u$(xsmall)">
+								<?php 
+								$duplicateWeb = '';
+								if (isset($_SESSION['temp_duplicate'])) $duplicateWeb = $_SESSION['temp_duplicate'];
+		
+								echo "<input type='text' value='$duplicateWeb' style='text-align: center;' readonly/>";
+								?>
+								</div>
+								</div>
+								<div class="12u 12u$(xsmall)" style="margin-bottom:10px;" >
+									Is this your university?
+									<?php 
+									$universityName = $row3['UniversityName'];
+									echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" 
+									?>
+								</div>
+
+								<div class="12u$" style="margin-bottom:20px">
+								<input type="submit" class="special" value="This is my University" />
+								</div>
+								</form>
+							<?php
+								}
+								else
 								{
 							?>
 								<h3>looks like your University is not in our database!</h3>
