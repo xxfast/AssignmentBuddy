@@ -108,6 +108,7 @@
 					?>
 					<div class="content">
 							<?php
+								// somwhow skips this page
 								if($row && !isset($_GET['not']) && !isset($_GET['not-listed']) && !isset($_GET['duplicate']))
 								{
 							?>
