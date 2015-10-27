@@ -99,13 +99,14 @@
 			die();
 		}
 		
-		$query = "SELECT * FROM University WHERE Website LIKE '$i_uwebsite';";
+		$query = "SELECT * FROM University WHERE Website LIKE '%$i_uwebsite';";
 		$result = mysqli_query($conn, $query);
 		$row = mysqli_fetch_assoc($result);
 
 		if(count($row)>0)
 		{
-			header("location:select_university.php");
+			$duplicate = $row['UniversityID'];
+			header("location:select_university.php?duplicate=$duplicate");
 			die();
 		}
 
