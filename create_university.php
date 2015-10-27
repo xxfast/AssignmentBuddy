@@ -1,3 +1,12 @@
+<?php
+	session_start();
+	if (!isset($_SESSION["username"])) {
+		problamatic request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -18,33 +27,55 @@
 			<?php require 'navigation.php';?>
 		
 		<!-- Register -->
-		
+
 		<section id="one" class="wrapper style1">
-				<div class="inner">
-					<form id="register" method="post" action="register_process.php" <!--novalidate = "novalidate"-->
-					<article class="feature">
-							<div class="content">
-							<h2>Enter University*:</h2>
-							<p><p><label for="university_name">University Name&#42;:</label>
-							<input type="text" name="university_name" id="university_name" value="" placeholder="Enter University Name" required="required" />
-							</p>
-							<p><p><label for="university_location">University Location&#42;:</label>
-							<input type="text" name="university_location" id="university_location" value="" placeholder="Enter University Location" required="required" />
-							</p>
-							<p><p><label for="university_website">University Website&#42;:</label>
-							<input type="text" name="university_website" id="university_website" value="" placeholder="Enter University website" required="required" />
-							</p>
-							<ul class="actions">
-							<li class="actions">
-								<li><input type="submit" class="special" value="Next" /></li>
-								<!--<li><input type="reset" class="alt" value="Reset" /></li> -->
-							</li>
-							</ul>
+			<div class="inner">
+				<div class='gstarting'>
+					<h2>Enter details of your University</h2>
+				<div>
+				<article class="feature right">
+					<span class="image"><img src="images/create_university.png" alt="" /></span>
+					<div class="content">
+						
+						<form method="post" action="create_university_process.php" validate='validate'>
+							<div class="row uniform 50%">
+								<div class="12u 12u$(xsmall)">
+									<p>Enter details about your university, so others in your univeristy can join you. This information will be voted by the peers and verfied</p>
+								</div>
+								<div class="12u 12u$(xsmall)">
+									<input type="text" name="uname" id="uname" size="20" pattern="[A-Za-z]+" required="required" placeholder="University Name" />
+								</div>
+								<div class="8u 12u$(xsmall)">
+									<input type="text" name="uweb" id="uweb" placeholder="University Website" pattern="^[a-zA-Z0-9\-\.]+\.(org|net|edu)$\i" required="required" />
+								</div>
+								<div class="4u 12u$(xsmall)">
+									<?php include_once 'ISO_SelectCountry.php'; ?>
+								</div>
+								<div class="12u$">
+								<?php
+									if (isset($_GET["errors"])) 
+									{
+										require_once 'unit_tests/classes/sanitiser.php'; 
+										$sanitiser = new Sanitiser();
+										$errors = ($_GET["errors"]); // if i sanatise this, i lose the formatting, if i dont, hackers will get in #first world problems
+							 			echo "<div class='errorlist'><ul>$errors</ul></div>";
+									}
+						 		?>
+								</div>
+								<div class="12u$">
+									<input type="submit" class="special" value="Enter Details" />
+									<input type="reset" class="alt" value="Reset" />
+								</div>
+								<div class="12u$">
+									<a href="select_university.php">See If my Universiry is already in the database</a>
+								</div>
+
 							</div>
-					</article>
-					</form>
-				</div>
-			</section>
+						</form>
+					</div>
+				</article>
+			</div>
+		</section>
 
 		<!-- Footer -->
 			<?php require 'footer.php'; ?>

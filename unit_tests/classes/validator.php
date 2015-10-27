@@ -50,6 +50,10 @@ class Validator
 		return preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\s).*$/", $value);
 	}
 
+	public function CheckValidWebsite($value)
+	{
+		return preg_match("/^[a-zA-Z0-9\-\.]+\.(org|net|edu)$\i/", $value);
+	}
 
 }
 
