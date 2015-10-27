@@ -49,7 +49,7 @@
 			<section id="one" class="wrapper style1">
 				<div class="inner">
 					<div class='gstarting'>
-						<h2>Getting Started!</h2>
+						<h2>Getting Started now!</h2>
 					<div>
 					<article class="feature left">
 						<span class="image"><img src="images/pic01.png" alt="" /></span>
