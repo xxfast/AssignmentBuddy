@@ -1,7 +1,12 @@
 <?php
 	session_start();
 	if (!isset($_SESSION["username"])) {
-		problamatic request, redirects to
+		//problamatic request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+	if ($_SESSION["username"]=='guest') {
+		//problamatic request, redirects to
 		header("location:error.php?type=unauthorized");
 		die();
 	}
@@ -46,7 +51,36 @@
 									<input type="text" name="uname" id="uname" size="20" pattern="[A-Za-z]+" required="required" placeholder="University Name" />
 								</div>
 								<div class="8u 12u$(xsmall)">
-									<input type="text" name="uweb" id="uweb" placeholder="University Website" pattern="^[a-zA-Z0-9\-\.]+\.(org|net|edu)$\i" required="required" />
+									<?php
+										$parts = explode('@', $_SESSION['username']);
+										$parts = explode('.',$parts[1]);
+										$website = '';
+										switch (count($parts)) 
+										{
+											case 4:
+												//like student.swin.edu.au
+												$website =  'www.'.$parts[1].'.'.$parts[2].'.'.$parts[3];
+												break;
+											case 3:
+												//like swin.edu.au
+												$website =  'www.'.$parts[0].'.'.$parts[1].'.'.$parts[2];
+												break;
+											case 2:
+												//like swin.edu
+												$website =  'www.'.$parts[0].'.'.$parts[1];
+												break;
+											default:
+												$website =  $parts[count($parts)-1];
+												for ($i=count($parts)-2; $i > 2; $i--) 
+												{ 
+													$website=$parts[$i].'.'.$website;
+												}
+												$website = 'www.'.$website;
+												break;
+										}
+										echo "<input type='text' name='uweb' id='uweb' value='$website' placeholder='www.university.com.au' pattern='^[a-zA-Z0-9\-\.]+\.(org|net|edu)$\i' required='required' readonly/>";
+									?>
+									
 								</div>
 								<div class="4u 12u$(xsmall)">
 									<?php include_once 'ISO_SelectCountry.php'; ?>
