@@ -171,26 +171,36 @@
 							?>
 								<h3>Oh dang!</h3>
 								<p>Looks like the university you're creating already exist in our database</p>
-								<div class="row uniform 50%" style="margin-bottom:40px;">
-								<div class="5.5u 12u$(xsmall)">
+								<form action='select_university_process.php'>
+								<div class="row uniform 50%" >
+								<div class="5u 12u$(xsmall)" style="margin-bottom:10px;">
 								<?php 
-								$universityName = $row3['UniversityName'];
-								echo "<input type='text' value='$duplicateID - $universityName' style='text-align: center;' readonly/>";
+								$originalWeb = $row3['Website'];
+								echo "<input type='text' value='$originalWeb' style='text-align: center;' readonly/>";
 								?>
 								</div>
-								<div class="1u 12u$(xsmall)">=</div>
-								<div class="5.5u 12u$(xsmall)">
+								<div class="2u 12u$(xsmall)" style=" height: 50px; line-height: 50px;">matches</div>
+								<div class="5u 12u$(xsmall)">
 								<?php 
-								$universityName = $row3['UniversityName'];
+								$duplicateWeb = '';
+								if (isset($_SESSION['temp_duplicate'])) $duplicateWeb = $_SESSION['temp_duplicate'];
 		
-								echo "<input type='text' value='$duplicateID - $universityName' style='text-align: center;' readonly/>";
+								echo "<input type='text' value='$duplicateWeb' style='text-align: center;' readonly/>";
 								?>
 								</div>
+								</div>
+								<div class="12u 12u$(xsmall)" style="margin-bottom:10px;" >
+									Is this your university?
+									<?php 
+									$universityName = $row3['UniversityName'];
+									echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" 
+									?>
 								</div>
 
 								<div class="12u$" style="margin-bottom:20px">
 								<input type="submit" class="special" value="This is my University" />
 								</div>
+								</form>
 							<?php
 								}
 								else

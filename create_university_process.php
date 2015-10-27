@@ -106,6 +106,7 @@
 		if(count($row)>0)
 		{
 			$duplicate = $row['UniversityID'];
+			$_SESSION['temp_duplicate'] = $i_uwebsite ;
 			header("location:select_university.php?duplicate=$duplicate");
 			die();
 		}
