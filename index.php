@@ -50,7 +50,6 @@
 				<div class="inner">
 					<div class='gstarting'>
 						<h2>Getting Started!</h2>
-						<?php print_r($_SESSION);?>
 					<div>
 					<article class="feature left">
 						<span class="image"><img src="images/pic01.png" alt="" /></span>
