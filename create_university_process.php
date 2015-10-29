@@ -110,7 +110,7 @@
 			$duplicateName = $row['UniversityName'];
 			$duplicateWebAddress = $row['Website'];
 			$duplicateCountry = $row['Location'];
-			if($duplicateName==$i_uname && $duplicateWebAddress==$i_uwebsite && $duplicateCountry == $i_ucountry)
+			if($duplicateWebAddress==$i_uwebsite && $duplicateCountry == $i_ucountry)
 			{
 				$_SESSION['temp_duplicateId'] = $duplicateID ;
 				$_SESSION['temp_duplicateName'] = $duplicateName ;

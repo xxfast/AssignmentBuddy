@@ -107,7 +107,6 @@
 					?>
 					<div class="content">
 							<?php
-								// somwhow skips this page
 								if($row && !isset($_GET['not']) && !isset($_GET['not-listed']) && !isset($_GET['duplicate']))
 								{
 							?>
@@ -115,6 +114,7 @@
 							<?php 
 									$universityName = $row['UniversityName'];
 									$universityID = $row['UniversityID'];
+									$universityCountry = $row['Location'];
 									$user_email = $_SESSION['username'];
 									echo "<p>From your email address: <strong>$user_email</strong>, it seems like you're currently enrolled in</p>";
 							?>
@@ -122,7 +122,7 @@
 
 										<div class="12u$" style='margin-bottom:20px'>
 											<?php echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>" ?>
-											<?php echo "<input type='text' name='universityName' value='$universityName' style='text-align: center;' readonly/>" ?>
+											<?php echo "<input type='text' name='universityName' value='$universityName - $universityCountry' style='text-align: center;' readonly/>" ?>
 										</div>
 									
 										<div class="12u$" style="margin-bottom:20px">
@@ -192,9 +192,9 @@
 									<?php 
 									$universityName = $_SESSION['temp_duplicateName'];
 									$universityID = $_SESSION['temp_duplicateId'];
-									
-									echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>"
-									echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" 
+
+									echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>";
+									echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" ;
 									?>
 								</div>
 
