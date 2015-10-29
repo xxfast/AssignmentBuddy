@@ -41,7 +41,19 @@
 						<h2>Success</h2>
 					<div>
 					<article class="feature right">
-						<span class="image"> <p style="color:white;">_</p> <img src="images/sucess.png" alt="" /><p style="color:white;">_</p></span>
+						<?php
+							if(isset($_GET['profile']))
+							{
+						?>
+							<span class="image"> <p style="color:white;">_</p> <img src="images/sucess.png" alt="" /><p style="color:white;">_</p></span>
+						<?php
+							}else if(isset($_GET['profile']))
+							{
+						?>
+							<span class="image"> <p style="color:white;">_</p> <img src="images/sucess_university.png" alt="" /><p style="color:white;">_</p></span>
+						<?php
+							{
+						?>
 						<div class="content">
 							<?php
 								if(isset($_GET['profile']))
