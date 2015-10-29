@@ -13,7 +13,7 @@
 		<?php 
 			if($firstName!="Guest")
 			{
-				echo"<div class='profilepic' style = 'background-image: url(https://avatars3.githubusercontent.com/u/13775137)'></div>";
+				//echo"<div class='profilepic' style = 'background-image: url(https://avatars3.githubusercontent.com/u/13775137)'></div>";
 			}
 		?>
 		</div>
