@@ -23,8 +23,8 @@
 		}
 	}
 
-	if(isset($_POST['selectedUni']) $selectedUni = $_POST['selectedUni'];
-	if(isset($_SESSION['selectedUni']) $selectedUni = $_POST['selectedUni'];
+	if(isset($_POST['selectedUni'])) $selectedUni = $_POST['selectedUni'];
+	if(isset($_SESSION['selectedUni'])) $selectedUni = $_POST['selectedUni'];
 
 	$email = $_SESSION['username'];
 	include_once "settings.php";
