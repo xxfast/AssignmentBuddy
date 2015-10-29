@@ -15,12 +15,12 @@
 		die();
 	}
 	if ($_SESSION["username"]=='guest') {
-		//problamatic request, redirects to
+		//guests cant create universities 
 		header("location:error.php?type=unauthorized");
 		die();
 	}
 
-	if(!isset($_POST["uname"]))
+	if(!isset($_POST["uname"]) || !isset($_POST["uweb"]) || !isset($_POST["pcountry"]))
 	{
 		//invalid request, redirects to
 		header("location:create_university.php");
@@ -85,6 +85,7 @@
 
 	if (!$valid) {
 		header("location:create_university.php?errors=$errors");
+		die();
 	}
 	else
 	{
@@ -105,10 +106,18 @@
 
 		if(count($row)>0)
 		{
-			$duplicate = $row['UniversityID'];
-			$_SESSION['temp_duplicate'] = $i_uwebsite ;
-			header("location:select_university.php?duplicate=$duplicate");
-			die();
+			$duplicateID = $row['UniversityID']
+			$duplicateName = $row['UniversityName'];
+			$duplicateWebAddress = $row['Website'];
+			$duplicateCountry = $row['Location'];
+			if($duplicateName==$i_uname && $duplicateWebAddress==$i_uwebsite && $duplicateCountry == $i_ucountry)
+			{
+				$_SESSION['temp_duplicateName'] = $duplicateName ;
+				$_SESSION['temp_duplicateWebAddress'] = $duplicateWebAddress;
+				$_SESSION['temp_duplicateCountry'] = $duplicateCountry ;
+				header("location:select_university.php?duplicate=true");
+				die();
+			}
 		}
 
 		//insert data to database

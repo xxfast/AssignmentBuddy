@@ -60,12 +60,11 @@
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
 	$sanitiser = new Sanitiser();
 
-	if(isset($_GET['duplicate']))
+	if(isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateName']))
 	{
-		$duplicateID = $sanitiser->sanitise($_GET["duplicate"]);
-		$query = "SELECT * FROM University WHERE UniversityID='$duplicateID'";
-		$result3 = @mysqli_query($conn, $query);
-		$row3 = mysqli_fetch_assoc($result3);
+		$duplicateName = $_SESSION['temp_duplicateName'];
+		$duplicateWebAddress = $_SESSION['temp_duplicateWebAddress'];
+		$duplicateCountry = $_SESSION['temp_duplicateCountry'];
 	}
 ?>
 
@@ -167,7 +166,7 @@
 								</form>
 							<?php
 								}
-								else if (isset($_GET['duplicate']))
+								else if (isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateName']))
 								{
 							?>
 								<h3>Oh dang!</h3>
@@ -176,17 +175,13 @@
 								<div class="row uniform 50%" >
 								<div class="5u 12u$(xsmall)" style="margin-bottom:10px;">
 								<?php 
-								$originalWeb = $row3['Website'];
-								echo "<input type='text' value='$originalWeb' style='text-align: center;' readonly/>";
+								echo "<input type='text' value='$duplicateName - $duplicateCountry' style='text-align: center;' readonly/>";
 								?>
 								</div>
-								<div class="2u 12u$(xsmall)" style=" height: 50px; line-height: 50px;">matches</div>
+								<div class="2u 12u$(xsmall)" style=" height: 50px; line-height: 50px;">uses</div>
 								<div class="5u 12u$(xsmall)">
 								<?php 
-								$duplicateWeb = '';
-								if (isset($_SESSION['temp_duplicate'])) $duplicateWeb = $_SESSION['temp_duplicate'];
-		
-								echo "<input type='text' value='$duplicateWeb' style='text-align: center;' readonly/>";
+								echo "<input type='text' value='$duplicateWebAddress' style='text-align: center;' readonly/>";
 								?>
 								</div>
 								</div>
