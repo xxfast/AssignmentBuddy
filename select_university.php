@@ -118,7 +118,7 @@
 									$user_email = $_SESSION['username'];
 									echo "<p>From your email address: <strong>$user_email</strong>, it seems like you're currently enrolled in</p>";
 							?>
-									<form action='select_university_process.php'>
+									<form action='select_university_process.php' method="post">
 
 										<div class="12u$" style='margin-bottom:20px'>
 											<?php echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>" ?>
@@ -146,7 +146,7 @@
 										echo "<p>We were unable to find your university based on your Email address. The list below, is based on your location. See if its listed below,</p>";
 									}
 								?>
-								<form action='select_university_process.php'>
+								<form action='select_university_process.php' method="post">
 									<div class="12u$" style='margin-bottom:20px'>
 									<select name='selectedUni'>
 							<?php
@@ -173,7 +173,7 @@
 							?>
 								<h3>Oh dang!</h3>
 								<p>Looks like the university you're creating already exist in our database</p>
-								<form action='select_university_process.php'>
+								<form action='select_university_process.php' method="post">
 								<div class="row uniform 50%" >
 								<div class="5u 12u$(xsmall)" style="margin-bottom:10px;">
 								<?php 
@@ -187,7 +187,7 @@
 								?>
 								</div>
 								</div>
-								<div class="12u 12u$(xsmall)" style="margin-bottom:10px;" >
+								<div class="12u 12u $(xsmall)" style="margin-bottom:10px;" >
 									Is this your university?
 									<?php 
 									$universityName = $_SESSION['temp_duplicateName'];

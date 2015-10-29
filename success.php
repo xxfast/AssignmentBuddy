@@ -1,13 +1,20 @@
 <?php 
 	session_start();
-	if (isset($_SESSION["username"])) {
-		//problamatic request, redirects to
-		header("location:error.php?type=already-verfied");
-		die();
-	}
+	if(!isset($_GET['profile']) && !isset($_GET['university']))
+	{
+		if (isset($_SESSION["username"])) {
+			//problamatic request, redirects to
+			header("location:error.php?type=already-verfied");
+			die();
+		}
 
-	if (!isset($_SESSION["i_email"])) {
-		//invalid request, redirects to
+		if (!isset($_SESSION["i_email"])) {
+			//invalid request, redirects to
+			header("location:error.php?type=unauthorized");
+			die();
+		}
+	}else if (!isset($_SESSION["username"])) {
+		//problamatic request, redirects to
 		header("location:error.php?type=unauthorized");
 		die();
 	}
@@ -47,12 +54,13 @@
 						?>
 							<span class="image"> <p style="color:white;">_</p> <img src="images/sucess.png" alt="" /><p style="color:white;">_</p></span>
 						<?php
-							}else if(isset($_GET['profile']))
+							}
+							else if(isset($_GET['university']))
 							{
-						?>
-							<span class="image"> <p style="color:white;">_</p> <img src="images/sucess_university.png" alt="" /><p style="color:white;">_</p></span>
+						?>https://twitter.com/
+							<span class="image"> <p style="color:white;">_</p> <img src="images/university_success.png" alt="" /><p style="color:white;">_</p></span>
 						<?php
-							{
+							}
 						?>
 						<div class="content">
 							<?php
