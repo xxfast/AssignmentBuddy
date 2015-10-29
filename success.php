@@ -1,22 +1,21 @@
 <?php 
 	session_start();
-	if(!isset($_GET['profile']) && !isset($_GET['university']))
+	if(!isset($_GET['profile']))
 	{
-		if (isset($_SESSION["username"])) {
-			//problamatic request, redirects to
-			header("location:error.php?type=already-verfied");
+		if(!isset($_GET['university']))
+		{
+			//invalid request, redirects to
+			header("location:error.php");
 			die();
 		}
-
+		
+	}
+	if (!isset($_SESSION["username"])) {
 		if (!isset($_SESSION["i_email"])) {
-			//invalid request, redirects to
+			//unauthorized request
 			header("location:error.php?type=unauthorized");
 			die();
 		}
-	}else if (!isset($_SESSION["username"])) {
-		//problamatic request, redirects to
-		header("location:error.php?type=unauthorized");
-		die();
 	}
 
 	$i_email = $_SESSION["i_email"];
