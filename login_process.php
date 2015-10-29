@@ -68,10 +68,21 @@
 		if(isset($_SESSION["u_university"],$_SESSION["u_course"]))
 		{
 			header("location:index.php");
+			
+		}
+
+		if($row['UniversityID']=='' || $row['UniversityID']==null)
+		{
+			header("location:select_university.php");
 			die();
 		}
 
-		header("location:select_university.php");
+		if($row['CourseID']=='' || $row['CourseID']==null)
+		{
+			header("location:select_course.php");
+			die();
+		}
+		
 	}
 	else
 	{

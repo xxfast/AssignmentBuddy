@@ -57,7 +57,7 @@
 							}
 							else if(isset($_GET['university']))
 							{
-						?>
+						?>https://twitter.com/
 							<span class="image"> <p style="color:white;">_</p> <img src="images/university_success.png" alt="" /><p style="color:white;">_</p></span>
 						<?php
 							}
