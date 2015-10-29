@@ -18,15 +18,15 @@
 	{
 		case 4:
 			//like student.swin.edu.au
-			$website =  'http://www.'.$parts[1].'.'.$parts[2].'.'.$parts[3];
+			$website =  'www.'.$parts[1].'.'.$parts[2].'.'.$parts[3];
 			break;
 		case 3:
 			//like swin.edu.au
-			$website =  'http://www.'.$parts[0].'.'.$parts[1].'.'.$parts[2];
+			$website =  'www.'.$parts[0].'.'.$parts[1].'.'.$parts[2];
 			break;
 		case 2:
 			//like swin.edu
-			$website =  'http://www.'.$parts[0].'.'.$parts[1];
+			$website =  'www.'.$parts[0].'.'.$parts[1];
 			break;
 		default:
 			$website =  $parts[count($parts)-1];
@@ -34,7 +34,7 @@
 			{ 
 				$website=$parts[$i].'.'.$website;
 			}
-			$website = 'http://www.'.$website;
+			$website = 'www.'.$website;
 			break;
 	}
 	include_once "settings.php";
@@ -60,12 +60,11 @@
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
 	$sanitiser = new Sanitiser();
 
-	if(isset($_GET['duplicate']))
+	if(isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateName']))
 	{
-		$duplicateID = $sanitiser->sanitise($_GET["duplicate"]);
-		$query = "SELECT * FROM University WHERE UniversityID='$duplicateID'";
-		$result3 = @mysqli_query($conn, $query);
-		$row3 = mysqli_fetch_assoc($result3);
+		$duplicateName = $_SESSION['temp_duplicateName'];
+		$duplicateWebAddress = $_SESSION['temp_duplicateWebAddress'];
+		$duplicateCountry = $_SESSION['temp_duplicateCountry'];
 	}
 ?>
 
@@ -114,13 +113,16 @@
 									<h3>Time to get connected with everyone!</h3>
 							<?php 
 									$universityName = $row['UniversityName'];
+									$universityID = $row['UniversityID'];
+									$universityCountry = $row['Location'];
 									$user_email = $_SESSION['username'];
 									echo "<p>From your email address: <strong>$user_email</strong>, it seems like you're currently enrolled in</p>";
 							?>
 									<form action='select_university_process.php'>
 
 										<div class="12u$" style='margin-bottom:20px'>
-											<?php echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" ?>
+											<?php echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>" ?>
+											<?php echo "<input type='text' name='universityName' value='$universityName - $universityCountry' style='text-align: center;' readonly/>" ?>
 										</div>
 									
 										<div class="12u$" style="margin-bottom:20px">
@@ -146,7 +148,7 @@
 								?>
 								<form action='select_university_process.php'>
 									<div class="12u$" style='margin-bottom:20px'>
-									<select name='universityID'>
+									<select name='selectedUni'>
 							<?php
 									while ($row2 = mysqli_fetch_assoc($result2)) { 
 										$universityID = $row2['UniversiyID'];
@@ -166,7 +168,7 @@
 								</form>
 							<?php
 								}
-								else if (isset($_GET['duplicate']))
+								else if (isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateName']))
 								{
 							?>
 								<h3>Oh dang!</h3>
@@ -175,30 +177,32 @@
 								<div class="row uniform 50%" >
 								<div class="5u 12u$(xsmall)" style="margin-bottom:10px;">
 								<?php 
-								$originalWeb = $row3['Website'];
-								echo "<input type='text' value='$originalWeb' style='text-align: center;' readonly/>";
+								echo "<input type='text' value='$duplicateName - $duplicateCountry' style='text-align: center;' readonly/>";
 								?>
 								</div>
-								<div class="2u 12u$(xsmall)" style=" height: 50px; line-height: 50px;">matches</div>
+								<div class="2u 12u$(xsmall)" style=" height: 50px; line-height: 50px;">uses</div>
 								<div class="5u 12u$(xsmall)">
 								<?php 
-								$duplicateWeb = '';
-								if (isset($_SESSION['temp_duplicate'])) $duplicateWeb = $_SESSION['temp_duplicate'];
-		
-								echo "<input type='text' value='$duplicateWeb' style='text-align: center;' readonly/>";
+								echo "<input type='text' value='$duplicateWebAddress' style='text-align: center;' readonly/>";
 								?>
 								</div>
 								</div>
 								<div class="12u 12u$(xsmall)" style="margin-bottom:10px;" >
 									Is this your university?
 									<?php 
-									$universityName = $row3['UniversityName'];
-									echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" 
+									$universityName = $_SESSION['temp_duplicateName'];
+									$universityID = $_SESSION['temp_duplicateId'];
+
+									echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>";
+									echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" ;
 									?>
 								</div>
 
 								<div class="12u$" style="margin-bottom:20px">
 								<input type="submit" class="special" value="This is my University" />
+								</div>
+								<div style='height:20px;'>
+									<a href="create_university.php" style='margin-bottom:50px;'>Re-enter details</a>
 								</div>
 								</form>
 							<?php

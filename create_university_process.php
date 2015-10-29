@@ -15,12 +15,12 @@
 		die();
 	}
 	if ($_SESSION["username"]=='guest') {
-		//problamatic request, redirects to
+		//guests cant create universities 
 		header("location:error.php?type=unauthorized");
 		die();
 	}
 
-	if(!isset($_POST["uname"]))
+	if(!isset($_POST["uname"]) || !isset($_POST["uweb"]) || !isset($_POST["pcountry"]))
 	{
 		//invalid request, redirects to
 		header("location:create_university.php");
@@ -85,6 +85,7 @@
 
 	if (!$valid) {
 		header("location:create_university.php?errors=$errors");
+		die();
 	}
 	else
 	{
@@ -105,10 +106,19 @@
 
 		if(count($row)>0)
 		{
-			$duplicate = $row['UniversityID'];
-			$_SESSION['temp_duplicate'] = $i_uwebsite ;
-			header("location:select_university.php?duplicate=$duplicate");
-			die();
+			$duplicateID = $row['UniversityID'];
+			$duplicateName = $row['UniversityName'];
+			$duplicateWebAddress = $row['Website'];
+			$duplicateCountry = $row['Location'];
+			if($duplicateWebAddress==$i_uwebsite && $duplicateCountry == $i_ucountry)
+			{
+				$_SESSION['temp_duplicateId'] = $duplicateID ;
+				$_SESSION['temp_duplicateName'] = $duplicateName ;
+				$_SESSION['temp_duplicateWebAddress'] = $duplicateWebAddress;
+				$_SESSION['temp_duplicateCountry'] = $duplicateCountry ;
+				header("location:select_university.php?duplicate=true");
+				die();
+			}
 		}
 
 		//insert data to database
@@ -121,8 +131,19 @@
 			die();
 		}
 
+		$query = "SELECT * FROM University WHERE UniversityName='$i_uname' AND Website='$i_uwebsite'AND Location='$i_ucountry';";
+		$result = @mysqli_query($conn, $query);
+		
+		if(!$result)
+		{
+			header("location:error.php");
+			die();
+		}
+
+		$row = mysqli_fetch_assoc($result);
+		$_SESSION['selectedUni']=$row['UniversityID'];
 		//and redirect to verify page
-		header("location:verify.php");
+		header("location:select_university_process.php");
 	}
 ?>
 	

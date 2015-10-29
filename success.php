@@ -41,15 +41,46 @@
 						<h2>Success</h2>
 					<div>
 					<article class="feature right">
-						<span class="image"> <p style="color:white;">_</p> <img src="images/sucess.png" alt="" /><p style="color:white;">_</p></span>
+						<?php
+							if(isset($_GET['profile']))
+							{
+						?>
+							<span class="image"> <p style="color:white;">_</p> <img src="images/sucess.png" alt="" /><p style="color:white;">_</p></span>
+						<?php
+							}else if(isset($_GET['profile']))
+							{
+						?>
+							<span class="image"> <p style="color:white;">_</p> <img src="images/sucess_university.png" alt="" /><p style="color:white;">_</p></span>
+						<?php
+							{
+						?>
 						<div class="content">
-							<h3>Well done!</h3>
-							<div class="12u$">
-								<p>You successfully created a profile, way to go :) Sign back in with your email and password to get things started</p>
-							</div>
-							<div class="12u$">
-								<a href="login.php" class="button big special" style='margin-bottom:50px;'>Sign in</a>
-							</div>
+							<?php
+								if(isset($_GET['profile']))
+								{
+							?>
+								<h3>Well done!</h3>
+								<div class="12u$">
+									<p>You successfully created a profile, way to go :) Sign back in with your email and password to get things started</p>
+								</div>
+								<div class="12u$">
+									<a href="login.php" class="button big special" style='margin-bottom:50px;'>Sign in</a>
+								</div>
+							<?php 
+								}
+								else if(isset($_GET['university']))
+								{
+							?>
+								<h3>You selected your university!</h3>
+								<div class="12u$">
+									<p>You successfully selected university, now please update your course information to continue</p>
+								</div>
+								<div class="12u$">
+									<a href="select_course.php" class="button big special" style='margin-bottom:50px;'>Select Course</a>
+								</div>
+							<?php
+								}		
+							?>
 						</div>
 					</article>
 				</div>
