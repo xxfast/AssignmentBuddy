@@ -18,15 +18,15 @@
 	{
 		case 4:
 			//like student.swin.edu.au
-			$website =  'http://www.'.$parts[1].'.'.$parts[2].'.'.$parts[3];
+			$website =  'www.'.$parts[1].'.'.$parts[2].'.'.$parts[3];
 			break;
 		case 3:
 			//like swin.edu.au
-			$website =  'http://www.'.$parts[0].'.'.$parts[1].'.'.$parts[2];
+			$website =  'www.'.$parts[0].'.'.$parts[1].'.'.$parts[2];
 			break;
 		case 2:
 			//like swin.edu
-			$website =  'http://www.'.$parts[0].'.'.$parts[1];
+			$website =  'www.'.$parts[0].'.'.$parts[1];
 			break;
 		default:
 			$website =  $parts[count($parts)-1];
@@ -34,7 +34,7 @@
 			{ 
 				$website=$parts[$i].'.'.$website;
 			}
-			$website = 'http://www.'.$website;
+			$website = 'www.'.$website;
 			break;
 	}
 	include_once "settings.php";
@@ -114,13 +114,15 @@
 									<h3>Time to get connected with everyone!</h3>
 							<?php 
 									$universityName = $row['UniversityName'];
+									$universityID = $row['UniversityID'];
 									$user_email = $_SESSION['username'];
 									echo "<p>From your email address: <strong>$user_email</strong>, it seems like you're currently enrolled in</p>";
 							?>
 									<form action='select_university_process.php'>
 
 										<div class="12u$" style='margin-bottom:20px'>
-											<?php echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" ?>
+											<?php echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>" ?>
+											<?php echo "<input type='text' name='universityName' value='$universityName' style='text-align: center;' readonly/>" ?>
 										</div>
 									
 										<div class="12u$" style="margin-bottom:20px">
@@ -146,7 +148,7 @@
 								?>
 								<form action='select_university_process.php'>
 									<div class="12u$" style='margin-bottom:20px'>
-									<select name='universityID'>
+									<select name='selectedUni'>
 							<?php
 									while ($row2 = mysqli_fetch_assoc($result2)) { 
 										$universityID = $row2['UniversiyID'];
@@ -188,13 +190,19 @@
 								<div class="12u 12u$(xsmall)" style="margin-bottom:10px;" >
 									Is this your university?
 									<?php 
-									$universityName = $row3['UniversityName'];
+									$universityName = $_SESSION['temp_duplicateName'];
+									$universityID = $_SESSION['temp_duplicateId'];
+									
+									echo "<input type='hidden' name='selectedUni' value='$universityID' style='text-align: center;' readonly/>"
 									echo "<input type='text' value='$universityName' style='text-align: center;' readonly/>" 
 									?>
 								</div>
 
 								<div class="12u$" style="margin-bottom:20px">
 								<input type="submit" class="special" value="This is my University" />
+								</div>
+								<div style='height:20px;'>
+									<a href="create_university.php" style='margin-bottom:50px;'>Re-enter details</a>
 								</div>
 								</form>
 							<?php

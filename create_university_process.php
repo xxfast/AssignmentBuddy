@@ -106,12 +106,13 @@
 
 		if(count($row)>0)
 		{
-			$duplicateID = $row['UniversityID']
+			$duplicateID = $row['UniversityID'];
 			$duplicateName = $row['UniversityName'];
 			$duplicateWebAddress = $row['Website'];
 			$duplicateCountry = $row['Location'];
 			if($duplicateName==$i_uname && $duplicateWebAddress==$i_uwebsite && $duplicateCountry == $i_ucountry)
 			{
+				$_SESSION['temp_duplicateId'] = $duplicateID ;
 				$_SESSION['temp_duplicateName'] = $duplicateName ;
 				$_SESSION['temp_duplicateWebAddress'] = $duplicateWebAddress;
 				$_SESSION['temp_duplicateCountry'] = $duplicateCountry ;
@@ -130,8 +131,19 @@
 			die();
 		}
 
+		$query = "SELECT * FROM University WHERE UniversityName='$i_uname' AND Website='$i_uwebsite'AND Location='$i_ucountry';";
+		$result = @mysqli_query($conn, $query);
+		
+		if(!$result)
+		{
+			header("location:error.php");
+			die();
+		}
+
+		$row = mysqli_fetch_assoc($result);
+		$_SESSION['selectedUni']=$row['UniversityID'];
 		//and redirect to verify page
-		header("location:verify.php");
+		header("location:select_university_process.php");
 	}
 ?>
 	
