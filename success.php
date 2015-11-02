@@ -4,21 +4,22 @@
 	{
 		if(!isset($_GET['university']))
 		{
-			//invalid request, redirects to
-			header("location:error.php");
-			die();
+			if(!isset($_GET['course']))
+			{
+				//invalid request, redirects to
+				//header("location:error.php");
+				//die();
+			}	
 		}
 		
 	}
 	if (!isset($_SESSION["username"])) {
 		if (!isset($_SESSION["i_email"])) {
 			//unauthorized request
-			header("location:error.php?type=unauthorized");
-			die();
+			//header("location:error.php?type=unauthorized");
+			//die();
 		}
 	}
-
-	$i_email = $_SESSION["i_email"];
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -54,9 +55,15 @@
 							<span class="image"> <p style="color:white;">_</p> <img src="images/sucess.png" alt="" /><p style="color:white;">_</p></span>
 						<?php
 							}
+							else if(isset($_GET['course']))
+							{
+						?>
+							<span class="image"> <p style="color:white;">_</p> <img src="images/success_course.png" alt="" /></span>
+						<?php
+							}
 							else if(isset($_GET['university']))
 							{
-						?>https://twitter.com/
+						?>
 							<span class="image"> <p style="color:white;">_</p> <img src="images/university_success.png" alt="" /><p style="color:white;">_</p></span>
 						<?php
 							}
@@ -72,6 +79,24 @@
 								</div>
 								<div class="12u$">
 									<a href="login.php" class="button big special" style='margin-bottom:50px;'>Sign in</a>
+								</div>
+							<?php 
+								}
+								else if(isset($_GET['course']))
+								{
+							?>
+								<h3>You selected your university!</h3>
+								<div class="12u$">
+									<p>You successfully selected your course, well done :) You may now </p>
+								</div>
+								<div class="12u 12u$(xsmall)" style='margin-bottom:5px;'>
+									<a href="lobby.php" class="button big special" >Browse Lobby</a>
+								</div>
+								<div class="12u 12u$(xsmall)" style='margin-bottom:5px;'>
+									<a href="lobby.php" class="button big special" >Create a Group</a>
+								</div>
+								<div class="12u 12u$(xsmall)" style='margin-bottom:20px;'>
+									<a href="lobby.php" class="button alt">Profile</a>
 								</div>
 							<?php 
 								}
