@@ -1,7 +1,8 @@
 <?php
 	$to =  $_SESSION['username'];
 	$subject = "Verify - AssignmentBuddy";
-
+	$emailCode = $_SESSION['code'];
+	$userFullname = $_SESSION['i_firstname'].' '.$_SESSION['i_lastname'];
 	$message = "
 		<html>
 			<head>
@@ -10,17 +11,8 @@
 				<link rel='stylesheet' href='assignmentbuddy.xfastgames.com/assets/css/main.css' />
 			</head>
 			<body>
-				<p>This email contains HTML Tags!</p>
-				<table>
-				<tr>
-				<th>Firstname</th>
-				<th>Lastname</th>
-				</tr>
-				<tr>
-				<td>John</td>
-				<td>Doe</td>
-				</tr>
-				</table>
+				<h1>Hello $userFullname!</h1>
+				<p>Your code is $emailCode</p>
 			</body>
 		</html>
 		";

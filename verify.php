@@ -23,6 +23,7 @@
 		$code = generateRandomString(5);
 		$_SESSION['code'] = $code;
 		//sent email
+		require_once 'create_verification_email.php';
 		//do something here.. idk lol
 	}
 ?>
