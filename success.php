@@ -95,6 +95,7 @@
 								<div class="12u 12u$(xsmall)" style='margin-bottom:5px;'>
 									<a href="lobby.php" class="button big special" >Create a Group</a>
 								</div>
+								<br>
 								<div class="12u 12u$(xsmall)" style='margin-bottom:20px;'>
 									<a href="lobby.php" class="button alt">Profile</a>
 								</div>
