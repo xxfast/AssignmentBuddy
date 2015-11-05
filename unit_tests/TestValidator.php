@@ -10,7 +10,8 @@ $path = realpath(dirname(__FILE__));
 $path .= '/classes/sanitiser.php';
 require_once($path);
 
-class TestOfLogging extends UnitTestCase {
+class TestOfLogging extends UnitTestCase 
+{
 
     function TestInvalidEmail() {
     	$validator = new Validator();
@@ -64,6 +65,15 @@ class TestOfLogging extends UnitTestCase {
         $this->assertTrue(1==$validator->CheckValidPassword("asD@#r345f"));
         $this->assertFalse(1==$validator->CheckValidPassword("password"));
         $this->assertFalse(1==$validator->CheckValidPassword("test"));
+    }
+
+    function TestInvalidCountry() 
+    {
+        $validator = new Validator();
+        $this->assertTrue(1==$validator->CheckValidCountry("LK"));
+        $this->assertTrue(1==$validator->CheckValidCountry("US"));
+        $this->assertFalse(1==$validator->CheckValidCountry("Lanka"));
+        $this->assertFalse(1==$validator->CheckValidCountry("Australia"));
     }
 
 }
