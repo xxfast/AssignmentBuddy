@@ -66,5 +66,14 @@ class TestOfLogging extends UnitTestCase {
         $this->assertFalse(1==$validator->CheckValidPassword("test"));
     }
 
-}
+    function TestInvalidCountry() 
+    {
+        $validator = new Validator();
+        $this->assertTrue(1==$validator->CheckValidCountry("LK"));
+        $this->assertTrue(1==$validator->CheckValidCountry("US"));
+        $this->assertFalse(1==$validator->CheckValidCountry("Lanka"));
+        $this->assertFalse(1==$validator->CheckValidCountry("Australia"));
+    }
+
+      
 ?>
