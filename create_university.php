@@ -45,7 +45,7 @@
 						<form method="post" action="create_university_process.php" validate='validate'>
 							<div class="row uniform 50%">
 								<div class="12u 12u$(xsmall)">
-									<p>Enter details about your university, so others in your univeristy can join you. This information will be voted by the peers and verfied</p>
+									<p>Enter details about your university, so others in your university can join you. This information will be voted by the peers and verfied</p>
 								</div>
 								<div class="12u 12u$(xsmall)">
 									<input type="text" name="uname" id="uname" size="20" pattern="[A-Za-z]+" required="required" placeholder="University Name" />
