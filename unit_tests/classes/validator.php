@@ -60,8 +60,10 @@ class Validator
 		return preg_match("/^[A-Z]{2,3}$/",$value);
 	}
 
-
-
+	public function CheckValidAddress($value)
+	{
+		return preg_match("/^([A-Za-z0-9 ]+)$/",$value);
+	}
 }
 
 ?>
