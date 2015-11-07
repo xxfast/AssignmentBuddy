@@ -17,7 +17,7 @@
 		</ul>
 		<ul class="copyright">
 			<li>2015 &copy; X Fast Games</li>
-			<li>Design by <a href="http://templated.co">templated.co</a>.</li>
+			<li>Design by <a href="http://templated.co">Assignment Buddy Team</a></li>
 		</ul>
 	</div>
 </footer>

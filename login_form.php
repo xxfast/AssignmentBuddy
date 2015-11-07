@@ -11,10 +11,7 @@
 						<div class="6u 12u$(xsmall)">
 							<?php 
 								$guest = false;
-  								if (isset($_GET['guest']))
-								{
-									$guest = $_GET['guest'];
-								}
+								if (isset($_GET['guest'])) $guest = $_GET['guest'];
 								if ($guest==true)
 								{
 									echo "<input name='username' placeholder='Email' type='text' value='guest' />";

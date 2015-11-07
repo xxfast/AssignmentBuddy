@@ -1,3 +1,13 @@
+<?php 
+	session_start();
+
+	if (isset($_SESSION["username"])) {
+		//problamatic request, redirects to
+		header("location:error.php?type=already-registered");
+		die();
+	}
+?>
+
 <!DOCTYPE HTML>
 <html>
 	<head>
@@ -19,81 +29,97 @@
 		
 		<!-- Register -->
 		
-		<section id="one" class="wrapper style1">
+			<!-- Form -->
+			<section id="one" class="wrapper style1">
 				<div class="inner">
-					<form id="register" method="post" action="register_process.php" <!--novalidate = "novalidate"-->
-					<article class="registerfeature">
-								<div class="content">
-									<h2>Personal Details</h2>
-									<p>
-									<label for="pfname">First Name&#42;:</label>
-									<input type="text" name="pfname" id="pfname" size="20" pattern="[A-Za-z]+" required="required" placeholder="Enter First Name" />
-									</p>
-									<p>
-									<label for="plname">Last Name&#42;:</label>
-									<input type="text" name="plname" id="plname"  size="20" pattern="[A-Za-z]+" required="required" placeholder="Enter Last Name" />
-									</p>
-									<p>
-									<label for="pdob">Date of Birth&#42;:</label>
-									<input type="text" name="pdob" id="pdob"  placeholder="yyyy-mm-dd"  required="required" />
-									</p>
-									<p>
-									<Label>Gender&#42;:</label>	
-									<div class="4u 12u$(xsmall)">
-										<input type="radio" id="priority-low" name="pgender">
-										<label for="priority-low">Male</label>
+					<div class='gstarting'>
+						<h2>Signup for AssignmentBuddy!</h2>
+					<div>
+					<article class="feature right">
+						<span class="image"><img src="images/pic01.png" alt="" /></span>
+						<div class="content">
+							
+							<form method="post" action="register_process.php" validate='validate'>
+								<div class="row uniform 50%">
+									<div class="6u 12u$(xsmall)">
+										<input type="text" name="pfname" id="pfname" size="20" pattern="[A-Za-z]+" required="required" placeholder="First Name" />
 									</div>
-									<div class="4u 12u$(xsmall)">
-										<input type="radio" id="priority-normal" name="pgender">
-										<label for="priority-normal">Female</label>
-									</div>									
-									</p>
-									<!--
-									<p>
-									<label for="state">University&#42;:</label>
+									<div class="6u 12u$(xsmall)">
+										<input type="text" name="plname" id="plname"  size="20" pattern="[A-Za-z]+" required="required" placeholder="Last Name" />
+									</div>
 									<div class="12u$">
-										<div class="select-wrapper">
-										<select name="university" id="university" class="university" required="required">
-											<option value ="DEAKIN">Deakin University</option>
-											<option value ="MONASH">Monash University</option>
-											<option value ="RMIT">RMIT University</option>
-											<option value ="FEDUNI">Federation University</option>
-											<option value ="SWINBURNE" selected="selected">Swinburne University Of Technology</option>
-											<option value ="MELBOURNE">University Of Melbourne</option>
-											<option value ="LATROBE">La Trobe University</option>
-											<option value ="VU">Victoria University</option>
-											<option value ="ACU">Australia Catholic University</option>
-										</select>
-										</div>
+										<input type="email" name="pemail" id="pemail" placeholder="student@university.edu" required="required" />
 									</div>
-									</p>
-									-->
-									<p>
-										<label for="pmphone">Mobile Phone Number:</label>
-										<input type="tel" name="pmphone" id="pmphone" placeholder="04########" pattern="[0-9]{10}" maxlength="10" size="12" required="required" />
-									</p>
-									<p>
-										<p><label for="aaddress">Address:</label>
-										<input type="text" name="aaddress" id="aaddress"  required="required" placeholder="Enter Your Address" /></p>
-									</p>
-									<p>
-										<label for="pemail">University Email Address&#42;:</label>
-										<input type="email" name="pemail" id="pemail" placeholder="123456789@student.swin.edu.au" required="required" />
-									</p>
+										<div class="2u 12u$(xsmall)">
+											<?php 
+												echo "<select name='pdate' required='required'>";
+											 	for ($i=1; $i <= 31; $i++) { 
+											 		echo "<option value='$i'>$i</option>";
+											 	}
+											 	echo "</select>";
+											?>
+										</div>
+										<div class="2u 12u$(xsmall)">
+											<?php 
+												echo "<select name='pmonth' required='required'>";
+											 	for ($i=1; $i <= 12; $i++) { 
+											 		echo "<option value='$i'>$i</option>";
+											 	}
+											 	echo "</select>";
+											?>
+										</div>
+										<div class="3u 12u$(xsmall)">
+											<?php 
+												echo "<select name='pyear' required='required'>";
+											 	for ($i=1900; $i <= date("Y"); $i++) { 
+											 		echo "<option value='$i'>$i</option>";
+											 	}
+											 	echo "</select>";
+											?>
+										</div>
+									<div class="5u 12u$(xsmall)">
+										<input type="radio" id="male" name="pgender" value="male" style="display:none"/>
+										<label for="male">Male</label>
+										<input type="radio" id="female" name="pgender" value="female" style="display:none"/>
+										<label for="female">Female</label>
+									</div>
+									<div class="12u$">
+									<input type="text" name="pphone" id="pmphone" placeholder="Phone Number (+00)0000000000" pattern="[\+]\d{2}[\(]\d{2}[\)]\d{10}" maxlength="20" size="12" required="required" />
+									</div>
+									<div class="8u 12u$(xsmall)">
+									<input type="text" name="padress" id="adress" placeholder="Address" /></p>
+									</div>
+									<div class="4u 12u$(xsmall)">
+										<?php include_once 'ISO_SelectCountry.php'; ?>
+									</div>
+									<div class="12u$">
+											<input type="checkbox" id="tos" name="ptos" style="display:none">
+											<label for="tos">I agree for</label>
+											<a href="#">terms of service</a>
+									<?php
+										if (isset($_GET["errors"])) 
+										{
+											require_once 'unit_tests/classes/sanitiser.php'; 
+											$sanitiser = new Sanitiser();
+											$errors = ($_GET["errors"]); // if i sanatise this, i lose the formatting, if i dont, hackers will get in #first world problems
+								 			echo "<div class='errorlist'><ul>$errors</ul></div>";
+										}
+							 		?>
+									</div>
 									
-									<ul class="actions">
-										<li class="actions">
-											<li><input type="submit" class="special" value="Next" /></li>
-											<li><input type="reset" class="alt" value="Reset" /></li>
-										</li>
-									</ul>
+									<div class="12u$">
+										<input type="submit" class="special" value="Next" />
+										<input type="reset" class="alt" value="Reset" />
+									</div>
+
 								</div>
+							</form>
+						</div>
 					</article>
-					</form>
 				</div>
 			</section>
-		
 
+			
 		<!-- Footer -->
 			<?php require 'footer.php'; ?>
 
