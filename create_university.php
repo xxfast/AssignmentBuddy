@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if (!isset($_SESSION["username"])) {
-		//problamatic request, redirects to
+		//problematic request, redirects to
 		header("location:error.php?type=unauthorized");
 		die();
 	}
@@ -102,7 +102,7 @@
 									<input type="reset" class="alt" value="Reset" />
 								</div>
 								<div class="12u$">
-									<a href="select_university.php">See If my Universiry is already in the database</a>
+									<a href="select_university.php">See If the university is already in the database</a>
 								</div>
 
 							</div>
