@@ -16,16 +16,7 @@
 	$sanitiser = new Sanitiser();
 	if(isset($_GET['error'])) $get_error = $sanitiser->sanitise($_GET['error']); else $get_error = false;
 
-	//generate code
-	if(!isset($_GET['error']))
-	{
-		require_once 'code_generator.php';
-		$code = generateRandomString(5);
-		$_SESSION['code'] = $code;
-		//sent email
-		require_once 'create_verification_email.php';
-		//do something here.. idk lol
-	}
+	
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -55,7 +46,7 @@
 						<h2>Upload a Profile Picture!</h2>
 					<div>
 					<article class="feature right">
-						<span class="image"> _ <img src="images/mail.png" alt="" />_</span>
+						<span class="image"> _ <img src="images/profile_picture.png" alt="" />_</span>
 						<div class="content">
 							<form method="post" action="profile_picture.php" validate='validate'>
 								<div class="row uniform 50%">
