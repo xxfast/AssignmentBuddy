@@ -38,12 +38,14 @@
 
 	$query = "UPDATE Student SET CourseID='$selectedCourse' WHERE Email='$email';";
 	$result = mysqli_query($conn, $query);
-
+	
 	if(!$result)
 	{
 		header("location:error.php");
 		die();
 	}
+
+	$_SESSION["u_course"] = $selectedCourse;
 
 	header("location:success.php?course=set");
 	die();
