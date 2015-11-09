@@ -83,7 +83,8 @@
 				<div class='gstarting'>
 					<h2>View Group</h2>
 				<div>
-				<article class="feature right">
+				<article class="feature left">
+					<span class="image"><img src="images/assignment_group.png" alt="" /></span>
 					<div class="content">
 						<form method="post" action="#">
 							<div class="row uniform 50%">
