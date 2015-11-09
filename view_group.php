@@ -1,7 +1,7 @@
 <?php
 	session_start();
 	if (!isset($_SESSION["username"])) {
-		//invalid request, redirects to
+		//unauthorized request, redirects to
 		header("location:error.php?type=unauthorized");
 		die();
 	}
@@ -13,6 +13,19 @@
 		die();
 	}
 
+	if(!isset($_GET['group']))
+	{
+		//invalid request
+		header("location:lobby.php");
+		die();
+	}
+	
+	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+	$sanitiser = new Sanitiser();
+
+	$groupID = $sanitiser->sanitise($_GET['group']);
+	
+
 	include_once "settings.php";
 	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
 	
@@ -22,21 +35,32 @@
 		header("location:error.php?type=database");
 		die();
 	}
-
-	$sanitiser = new Sanitiser();
-	$groupID = $sanitiser->sanitise($_GET['group']);
-												
 	
 	$query = "SELECT * FROM Groups WHERE GroupID='$groupID';";
 	$result = @mysqli_query($conn, $query);
-	$row = mysqli_fetch_assoc($result);
+	$group = mysqli_fetch_assoc($result);
+
+	$assignmentID = $group['AssignmentID'];
+	$query = "SELECT * FROM Assignment WHERE AssignmentID='$assignmentID';";
+	$result = @mysqli_query($conn, $query);
+	$assignment = mysqli_fetch_assoc($result);
+
+	$unitID = $assignment['UnitID'];
+	$query = "SELECT * FROM Unit WHERE UnitID='$unitID';";
+	$result = @mysqli_query($conn, $query);
+	$unit = mysqli_fetch_assoc($result);
+
+	$ownerID = $group['AdminID'];
+	$query = "SELECT StudentId, FirstName, LastName FROM Student WHERE StudentID='$AdminID';";
+	$result = @mysqli_query($conn, $query);
+	$student = mysqli_fetch_assoc($result);
 	
 ?>
 
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Group Viewer</title>
+		<title>View Group</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -55,95 +79,58 @@
 		<!-- Register -->
 		<section id="one" class="wrapper style1">
 			<div class="inner">
+				<div align='left' style='width:50%, display:block'><button onclick='goBack()'>< Back</button></div>
 				<div class='gstarting'>
 					<h2>View Group</h2>
 				<div>
-				<article class="feature left">
-					<?php  
-					if ($row && !isset($_GET['not']))
-					{
-						?> <span class="image"><img src="images/select_course.png" alt="" /></span> <?php
-					} else
-					{
-					?>
-						<span class="image"> <img src="images/create_course.png" alt="" /></span>
-					<?php 
-					}
-					?>
+				<article class="feature right">
 					<div class="content">
-							<?php
-								if($row && !isset($_GET['not'])&& !isset($_GET['duplicate']))
-								{
-							?>
-									<h3>Join your peers!</h3>
-							<?php 
-									$universityName = $row['UniversityName'];
-									$universityID = $row['UniversityID'];
-									$universityCountry = $row['Location'];
-									echo "<p>Select the course you're currently enrolled in</p>";
-							?>
-									<form action='select_course_process.php' method="post">
-									<div class="12u$" style="margin-bottom:20px">
-									<select name='selectedCourse'>
-							<?php
-									while ($row = mysqli_fetch_assoc($result)) { 
-										$courseCode = $row['CourseCode'];
-										$CourseName = $row['CourseName'];
-										$courseID = $row['CourseID'];
-										echo "<option value='$courseID'>$courseCode - $CourseName</option>";
-									}
-							?>
-									</select>
-									</div>
-									<div class="12u$" style="margin-bottom:20px">
-										<input type="submit" class="special" value="This is my Course" />
-									</div>
+						<form method="post" action="#">
+							<div class="row uniform 50%">
+								<div class="6u 12u$(xsmall)">
+									<input type="text" name="assignmentTitle" id="assignmentTitle" value="<?php echo $assignment['AssignmentTitle']; ?>" placeholder='Assignment Title' readonly='readonly'/>
+								</div>
 
-									<div style='height:20px;'>
-										<a href="select_course.php?not=true">My course is not listed</a>
-									</div>	
-									</form>
-							<?php	
-								}
-								else if(isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateCode']))
-								{
-							?>
-									<h3>We found a match!</h3>
-									<p>Looks like the details you entered already match a course that exist in our database. Is this your course?</p>
-									<form action='select_course_process.php' method="post">
-									<div class="12u$" style="margin-bottom:20px">
-										<?php 
-											$CourseID = $row['CourseID'];
-											$CourseCode = $row['CourseCode'];
-											$CourseName = $row['CourseName'];
-											echo "<input type='hidden' name='selectedCourse' value='$CourseID' style='text-align: center;' readonly/>" ;
-											echo "<input type='text' name='courseName' value='$CourseCode - $CourseName' style='text-align: center;' readonly/>" ;
-										?>
-									</div>
-									<div class="12u$" style="margin-bottom:20px">
-										<input type="submit" class="special" value="This is my Course" />
-									</div>
-									<div style='height:20px;'>
-										<a href="select_course.php?not=true">This isn't my university</a>
-									</div>
-									</form>	
-							<?php
-								}else{
-							?>
-								<h3>Couldn't find any courses!</h3>
-								<p>We were unable to find your course provided by your university. Don't worry, you can enter details about your course and get started right away</p>
-								<form action='create_course.php' method="post">
-									<div class="12u$" style='margin-bottom:20px'>
-						
-									</div>
-									<div class="12u$" style="margin-bottom:20px">
-										<input type="submit" class="special" value="Enter details of my course" />
-									</div>
-								</form>
-							<?php
-								}
-							?>
-						<br>
+								<div class="6u 12u$(xsmall)">
+									<input type="text" name="unitcode" id="unitcode" value="<?php echo $unit['UnitCode']; ?>" placeholder="Unit Code" readonly='readonly'/>
+								</div>
+
+								<div class="12u$">
+									<textarea name="description" id="description" value="<?php  echo $group['Description']; ?>" placeholder="Group description" rows="6" readonly='readonly'></textarea>
+								</div>
+								
+								<div class="4u 12u$(xsmall)" style="height: 55px; line-height: 55px;">
+									<p>Group Owned by:</p>
+								</div>
+								<div class="8u 12u$(xsmall)">
+									<input type="text" name="OwnerName" id="OwnerName" value="<?php  echo $student['FirstName'].' '.$student['LastName']; ?>" placeholder="Admin Name" readonly='readonly'/>
+								</div>
+								<div class="6u 12u$(xsmall)" style="height: 55px; line-height: 55px;">
+									
+								</div>
+
+								<div class="2u 12u$(xsmall)" style="height: 55px; line-height: 55px;">
+									<p>Target:</p>
+								</div>
+								<div class="4u 12u$(xsmall)">
+									<input type="text" name="target" id="target" value="<?php  echo $group['Target']; ?>" placeholder="C/P/D/HD" readonly='readonly'/>
+								</div>
+
+								<div class="12u$" style="text-align:left; height: 35px; line-height: 55px;">
+									<h4>Members (1/4)</h4>
+								</div>
+
+								<div class="12u$">
+									<input type="text" name="unitid" id="unitid" value="" placeholder="Member" readonly='readonly'/>
+								</div>
+
+								<div class="12u$">
+									<ul class="actions">
+										<li><input type="submit" value="Send Request to Join" class="special" /></li>
+									</ul>
+								</div>
+							</div>
+						</form>
 					</div>
 				</article>
 			</div>
@@ -158,6 +145,11 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
+			<script>
+			function goBack() 
+			{
+				window.history.back();
+			}
+			</script>
 	</body>
 </html>
