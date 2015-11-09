@@ -58,8 +58,8 @@
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
-						<h2>Lobby</h2>
-						<p>Select the university you want to browse</p>
+						<h2>Browse the Lobby as Guest</h2>
+						<p>Browse through the <?php echo "$mode";?>s we have in our database</p>
 					</header>
 
 					<!-- Table -->
@@ -123,9 +123,18 @@
 													echo "<td>{$row['Location']}</td>";
 													echo "<td>{$row['UniversityName']}</td>";
 													$universityID = $row['UniversityID'];
-													echo "<td><a href='lobby.php?view=course&university=$universityID'' class='button alt'>Browse</a></td>";
+													echo "<td align='right'><a href='lobby_guest.php?view=course&university=$universityID'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No universities has registed yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
 												}
 											}
 											else if($mode=='course')
@@ -140,9 +149,18 @@
 													echo "<td>{$row['CourseCode']}</td>";
 													echo "<td>{$row['CourseName']}</td>";
 													$courseID = $row['CourseID'];
-													echo "<td><a href='lobby.php?view=unit&course=$courseID'' class='button alt'>Browse</a></td>";
+													echo "<td align='right'><a href='lobby_guest.php?view=unit&course=$courseID'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No courses has been registed for this university yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
 												}
 											}
 											else if($mode=='unit')
@@ -157,9 +175,19 @@
 													echo "<td>{$row['UnitCode']}</td>";
 													echo "<td>{$row['UnitName']}</td>";
 													$assignmentCode = $row['AssignmentCode'];
-													echo "<td><a href='lobby.php?view=assignment&assignment=$assignmentCode'' class='button alt'>Browse</a></td>";
+													echo "<td>Register to view</td>";
+													//echo "<td align='right'><a href='lobby_guest.php?view=assignment&assignment=$assignmentCode'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No Units has been registed for this course yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
 												}
 											}
 										?>

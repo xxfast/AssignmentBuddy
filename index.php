@@ -32,10 +32,14 @@
                 	<?php 
 						if(isset ($_SESSION["username"]))
 						{
-							if(!$_SESSION["username"]=='guest')
+							if($_SESSION["username"]!='guest')
 							{
 								echo '<li><a href="lobby.php" class="button big special">Lobby</a></li>';
 								echo '<li><a href="profile.php" class="button big special">Profile</a></li>';
+							}
+							else
+							{
+								echo '<li><a href="lobby_guest.php" class="button big special">Browse Lobby as Guest</a></li>';
 							}
 						}
 						else

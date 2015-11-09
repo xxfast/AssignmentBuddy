@@ -14,9 +14,7 @@
 
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
 	$sanitiser = new Sanitiser();
-	if(isset($_GET['error'])) $get_error = $sanitiser->sanitise($_GET['error']); else $get_error = false;
-
-	
+	if(isset($_GET['error'])) $get_error = $sanitiser->sanitise($_GET['error']); else $get_error = false;	
 ?>
 <!DOCTYPE HTML>
 <html>

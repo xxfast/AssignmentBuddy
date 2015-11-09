@@ -7,6 +7,13 @@
 		die();
 	}
 	$email = $_SESSION["username"];
+
+	if($email=="guest")
+	{
+		header("location:lobby_guest.php");
+		die();
+	}
+
 	include_once "settings.php";
 	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
 	if (!$conn)
@@ -16,16 +23,9 @@
 	}
 	else
 	{
-		if($email='guest')
-		{
-			$sql_table="University";
-		}
-	}
-	if(!isset ($_SESSION["username"]))
-	{
-		header("location:login.php");
-		die();
-	}
+	
+	$sql_table="University";
+	
 ?>
 <!DOCTYPE HTML>
 <html>
