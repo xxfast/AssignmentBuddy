@@ -42,7 +42,7 @@
 					<span class="image"><img src="images/create_university.png" alt="" /></span>
 					<div class="content">
 						
-						<form method="post" action="create_university_process.php" validate='validate'>
+						<form method="post" action="create_university_process.php" novalidate='novalidate'>
 							<div class="row uniform 50%">
 								<div class="12u 12u$(xsmall)">
 									<p>Enter details about your university, so others in your univeristy can join you. This information will be voted by the peers and verfied</p>

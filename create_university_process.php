@@ -100,11 +100,11 @@
 			die();
 		}
 		
-		$query = "SELECT * FROM University WHERE Website LIKE '%$i_uwebsite';";
+		$query = "SELECT * FROM University WHERE Website = '$i_uwebsite';";
 		$result = mysqli_query($conn, $query);
 		$row = mysqli_fetch_assoc($result);
 
-		if(count($row)>0)
+		if($result)
 		{
 			$duplicateID = $row['UniversityID'];
 			$duplicateName = $row['UniversityName'];
@@ -122,9 +122,8 @@
 		}
 
 		//insert data to database
-		$query = "INSERT INTO University (UniversityName, Location, Website) VALUES ('$i_uname', '$i_uwebsite', '$i_ucountry')";
+		$query = "INSERT INTO University (UniversityName, Location, Website) VALUES ('$i_uname', '$i_ucountry', '$i_uwebsite')";
 		$result = @mysqli_query($conn, $query);
-
 		if(!$result)
 		{
 			header("location:error.php");
@@ -143,6 +142,7 @@
 		$row = mysqli_fetch_assoc($result);
 		$_SESSION['selectedUni']=$row['UniversityID'];
 		//and redirect to verify page
+		
 		header("location:select_university_process.php");
 	}
 ?>

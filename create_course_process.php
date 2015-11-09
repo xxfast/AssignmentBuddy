@@ -94,11 +94,11 @@
 		die();
 	}
 	
-	$query = "SELECT * FROM Course WHERE CourseCode LIKE '%$i_ccode';";
+	$query = "SELECT * FROM Course WHERE CourseCode = '$i_ccode' AND UniversityID = '$u_university';";
 	$result = mysqli_query($conn, $query);
 	$row = mysqli_fetch_assoc($result);
 
-	if(count($row)>0)
+	if($result)
 	{
 		$duplicateCode = $row['CourseCode'];
 		$duplicateName = $row['CourseName'];
@@ -121,7 +121,7 @@
 		die();
 	}
 
-	$query = "SELECT * FROM University WHERE UniversityName='$i_uname' AND Website='$i_uwebsite'AND Location='$i_ucountry';";
+	$query = "SELECT * FROM Course WHERE CourseCode='$i_ccode' AND CourseName='$i_cname'AND UniversityID='$u_university';";
 	$result = @mysqli_query($conn, $query);
 	
 	if(!$result)
