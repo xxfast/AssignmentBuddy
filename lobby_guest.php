@@ -66,23 +66,28 @@
 
 						<section>
 							<h3> 
+								<div>
 								<?php 
 									switch ($mode) 
 									{
 									 	case 'university':
-									 		echo 'Universities';
+									 		echo "<div align='left'>Universities</div>";
 									 		break;
 									 	case 'course':
-									 		echo 'Courses';
+									 		echo "<div align='left'  style='width:50%, display:block'>Course</div>";
+									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
 									 		break;
 									 	case 'unit':
-									 		echo 'Units';
+									 		echo "<div align='left' style='width:50%, display:block'>Units</div>";
+									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
 									 		break;
 									 	default:
-									 		echo 'Browse';
+									 		echo "<div align='left' style='width:50%, display:block'>Browse</div>";
+									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
 									 		break;
 									} 
 								?>
+								</div>	
 							</h3>
 							<div class="table-wrapper">
 								<table>
@@ -175,7 +180,7 @@
 													echo "<td>{$row['UnitCode']}</td>";
 													echo "<td>{$row['UnitName']}</td>";
 													$assignmentCode = $row['AssignmentCode'];
-													echo "<td>Register to view</td>";
+													echo "<td align='right'><span class='button disabled'>Register to view</span></td>";
 													//echo "<td align='right'><a href='lobby_guest.php?view=assignment&assignment=$assignmentCode'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
@@ -207,6 +212,11 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
+			<script>
+			function goBack() 
+			{
+				window.history.back();
+			}
+			</script>
 	</body>
 </html>

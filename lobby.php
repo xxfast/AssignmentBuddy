@@ -6,14 +6,13 @@
 		header("location:error.php?type=unauthorized");
 		die();
 	}
-	$email = $_SESSION["username"];
 
-	if($email=="guest")
+	if($_SESSION["username"]=='guest')
 	{
 		header("location:lobby_guest.php");
 		die();
 	}
-
+	$email = $_SESSION["username"];
 	include_once "settings.php";
 	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
 	if (!$conn)
@@ -23,9 +22,16 @@
 	}
 	else
 	{
-	
-	$sql_table="University";
-	
+		if($email='guest')
+		{
+			$sql_table="University";
+		}
+	}
+	if(!isset ($_SESSION["username"]))
+	{
+		header("location:login.php");
+		die();
+	}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -58,31 +64,37 @@
 			<section id="main" class="wrapper">
 				<div class="container">
 					<header class="major special">
-						<h2>Lobby</h2>
-						<p>Select the university you want to browse</p>
+						<h2>Browse the Lobby</h2>
+						<p>Browse through the <?php echo "$mode";?>s we have in our database</p>
 					</header>
 
 					<!-- Table -->
 
 						<section>
 							<h3> 
+								<div>
 								<?php 
 									switch ($mode) 
 									{
-									 	case 'university':
-									 		echo 'Universities';
-									 		break;
-									 	case 'course':
-									 		echo 'Courses';
-									 		break;
 									 	case 'unit':
-									 		echo 'Units';
+									 		echo "<div align='left' style='width:50%, display:block'>Units</div>";
+									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
+									 		break;
+									 	case 'assignment':
+									 		echo "<div align='left' style='width:50%, display:block'>Assignments</div>";
+									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
+									 		break;
+									 	case 'group':
+									 		echo "<div align='left' style='width:50%, display:block'>Groups</div>";
+									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
 									 		break;
 									 	default:
-									 		echo 'Browse';
+									 		echo "<div align='left' style='width:50%, display:block'>Browse</div>";
+									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
 									 		break;
 									} 
 								?>
+								</div>	
 							</h3>
 							<div class="table-wrapper">
 								<table>
@@ -90,14 +102,14 @@
 										<tr>
 											<?php 
 												switch ($mode) {
-													case 'university':
+													case 'unit':
 														echo "<th>Location</th><th>University</th>";
 														break;
 													case 'course':
 														echo "<th>Course Code</th><th>Course</th>";
 														break;
-													case 'unit':
-														echo "<th>Unit Code</th><th>Unit</th>";
+													case 'assignment':
+														echo "<th>Assignment Code</th><th>Unit</th>";
 														break;
 													case 'assignment':
 														echo "<th>Assignment Code</th><th>Unit</th>";
@@ -123,9 +135,18 @@
 													echo "<td>{$row['Location']}</td>";
 													echo "<td>{$row['UniversityName']}</td>";
 													$universityID = $row['UniversityID'];
-													echo "<td><a href='lobby.php?view=course&university=$universityID'' class='button alt'>Browse</a></td>";
+													echo "<td align='right'><a href='lobby_guest.php?view=course&university=$universityID'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No universities has registed yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
 												}
 											}
 											else if($mode=='course')
@@ -140,9 +161,18 @@
 													echo "<td>{$row['CourseCode']}</td>";
 													echo "<td>{$row['CourseName']}</td>";
 													$courseID = $row['CourseID'];
-													echo "<td><a href='lobby.php?view=unit&course=$courseID'' class='button alt'>Browse</a></td>";
+													echo "<td align='right'><a href='lobby_guest.php?view=unit&course=$courseID'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No courses has been registed for this university yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
 												}
 											}
 											else if($mode=='unit')
@@ -157,9 +187,19 @@
 													echo "<td>{$row['UnitCode']}</td>";
 													echo "<td>{$row['UnitName']}</td>";
 													$assignmentCode = $row['AssignmentCode'];
-													echo "<td><a href='lobby.php?view=assignment&assignment=$assignmentCode'' class='button alt'>Browse</a></td>";
+													echo "<td align='right'><span class='button disabled'>Register to view</span></td>";
+													//echo "<td align='right'><a href='lobby_guest.php?view=assignment&assignment=$assignmentCode'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No Units has been registed for this course yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
 												}
 											}
 										?>
@@ -179,6 +219,11 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-
+			<script>
+			function goBack() 
+			{
+				window.history.back();
+			}
+			</script>
 	</body>
 </html>
