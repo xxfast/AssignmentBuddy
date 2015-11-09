@@ -1,11 +1,44 @@
 <?php
 	session_start();
-	if(isset($_SESSION['username']))
+	if (!isset($_SESSION["username"])) {
+		//invalid request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+
+	if($_SESSION["username"]=="guest")
 	{
-		header("location:login.php");
+		//no guest is allowed
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+
+	include_once "settings.php";
+	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
+	
+	if(!$conn)
+	{
+		//no database :(
+		header("location:error.php?type=database");
+		die();
+	}
+
+	if (!isset($_GET['duplicate'])) 
+	{
+		$unitID = $_SESSION['u_unit'];
+		$query = "SELECT * FROM Unit WHERE UnitID='$unitID'";
+		$result = @mysqli_query($conn, $query);
+		$row = mysqli_fetch_assoc($result);
+	}
+	else
+	{
+		$duplicateCode = $_SESSION['temp_duplicateCode'];
+		$unitID = $_SESSION['u_unit'];
+		$query = "SELECT * FROM Unit WHERE UnitCode='$duplicateCode' AND UnitID='$unitID'";
+		$result = @mysqli_query($conn, $query);
+		$row = mysqli_fetch_assoc($result);
 	}
 ?>
-
 
 <!DOCTYPE HTML>
 <html>
@@ -21,74 +54,114 @@
 	</head>
 
 	<body>
-
 		<?php require 'header.php'; ?>
 
 		<!-- Nav -->
 			<?php require 'navigation.php';?>
-
-		<!-- Main -->
-
-		<header class="major special">
-		<p></p>
-		<h2>Create Group</h2>
-		</header>
-
-		<div class="box" >
-			<section id="select" class="wrapper style1">
-				<div class="inner">
-						<h2 align="left">STEP 1:</h2>
-							<h3>Select Units</h3>
-							<h4>Please select the units </h4>
-							
-							<form id="selectunits" method="post" <!--novalidate = "novalidate"-->
-								<article class="feature">
-									<div class="12u$">
-										<div class="select-wrapper">
-											<select name="category" id="category">
-												<option value="">COS10009 Introduction to Programming-</option>
-												<option value="1">COS10011 Creating Web Applications</option>
-												<option value="1">COS10003 Computer and Logic Essentials</option>
-												<option value="1">COS20001 User Centred Design</option>
-												<option value="1">COS20007 Object Oriented Programming</option>
-												<option value="1">SWE20001 Development Project 1 – Tools and Practices </option>
-												<option value="1">COS10004 Computer Systems</option>
-												<option value="1">COS20015 Fundamentals of Data Management</option>
-											</select>
-										</div>
+		
+		<!-- Register -->
+		<section id="one" class="wrapper style1">
+			<div class="inner">
+				<div class='gstarting'>
+					<h2>Select your Unit</h2>
+				<div>
+				<article class="feature left">
+					<?php  
+					if ($row && !isset($_GET['not']))
+					{
+						?> <span class="image"><img src="images/select_course.png" alt="" /></span> <?php
+					} else
+					{
+					?>
+						<span class="image"> <img src="images/create_course.png" alt="" /></span>
+					<?php 
+					}
+					?>
+					<div class="content">
+							<?php
+								if($row && !isset($_GET['not'])&& !isset($_GET['duplicate']))
+								{
+							?>
+									<h3>Join your peers!</h3>
+							<?php 
+									echo "<p>Select the unit you're currently enrolled in</p>";
+							?>
+									<form action='select_course_process.php' method="post">
+									<div class="12u$" style="margin-bottom:20px">
+									<select name='selectedCourse'>
+							<?php
+									while ($row = mysqli_fetch_assoc($result)) { 
+										$unitCode = $row['UnitCode'];
+										$unitName = $row['UnitName'];
+										$unitID = $row['UnitID'];
+										echo "<option value='$unitID'>$unitCode - $UnitName</option>";
+									}
+							?>
+									</select>
 									</div>
-								</article>
-							</form>
-						
-				</div>					
-							<ul align="center" class="actions">
-								<li><a href="#" class="button special">GO NEXT</a></li>
-							</ul>											
-			</section>
-		</div>
+									<div class="12u$" style="margin-bottom:20px">
+										<input type="submit" class="special" value="This is my Course" />
+									</div>
 
+									<div style='height:20px;'>
+										<a href="select_unit.php?not=true">My unit is not listed</a>
+									</div>	
+									</form>
+							<?php	
+								}
+								else if(isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateCode']))
+								{
+							?>
+									<h3>We found a match!</h3>
+									<p>Looks like the details you entered already match a unit that exist in our database. Is this your course?</p>
+									<form action='select_unit_process.php' method="post">
+									<div class="12u$" style="margin-bottom:20px">
+										<?php 
+											$UnitID = $row['UnitID'];
+											$UnitCode = $row['UnitCode'];
+											$UnitName = $row['UnitName'];
+											echo "<input type='hidden' name='selectedUnit' value='$UnitID' style='text-align: center;' readonly/>" ;
+											echo "<input type='text' name='unitName' value='$UnitCode - $UnitName' style='text-align: center;' readonly/>" ;
+										?>
+									</div>
+									<div class="12u$" style="margin-bottom:20px">
+										<input type="submit" class="special" value="This is my Unit" />
+									</div>
+									<div style='height:20px;'>
+										<a href="select_unit.php?not=true">This isn't my unit</a>
+									</div>
+									</form>	
+							<?php
+								}else{
+							?>
+								<h3>Couldn't find any units!</h3>
+								<p>We were unable to find your unit provided by your university. Don't worry, you can enter details about your unit and get started right away</p>
+								<form action='create_unit.php' method="post">
+									<div class="12u$" style='margin-bottom:20px'>
+						
+									</div>
+									<div class="12u$" style="margin-bottom:20px">
+										<input type="submit" class="special" value="Enter details of my unit" />
+									</div>
+								</form>
+							<?php
+								}
+							?>
+						<br>
+					</div>
+				</article>
+			</div>
+		</section>
+		
 		<!-- Footer -->
-		<?php require 'footer.php'; ?>
+			<?php require 'footer.php'; ?>
 
 		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/skel.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-		<script src="assets/js/main.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
 	</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-				
