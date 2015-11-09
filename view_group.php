@@ -19,7 +19,7 @@
 		header("location:lobby.php");
 		die();
 	}
-	
+
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
 	$sanitiser = new Sanitiser();
 
@@ -39,6 +39,7 @@
 	$query = "SELECT * FROM Groups WHERE GroupID='$groupID';";
 	$result = @mysqli_query($conn, $query);
 	$group = mysqli_fetch_assoc($result);
+	$adminID = $group['AdminID'];
 
 	$assignmentID = $group['AssignmentID'];
 	$query = "SELECT * FROM Assignment WHERE AssignmentID='$assignmentID';";
@@ -51,10 +52,9 @@
 	$unit = mysqli_fetch_assoc($result);
 
 	$ownerID = $group['AdminID'];
-	$query = "SELECT StudentId, FirstName, LastName FROM Student WHERE StudentID='$AdminID';";
+	$query = "SELECT StudentId, FirstName, LastName FROM Student WHERE StudentID='$adminID';";
 	$result = @mysqli_query($conn, $query);
 	$student = mysqli_fetch_assoc($result);
-	
 ?>
 
 <!DOCTYPE HTML>
@@ -87,16 +87,16 @@
 					<div class="content">
 						<form method="post" action="#">
 							<div class="row uniform 50%">
-								<div class="6u 12u$(xsmall)">
+								<div class="8u 12u$(xsmall)">
 									<input type="text" name="assignmentTitle" id="assignmentTitle" value="<?php echo $assignment['AssignmentTitle']; ?>" placeholder='Assignment Title' readonly='readonly'/>
 								</div>
 
-								<div class="6u 12u$(xsmall)">
+								<div class="4u 12u$(xsmall)">
 									<input type="text" name="unitcode" id="unitcode" value="<?php echo $unit['UnitCode']; ?>" placeholder="Unit Code" readonly='readonly'/>
 								</div>
 
 								<div class="12u$">
-									<textarea name="description" id="description" value="<?php  echo $group['Description']; ?>" placeholder="Group description" rows="6" readonly='readonly'></textarea>
+									<textarea name="description" id="description"  placeholder="Group description" rows="6" readonly='readonly'><?php echo $group['Description']; ?></textarea>
 								</div>
 								
 								<div class="4u 12u$(xsmall)" style="height: 55px; line-height: 55px;">

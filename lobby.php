@@ -195,7 +195,7 @@
 													$resultC = @mysqli_query($conn, $queryC);
 													$rowC = mysqli_fetch_assoc($resultC);
 													echo "<td align='right'>{$rowC['number']}/{$row['MemberCount']}</td>";
-													echo "<td align='right'><a href='view_group.php?group='$groupID'>Join</a></td>";
+													echo "<td align='right'><a href='view_group.php?group=$groupID'>Join</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
 												}
