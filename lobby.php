@@ -103,16 +103,13 @@
 											<?php 
 												switch ($mode) {
 													case 'unit':
-														echo "<th>Location</th><th>University</th>";
-														break;
-													case 'course':
-														echo "<th>Course Code</th><th>Course</th>";
+														echo "<th>Unit Code</th><th>Unit Name</th>";
 														break;
 													case 'assignment':
-														echo "<th>Assignment Code</th><th>Unit</th>";
+														echo "<th>Assignment Name</th>";
 														break;
-													case 'assignment':
-														echo "<th>Assignment Code</th><th>Unit</th>";
+													case 'group':
+														echo "<th>Owner</th><th>Description</th><th>Target</th><th>Members</th>";
 														break;
 													default:
 														# code...
@@ -124,9 +121,10 @@
 									</thead>
 									<tbody>
 										<?php
-											if($mode=='university')
+											if($mode=='unit')
 											{
-												$query = "SELECT * FROM University;";
+												$courseID = $_SESSION["u_course"];
+												$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu WHERE cu.CourseID='';";
 												$result = @mysqli_query($conn, $query);
 												$row = mysqli_fetch_assoc($result);
 												while ($row) 

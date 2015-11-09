@@ -46,6 +46,8 @@
 		die();
 	}
 
+	$_SESSION["u_university"] = $selectedUni;
+
 	header("location:success.php?university=set");
 	die();
 
