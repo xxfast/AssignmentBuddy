@@ -80,7 +80,6 @@
 									{
 									 	case 'unit':
 									 		echo "<div align='left' style='width:50%, display:block'>Units</div>";
-									 		echo "<div align='right' style='width:50%, display:block'><button onclick='goBack()''>< Back</button></div>";
 									 		break;
 									 	case 'assignment':
 									 		echo "<div align='left' style='width:50%, display:block'>Assignments</div>";
@@ -135,7 +134,7 @@
 													echo "<td>{$row['UnitCode']}</td>";
 													echo "<td>{$row['UnitName']}</td>";
 													$unitID = $row['UnitID'];
-													echo "<td align='right'><a href='lobby_guest.php?view=assignment&unit=$unitID'' class='button alt'>Browse</a></td>";
+													echo "<td align='right'><a href='lobby.php?view=assignment&unit=$unitID'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
 												}
@@ -154,7 +153,7 @@
 												require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
 												$sanitiser = new Sanitiser();
 												$unitID = $sanitiser->sanitise($_GET['unit']);
-												$query = "SELECT * FROM Assignment a NATURAL JOIN Unit u WHERE u.UnitID='$unitID';";
+												$query = "SELECT * FROM Assignment a NATURAL JOIN Unit u WHERE UnitID='$unitID';";
 												$result = @mysqli_query($conn, $query);
 												$row = mysqli_fetch_assoc($result);
 												while ($row) 
@@ -162,7 +161,7 @@
 													echo "<tr>";
 													echo "<td>{$row['AssignmentTitle']}</td>";
 													$assignmentID = $row['AssignmentID'];
-													echo "<td align='right'><a href='lobby_guest.php?view=group&assignment=$assignmentID' class='button alt'>Browse</a></td>";
+													echo "<td align='right'><a href='lobby.php?view=group&assignment=$assignmentID' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
 												}
@@ -181,7 +180,7 @@
 												require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
 												$sanitiser = new Sanitiser();
 												$assignmentID = $sanitiser->sanitise($_GET['assignment']);
-												$query = "SELECT * FROM Groups g NATURAL JOIN Assignment a NATURAL JOIN Student s WHERE a.AssignmentID='$assignmentID';";
+												$query = "SELECT * FROM Groups g NATURAL JOIN Assignment a NATURAL JOIN Student s WHERE a.AssignmentID='$assignmentID' AND g.AdminID=s.StudentID;";
 												$result = @mysqli_query($conn, $query);
 												$row = mysqli_fetch_assoc($result);
 												while ($row) 
@@ -191,8 +190,12 @@
 													echo "<td>{$row['Description']}</td>";
 													echo "<td>{$row['Target']}</td>";
 													$groupID = $row['GroupID'];
-													echo "<td align='right'>{$row['Members']}";
-													echo "<a href='view_group.php?group=$groupID class='button alt'>Join</a></td>";
+													//Get count of students
+													$queryC = "SELECT COUNT(*) AS 'number' FROM StudentGroup sg WHERE GroupID='$groupID' AND Approved=1 GROUP BY GroupID;";
+													$resultC = @mysqli_query($conn, $queryC);
+													$rowC = mysqli_fetch_assoc($resultC);
+													echo "<td align='right'>{$rowC['number']}/{$row['MemberCount']}</td>";
+													echo "<td align='right'><a href='view_group.php?group='$groupID' >Join</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
 												}
