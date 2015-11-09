@@ -51,7 +51,9 @@
 			$mode = 'university';
 			if(isset($_GET['view']))
 			{
-				$mode = $_GET['view'];
+				require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+				$sanitiser = new Sanitiser();
+				$mode = $sanitiser->sanitise($_GET['view']);
 			}
 		?>
 
@@ -144,7 +146,9 @@
 											}
 											else if($mode=='course')
 											{
-												$universityID = $_GET['university'];
+												require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+												$sanitiser = new Sanitiser();
+												$universityID = $sanitiser->sanitise($_GET['university']);
 												$query = "SELECT * FROM Course NATURAL JOIN  University WHERE UniversityID='$universityID';";
 												$result = @mysqli_query($conn, $query);
 												$row = mysqli_fetch_assoc($result);
@@ -170,7 +174,9 @@
 											}
 											else if($mode=='unit')
 											{
-												$courseID = $_GET['course'];
+												require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+												$sanitiser = new Sanitiser();
+												$courseID = $sanitiser->sanitise($_GET['course']);
 												$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit WHERE CourseID='$courseID';";
 												$result = @mysqli_query($conn, $query);
 												$row = mysqli_fetch_assoc($result);

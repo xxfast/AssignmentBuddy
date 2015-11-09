@@ -54,10 +54,12 @@
 
 		<!-- Main -->
 		<?php 
-			$mode = 'university';
+			$mode = 'unit';
 			if(isset($_GET['view']))
 			{
-				$mode = $_GET['view'];
+				require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+				$sanitiser = new Sanitiser();
+				$mode = $sanitiser->sanitise($_GET['view']);
 			}
 		?>
 
@@ -124,59 +126,7 @@
 											if($mode=='unit')
 											{
 												$courseID = $_SESSION["u_course"];
-												$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu WHERE cu.CourseID='';";
-												$result = @mysqli_query($conn, $query);
-												$row = mysqli_fetch_assoc($result);
-												while ($row) 
-												{
-													echo "<tr>";
-													echo "<td>{$row['Location']}</td>";
-													echo "<td>{$row['UniversityName']}</td>";
-													$universityID = $row['UniversityID'];
-													echo "<td align='right'><a href='lobby_guest.php?view=course&university=$universityID'' class='button alt'>Browse</a></td>";
-													echo "</tr>";
-													$row = mysqli_fetch_assoc($result);
-												}
-												$result = @mysqli_query($conn, $query);
-												$row = mysqli_fetch_assoc($result);
-												if(!$row)
-												{
-													echo "<tr>";
-													echo "<td><em>No universities has registed yet</em></td>";
-													echo "<td>-</td>";
-													echo "</tr>";
-												}
-											}
-											else if($mode=='course')
-											{
-												$universityID = $_GET['university'];
-												$query = "SELECT * FROM Course NATURAL JOIN  University WHERE UniversityID='$universityID';";
-												$result = @mysqli_query($conn, $query);
-												$row = mysqli_fetch_assoc($result);
-												while ($row) 
-												{
-													echo "<tr>";
-													echo "<td>{$row['CourseCode']}</td>";
-													echo "<td>{$row['CourseName']}</td>";
-													$courseID = $row['CourseID'];
-													echo "<td align='right'><a href='lobby_guest.php?view=unit&course=$courseID'' class='button alt'>Browse</a></td>";
-													echo "</tr>";
-													$row = mysqli_fetch_assoc($result);
-												}
-												$result = @mysqli_query($conn, $query);
-												$row = mysqli_fetch_assoc($result);
-												if(!$row)
-												{
-													echo "<tr>";
-													echo "<td><em>No courses has been registed for this university yet</em></td>";
-													echo "<td>-</td>";
-													echo "</tr>";
-												}
-											}
-											else if($mode=='unit')
-											{
-												$courseID = $_GET['course'];
-												$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit WHERE CourseID='$courseID';";
+												$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu WHERE cu.CourseID='$courseID';";
 												$result = @mysqli_query($conn, $query);
 												$row = mysqli_fetch_assoc($result);
 												while ($row) 
@@ -184,9 +134,8 @@
 													echo "<tr>";
 													echo "<td>{$row['UnitCode']}</td>";
 													echo "<td>{$row['UnitName']}</td>";
-													$assignmentCode = $row['AssignmentCode'];
-													echo "<td align='right'><span class='button disabled'>Register to view</span></td>";
-													//echo "<td align='right'><a href='lobby_guest.php?view=assignment&assignment=$assignmentCode'' class='button alt'>Browse</a></td>";
+													$unitID = $row['UnitID'];
+													echo "<td align='right'><a href='lobby_guest.php?view=assignment&unit=$unitID'' class='button alt'>Browse</a></td>";
 													echo "</tr>";
 													$row = mysqli_fetch_assoc($result);
 												}
@@ -195,7 +144,64 @@
 												if(!$row)
 												{
 													echo "<tr>";
-													echo "<td><em>No Units has been registed for this course yet</em></td>";
+													echo "<td><em>No Units has registed for this course yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
+												}
+											}
+											else if($mode=='assignment')
+											{
+												require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+												$sanitiser = new Sanitiser();
+												$unitID = $sanitiser->sanitise($_GET['unit']);
+												$query = "SELECT * FROM Assignment a NATURAL JOIN Unit u WHERE u.UnitID='$unitID';";
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												while ($row) 
+												{
+													echo "<tr>";
+													echo "<td>{$row['AssignmentTitle']}</td>";
+													$assignmentID = $row['AssignmentID'];
+													echo "<td align='right'><a href='lobby_guest.php?view=group&assignment=$assignmentID' class='button alt'>Browse</a></td>";
+													echo "</tr>";
+													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No Assignments has been registed for this unit yet</em></td>";
+													echo "<td>-</td>";
+													echo "</tr>";
+												}
+											}
+											else if($mode=='group')
+											{
+												require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+												$sanitiser = new Sanitiser();
+												$assignmentID = $sanitiser->sanitise($_GET['assignment']);
+												$query = "SELECT * FROM Groups g NATURAL JOIN Assignment a NATURAL JOIN Student s WHERE a.AssignmentID='$assignmentID';";
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												while ($row) 
+												{
+													echo "<tr>";
+													echo "<td>{$row['FirstName']} {$row['LastName']}</td>";
+													echo "<td>{$row['Description']}</td>";
+													echo "<td>{$row['Target']}</td>";
+													$groupID = $row['GroupID'];
+													echo "<td align='right'>{$row['Members']}";
+													echo "<a href='view_group.php?group=$groupID class='button alt'>Join</a></td>";
+													echo "</tr>";
+													$row = mysqli_fetch_assoc($result);
+												}
+												$result = @mysqli_query($conn, $query);
+												$row = mysqli_fetch_assoc($result);
+												if(!$row)
+												{
+													echo "<tr>";
+													echo "<td><em>No Groups has been registed for this Assignment yet</em></td>";
 													echo "<td>-</td>";
 													echo "</tr>";
 												}
