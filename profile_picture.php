@@ -2,14 +2,14 @@
 	session_start();
 	if (isset($_SESSION["username"])) {
 		//problamatic request, redirects to
-		//header("location:error.php?type=already-verfied");
-		//die();
+		header("location:error.php?type=already-verfied");
+		die();
 	}
 
 	if (!isset($_SESSION["i_email"])) {
 		//invalid request, redirects to
-		//header("location:error.php?type=unauthorized");
-		//die();
+		header("location:error.php?type=unauthorized");
+		die();
 	}
 
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
@@ -48,7 +48,7 @@
 					<article class="feature right">
 						<span class="image"> _ <img src="images/profile_picture.png" alt="" />_</span>
 						<div class="content">
-							<form method="post" action="profile_picture.php" validate='validate'>
+							<form method="post" action="profile_picture_upload.php" enctype="multipart/form-data">
 								<div class="row uniform 50%">
 									<div class="12u$">
 										<p>Customise your profile, give your profile a picture so others can see who they are talking to</p>
@@ -64,12 +64,12 @@
 									?>
 									<div class="12u$" style=" text-align: center;">
 										<div class="5u$" style="display:inline-block;">
-											<?php echo "<input type='text' name='code' id='code' size='5' pattern='[A-Z0-9]{5}' value='$code' required='required' placeholder='XXXXX' style='text-align: center;'/>"?>
+											<input type="file" name="fileToUpload" id="fileToUpload">
 										</div>
 									</div>
 
 									<div class="12u$">
-										<p>Didn't get an email? <a href="#">Resent email</a></p>
+										<p>Please select an image atleast 250x250</p>
 									</div>
 
 									<div class="12u$">

@@ -32,8 +32,11 @@
                 	<?php 
 						if(isset ($_SESSION["username"]))
 						{
-							echo '<li><a href="lobby.php" class="button big special">Lobby</a></li>';
-							echo '<li><a href="profile.php" class="button big special">Profile</a></li>';
+							if(!$_SESSION["username"]=='guest')
+							{
+								echo '<li><a href="lobby.php" class="button big special">Lobby</a></li>';
+								echo '<li><a href="profile.php" class="button big special">Profile</a></li>';
+							}
 						}
 						else
 						{
