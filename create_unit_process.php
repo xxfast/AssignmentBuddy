@@ -93,6 +93,9 @@
 	{
 		//check if the unit already exist
 		$email = $_SESSION['username'];
+		$courseID = $_SESSION['u_course'];
+		$universityID = $_SESSION['u_university'];
+
 		include_once "settings.php";
 		$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
@@ -102,6 +105,7 @@
 			die();
 		}
 		
+		//checking for duplicate
 		$universityID = $_SESSION['u_university'];
 		$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu NATURAL JOIN Course c NATURAL JOIN University uni WHERE UniversityID = '$universityID' AND UnitCode = '$i_ucode';";
 		$result = mysqli_query($conn, $query);
@@ -132,8 +136,11 @@
 			die();
 		}
 
-		$query = "SELECT * FROM Unit WHERE UnitCode='$i_uname' AND UnitName='$i_uname';";
+		//checking if it made it
+		$query = "SELECT * FROM Unit u ORDER BY UnitID DESC LIMIT 1;";
 		$result = @mysqli_query($conn, $query);
+		$row = mysqli_fetch_assoc($result);
+	
 		
 		if(!$result)
 		{
@@ -141,16 +148,18 @@
 			die();
 		}
 
-		$row = mysqli_fetch_assoc($result);
+		
 
-		$unitCode = $row['UnitID'];
+		$unitID = $row['UnitID'];
 		$_SESSION['selectedUnit']=$unitCode;
 
 		//update CourseUnit Table to add the new subject to user's course
-		$courseCode = $_SESSION["u_course"];
+		$courseID = $_SESSION["u_course"];
 
-		$query = "INSERT INTO CourseUnit (CourseCode, UnitCode) VALUES ('$courseCode', '$unitCode')";
-		$result = @mysqli_query($conn, $query);
+		$query = "INSERT INTO CourseUnit (CourseID, UnitID) VALUES ('$courseID', '$unitID')";
+		$result = mysqli_query($conn, $query);
+		
+
 		if(!$result)
 		{
 			header("location:error.php");

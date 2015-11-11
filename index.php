@@ -61,6 +61,7 @@
 					<article class="feature left">
 						<span class="image"><img src="images/pic01.png" alt="" /></span>
 						<div class="content">
+							<?php var_dump($_SESSION); ?>
 							<h2>Create a profile</h2>
 							<p>
 								To get started, create your own profile using your university email address. Upload a profile picture, enter your details and customize it the way you want

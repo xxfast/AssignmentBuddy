@@ -54,9 +54,9 @@
 
 		$courseID =  $_SESSION['u_course'];
 
-		$query = "INSERT INTO CourseUnit (CourseID,UnitID) VALUES ($courseID,$selectedUnit);";
-		$result = mysqli_query($conn, $query);
+		$query = "INSERT INTO CourseUnit (CourseID,UnitID) VALUES ('$courseID','$selectedUnit');";
 
+		$result = mysqli_query($conn, $query) ;
 		if(!$result)
 		{
 			header("location:error.php");
