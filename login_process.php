@@ -1,5 +1,19 @@
 <?php
 	session_start();
+
+	if (!isset($_SESSION["username"])) {
+		//invalid request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+
+	if($_SESSION["username"]=="guest")
+	{
+		//no guest is allowed
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+	
 	if(!isset($_POST["username"]) || !isset($_POST["password"]))
 	{
 		header("location:login.php?error='Invalid request'");

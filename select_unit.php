@@ -40,6 +40,14 @@
 
 	if (!isset($_GET['duplicate'])) 
 	{
+		//duplicate requesst is here
+		if(!isset($_SESSION['u_university']))
+		{
+			//fake duplicate request
+			header("location:select_unit.php");
+			die();
+		}
+		
 		$universityID = $_SESSION['u_university'];
 		$courseID = $_SESSION["u_course"];
 		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE CourseID='$courseID'";
