@@ -60,10 +60,6 @@
 		{
 			$errors .= "<li>Unit code is empty</li>";
 		}
-		if(!$validator->CheckValidName($value))
-		{
-			$errors .= "<li>Only letters and spaces allowed in Unit code</li>";
-		} 
 		if(! $validator->CheckValueInRange(strlen($value),1,50))
 		{
 			$errors  .= "<li>Unit code is too long. Please keep it less than 50 characters</li>";
