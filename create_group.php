@@ -8,8 +8,8 @@
 	if(!isset($_SESSION["selectedUnit"]))
 	{
 		//user hasn't selected the unit yet :/
-		header("location:select_unit.php");
-		die();
+		//header("location:select_unit.php");
+		//die();
 	}
 ?>
 

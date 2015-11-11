@@ -27,6 +27,13 @@
 		die();
 	}
 
+	if(!isset($_SESSION["u_course"]))
+	{
+		//no course? weird
+		header("location:select_course.php");
+		die();
+	}
+
 	//global errors
 	$errors = "";
 	
@@ -96,7 +103,7 @@
 		}
 		
 		$universityID = $_SESSION['u_university'];
-		$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu NATURAL JOIN Course c NATURAL JOIN University uni WHERE UniversityID = '$universityID' AND u.UnitCode = '$i_ucode';";
+		$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu NATURAL JOIN Course c NATURAL JOIN University uni WHERE UniversityID = '$universityID' AND UnitCode = '$i_ucode';";
 		$result = mysqli_query($conn, $query);
 		$row = mysqli_fetch_assoc($result);
 
@@ -135,7 +142,20 @@
 		}
 
 		$row = mysqli_fetch_assoc($result);
-		$_SESSION['selectedUnit']=$row['UnitID'];
+
+		$unitCode = $row['UnitID'];
+		$_SESSION['selectedUnit']=$unitCode;
+
+		//update CourseUnit Table to add the new subject to user's course
+		$courseCode = $_SESSION["u_course"];
+
+		$query = "INSERT INTO CourseUnit (CourseCode, UnitCode) VALUES ('$courseCode', '$unitCode')";
+		$result = @mysqli_query($conn, $query);
+		if(!$result)
+		{
+			header("location:error.php");
+			die();
+		}
 
 		//and redirect to verify page
 		header("location:select_unit_process.php");
