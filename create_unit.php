@@ -42,7 +42,7 @@
 					<span class="image"><img src="images/create_unit.png" alt="" /></span>
 					<div class="content">
 						
-						<form method="post" action="create_university_process.php" novalidate='novalidate'>
+						<form method="post" action="create_unit_process.php" novalidate='novalidate'>
 							<div class="row uniform 50%">
 								<div class="12u 12u$(xsmall)">
 									<p>Enter details about your unit, so others who does the same unit can join you. This information will be voted by the peers and verfied</p>
