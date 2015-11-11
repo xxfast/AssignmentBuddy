@@ -65,7 +65,7 @@
 	}
 
 	//if selected unit hasnt been set yet, set it now
-	if(!isset($_SESSION['selectedUnit']))) $_SESSION['selectedUnit']= $selectedUnit;
+	if(!isset($_SESSION['selectedUnit'])) $_SESSION['selectedUnit']= $selectedUnit;
 
 	header("location:create_group.php");
 	die();
