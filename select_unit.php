@@ -91,7 +91,7 @@
 				<article class="feature left">
 					
 							<?php
-								if(!isset($_GET['duplicate'])&& $result)
+								if(!isset($_GET['duplicate'])&& $result && !isset($_GET['not']))
 								{
 							?>
 					<span class="image"><img src="images/select_unit.png" alt="" /></span>
@@ -157,6 +157,7 @@
 									<p>Perhaps your unit already exist in our database, but as a part of another course in the same university. Help us make the link, if your university is listed below, select it. If not, select <em>'my unit is not listed'</em></p>
 									<form action='select_unit_process.php' method="post">
 									<div class="12u$" style="margin-bottom:20px">
+									<select name='selectedUnit'>
 										<?php 
 											while ($row = mysqli_fetch_assoc($result)) 
 											{ 
@@ -166,6 +167,7 @@
 												echo "<option value='$unitID'>$unitCode - $unitName</option>";
 											}
 										?>
+									</select>
 									</div>
 									<div class="12u$" style="margin-bottom:20px">
 										<input type="submit" class="special" value="This is my Unit" />
