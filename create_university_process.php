@@ -1,6 +1,17 @@
 <?php
 	
 	session_start();
+
+	if (!isset($_SESSION["username"])) {
+		//problematic request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+	if ($_SESSION["username"]=='guest') {
+		//problamatic request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
 	
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
 	require_once 'unit_tests/classes/validator.php'; // create sanitise objects

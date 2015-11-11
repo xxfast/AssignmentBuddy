@@ -13,39 +13,61 @@
 		die();
 	}
 
-	if(!isset($_POST['selectedCourse']))
+	if(!isset( $_SESSION['u_course']))
 	{
-		if(!isset($_SESSION['selectedCourse']))
+		//user hasnt selected his course
+		header("location:select_course.php");
+		die();
+	}
+
+	if(!isset($_POST['selectedUnit']))
+	{
+		if(!isset($_SESSION['selectedUnit']))
 		{
 			//invalid request
-			header("location:select_university.php");
+			header("location:select_unit.php");
 			die();
 		}
 	}
 
-	if(isset($_POST['selectedCourse'])) $selectedCourse = $_POST['selectedCourse'];
-	if(isset($_SESSION['selectedCourse'])) $selectedCourse = $_SESSION['selectedCourse'];
+	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
+	
+	$sanitiser = new Sanitiser();
+
+	if(isset($_POST['selectedUnit'])) $selectedUnit = $sanitiser->sanitise($_POST['selectedUnit']);
+	if(isset($_SESSION['selectedUnit'])) $selectedUnit = $sanitiser->sanitise($_SESSION['selectedUnit']);
 
 	$email = $_SESSION['username'];
-	include_once "settings.php";
-	$conn = mysqli_connect($host, $user, $pwd, $sql_db);
 
-	if (!$conn)
+
+	if(isset($_GET['makeconnection']))
 	{
-		header("location:error.php?type=database");
-		die();
+		//user's course has to be linked with this course
+		include_once "settings.php";
+		$conn = mysqli_connect($host, $user, $pwd, $sql_db);
+
+		if (!$conn)
+		{
+			header("location:error.php?type=database");
+			die();
+		}
+
+		$courseID =  $_SESSION['u_course'];
+
+		$query = "INSERT INTO CourseUnit (CourseID,UnitID) VALUES ('$courseID','$selectedUnit');";
+
+		$result = mysqli_query($conn, $query) ;
+		if(!$result)
+		{
+			header("location:error.php");
+			die();
+		}
 	}
 
-	$query = "UPDATE Student SET CourseID='$selectedCourse' WHERE Email='$email';";
-	$result = mysqli_query($conn, $query);
+	//if selected unit hasnt been set yet, set it now
+	if(!isset($_SESSION['selectedUnit'])) $_SESSION['selectedUnit']= $selectedUnit;
 
-	if(!$result)
-	{
-		header("location:error.php");
-		die();
-	}
-
-	header("location:success.php?course=set");
+	header("location:create_group.php");
 	die();
 
 ?>

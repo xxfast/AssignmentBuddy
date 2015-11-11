@@ -1,8 +1,14 @@
 <?php
 	session_start();
-	if(isset($_SESSION['username']))
-	{
-		header("location:login.php");
+	if (!isset($_SESSION["username"])) {
+		//problematic request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+	if ($_SESSION["username"]=='guest') {
+		//problamatic request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
 	}
 ?>
 
@@ -20,74 +26,68 @@
 	</head>
 
 	<body>
-
 		<?php require 'header.php'; ?>
 
 		<!-- Nav -->
 			<?php require 'navigation.php';?>
+		
+		<!-- Register -->
 
-		<!-- Main -->
+		<section id="one" class="wrapper style1">
+			<div class="inner">
+				<div class='gstarting'>
+					<h2>Enter details of your Unit</h2>
+				<div>
+				<article class="feature right">
+					<span class="image"><img src="images/create_unit.png" alt="" /></span>
+					<div class="content">
+						
+						<form method="post" action="create_unit_process.php" novalidate='novalidate'>
+							<div class="row uniform 50%">
+								<div class="12u 12u$(xsmall)">
+									<p>Enter details about your unit, so others who does the same unit can join you. This information will be voted by the peers and verfied</p>
+								</div>
+								<div class="6u 12u$(xsmall)">
+									<input type="text" name="unitcode" id="unitcode" size="20" pattern="[A-Za-z]+" required="required" placeholder="Unit Code"/>
+								</div>
+								<div class="6u 12u$(xsmall)">
+									<input type='text' name='unitname' id='unitname' required="required"  placeholder='Unit Name'  required='required'/>";
+								</div>
+								<div class="12u$">
+								<?php
+									if (isset($_GET["errors"])) 
+									{
+										require_once 'unit_tests/classes/sanitiser.php'; 
+										$sanitiser = new Sanitiser();
+										$errors = ($_GET["errors"]); // if i sanatise this, i lose the formatting, if i dont, hackers will get in #first world problems
+							 			echo "<div class='errorlist'><ul>$errors</ul></div>";
+									}
+						 		?>
+								</div>
+								<div class="12u$">
+									<input type="submit" class="special" value="Enter Details" />
+									<input type="reset" class="alt" value="Reset" />
+								</div>
+								<div class="12u$">
+									<a href="select_unit.php">See If the Unit is already in the database</a>
+								</div>
 
-			<section id="main" class="wrapper">
-				<div class="container">
-					<header class="major special">
-						<h2>Create Group</h2>
-					</header>
-						<h2>STEP 2:</h2>
-
-					<h2>Create a unit</h2>
-							
-					<!-- Form -->
-					<div class="box" >
-						<section id="select" class="wrapper style1">
-							<div class="inner">
-								<h3>Please fill in the blanks</h3>
-								<form method="post" action="#">
-									<p>Enter Unit Name:</p>
-									<div>
-										<div class="6u 12u$(xsmall)">
-											<input type="text" name="name" id="name" value="" placeholder="Unit Name" />
-										</div>
-										</br>
-											<p>Enter Unit Code:</p>
-										<div class="6u$ 12u$(xsmall)">
-											<input type="text" name="code" id="code" value="" placeholder="Unit Code" />			
-											<div class="12u$">
-												<ul class="actions">
-													<li><input type="submit" value="Send Message" class="special" /></li>
-													<li><input type="reset" value="Reset" /></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</form>
 							</div>
-						</section>
+						</form>
 					</div>
+				</article>
+			</div>
+		</section>
 
 		<!-- Footer -->
-		<?php require 'footer.php'; ?>
+			<?php require 'footer.php'; ?>
 
 		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/skel.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-		<script src="assets/js/main.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
 	</body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-				
-					

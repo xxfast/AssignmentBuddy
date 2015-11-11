@@ -13,6 +13,21 @@
 		die();
 	}
 
+
+	if($_SESSION["u_course"]==NULL)
+	{
+		//user hasnt selected the course
+		header("location:select_course.php");
+		die();
+	}
+
+	if($_SESSION["u_university"]==NULL)
+	{
+		//user hasnt selected the university
+		header("location:select_university.php");
+		die();
+	}
+
 	include_once "settings.php";
 	$conn = @mysqli_connect($host, $user, $pwd, $sql_db);
 	
@@ -25,16 +40,24 @@
 
 	if (!isset($_GET['duplicate'])) 
 	{
-		$unitID = $_SESSION['u_unit'];
-		$query = "SELECT * FROM Unit WHERE UnitID='$unitID'";
+		$universityID = $_SESSION['u_university'];
+		$courseID = $_SESSION["u_course"];
+		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE CourseID='$courseID'";
 		$result = @mysqli_query($conn, $query);
-		$row = mysqli_fetch_assoc($result);
 	}
 	else
 	{
+		//invalid duplicate request.. get lost hacker
+		if(!isset($_SESSION['temp_duplicateId']))
+		{
+			header("location:select_unit.php");
+			die();
+		}
+
+		$universityID = $_SESSION['u_university'];
+		$duplicateID = $_SESSION['temp_duplicateId'];
 		$duplicateCode = $_SESSION['temp_duplicateCode'];
-		$unitID = $_SESSION['u_unit'];
-		$query = "SELECT * FROM Unit WHERE UnitCode='$duplicateCode' AND UnitID='$unitID'";
+		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE UnitCode='$duplicateCode' AND UniversityID='$universityID'";
 		$result = @mysqli_query($conn, $query);
 		$row = mysqli_fetch_assoc($result);
 	}
@@ -66,41 +89,31 @@
 					<h2>Select your Unit</h2>
 				<div>
 				<article class="feature left">
-					<?php  
-					if ($row && !isset($_GET['not']))
-					{
-						?> <span class="image"><img src="images/select_course.png" alt="" /></span> <?php
-					} else
-					{
-					?>
-						<span class="image"> <img src="images/create_course.png" alt="" /></span>
-					<?php 
-					}
-					?>
-					<div class="content">
+					
 							<?php
-								if($row && !isset($_GET['not'])&& !isset($_GET['duplicate']))
+								if(!isset($_GET['duplicate'])&& $result && !isset($_GET['not']))
 								{
 							?>
-									<h3>Join your peers!</h3>
-							<?php 
-									echo "<p>Select the unit you're currently enrolled in</p>";
-							?>
+					<span class="image"><img src="images/select_unit.png" alt="" /></span>
+					<div class="content">
+									<h3>Set Unit</h3>
+									<p>Select the unit this assignment group belongs to</p>
 									<form action='select_course_process.php' method="post">
 									<div class="12u$" style="margin-bottom:20px">
-									<select name='selectedCourse'>
+									<select name='selectedUnit'>
 							<?php
-									while ($row = mysqli_fetch_assoc($result)) { 
+									while ($row = mysqli_fetch_assoc($result)) 
+									{ 
 										$unitCode = $row['UnitCode'];
 										$unitName = $row['UnitName'];
 										$unitID = $row['UnitID'];
-										echo "<option value='$unitID'>$unitCode - $UnitName</option>";
+										echo "<option value='$unitID'>$unitCode - $unitName</option>";
 									}
 							?>
 									</select>
 									</div>
 									<div class="12u$" style="margin-bottom:20px">
-										<input type="submit" class="special" value="This is my Course" />
+										<input type="submit" class="special" value="This is my Unit" />
 									</div>
 
 									<div style='height:20px;'>
@@ -109,11 +122,13 @@
 									</form>
 							<?php	
 								}
-								else if(isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateCode']))
+								else if(isset($_GET['duplicate'])&& isset($_SESSION['temp_duplicateCode']))
 								{
 							?>
-									<h3>We found a match!</h3>
-									<p>Looks like the details you entered already match a unit that exist in our database. Is this your course?</p>
+					<span class="image"><img src="images/select_unit_not_found.png" alt="" /></span>
+					<div class="content">
+									<h3>We found a similar unit!</h3>
+									<p>Looks like the details you entered already match a unit that exist in our database. Is this your unit?</p>
 									<form action='select_unit_process.php' method="post">
 									<div class="12u$" style="margin-bottom:20px">
 										<?php 
@@ -128,23 +143,56 @@
 										<input type="submit" class="special" value="This is my Unit" />
 									</div>
 									<div style='height:20px;'>
-										<a href="select_unit.php?not=true">This isn't my unit</a>
+										<a href="create_unit.php">This isn't my unit</a>
 									</div>
 									</form>	
-							<?php
-								}else{
+							<?php 
+								}
+								else if(isset($_GET['not']))
+								{
 							?>
-								<h3>Couldn't find any units!</h3>
-								<p>We were unable to find your unit provided by your university. Don't worry, you can enter details about your unit and get started right away</p>
-								<form action='create_unit.php' method="post">
-									<div class="12u$" style='margin-bottom:20px'>
-						
+					<span class="image"><img src="images/select_unit_not_found.png" alt="" /></span>
+					<div class="content">
+									<h3>Check if the unit is part of another course</h3>
+									<p>Perhaps your unit already exist in our database, but as a part of another course in the same university. Help us make the link, if your unit is listed below, select it. If not, select <em>'my unit is not listed'</em></p>
+									<form action='select_unit_process.php?makeconnection=true' method="post">
+									<div class="12u$" style="margin-bottom:20px">
+									<select name='selectedUnit'>
+										<?php 
+											while ($row = mysqli_fetch_assoc($result)) 
+											{ 
+												$unitCode = $row['UnitCode'];
+												$unitName = $row['UnitName'];
+												$unitID = $row['UnitID'];
+												echo "<option value='$unitID'>$unitCode - $unitName</option>";
+											}
+										?>
+									</select>
 									</div>
 									<div class="12u$" style="margin-bottom:20px">
-										<input type="submit" class="special" value="Enter details of my unit" />
+										<input type="submit" class="special" value="This is my Unit" />
 									</div>
-								</form>
-							<?php
+									<div style='height:20px;'>
+										<a href="create_unit.php">my unit is not listed</a>
+									</div>
+									</form>	
+							<?php 
+								}
+								else 
+								{
+							?>
+					<span class="image"><img src="images/select_unit_not_found.png" alt="" /></span>
+					<div class="content">
+									<h3>We couldnt find any units</h3>
+									<p>Looks like there's no records of any units in this course in our database. Don't worry, enter the details of your unit and continue right away</p>
+									<form action='create_unit.php' method="post">
+									<div class="12u$" style="margin-bottom:20px">
+									</div>
+									<div class="12u$" style="margin-bottom:20px">
+										<input type="submit" class="special" value="Enter Details" />
+									</div>
+									</form>	
+							<?php 
 								}
 							?>
 						<br>
