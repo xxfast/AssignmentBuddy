@@ -5,7 +5,7 @@
 		header("location:login.php");
 	}
 
-	if(!isset($_SESSION["selectedUnit"])
+	if(!isset($_SESSION["selectedUnit"]))
 	{
 		//user hasn't selected the unit yet :/
 		header("location:select_unit.php");

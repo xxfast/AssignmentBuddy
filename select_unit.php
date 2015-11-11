@@ -44,7 +44,6 @@
 		$courseID = $_SESSION["u_course"];
 		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE CourseID='$courseID'";
 		$result = @mysqli_query($conn, $query);
-		$row = mysqli_fetch_assoc($result);
 	}
 	else
 	{
@@ -85,7 +84,7 @@
 					<span class="image"><img src="images/select_unit.png" alt="" /></span>
 					<div class="content">
 							<?php
-								if(!isset($_GET['duplicate']))
+								if(!isset($_GET['duplicate'])&& $row)
 								{
 							?>
 									<h3>Set Unit</h3>
@@ -94,11 +93,12 @@
 									<div class="12u$" style="margin-bottom:20px">
 									<select name='selectedUnit'>
 							<?php
-									while ($row = mysqli_fetch_assoc($result)) { 
+									while ($row = mysqli_fetch_assoc($result)) 
+									{ 
 										$unitCode = $row['UnitCode'];
 										$unitName = $row['UnitName'];
 										$unitID = $row['UnitID'];
-										echo "<option value='$unitID'>$unitCode - $UnitName</option>";
+										echo "<option value='$unitID'>$unitCode - $unitName</option>";
 									}
 							?>
 									</select>
@@ -133,6 +133,20 @@
 									</div>
 									<div style='height:20px;'>
 										<a href="create_unit.php">This isn't my unit</a>
+									</div>
+									</form>	
+							<?php 
+								}
+								else 
+								{
+							?>
+									<h3>We couldnt find any units</h3>
+									<p>Looks like there's no records of any units that served as a part of this course in our database. Don't worry, enter the details of your unit and continue right away</p>
+									<form action='create_unit.php' method="post">
+									<div class="12u$" style="margin-bottom:20px">
+									</div>
+									<div class="12u$" style="margin-bottom:20px">
+										<input type="submit" class="special" value="Enter Details" />
 									</div>
 									</form>	
 							<?php 
