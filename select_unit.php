@@ -82,17 +82,7 @@
 					<h2>Select your Unit</h2>
 				<div>
 				<article class="feature left">
-					<?php  
-					if ($row && !isset($_GET['not']))
-					{
-						?> <span class="image"><img src="images/select_course.png" alt="" /></span> <?php
-					} else
-					{
-					?>
-						<span class="image"> <img src="images/create_course.png" alt="" /></span>
-					<?php 
-					}
-					?>
+					<span class="image"><img src="images/select_unit.png" alt="" /></span>
 					<div class="content">
 							<?php
 								if(!isset($_GET['duplicate']))
