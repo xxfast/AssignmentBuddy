@@ -59,7 +59,7 @@
 		$duplicateCode = $_SESSION['temp_duplicateCode'];
 		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE UnitCode='$duplicateCode' AND UniversityID='$universityID'";
 		$result = @mysqli_query($conn, $query);
-		
+		$row = mysqli_fetch_assoc($result);
 	}
 ?>
 
@@ -155,7 +155,7 @@
 					<div class="content">
 									<h3>Check if the unit is part of another course</h3>
 									<p>Perhaps your unit already exist in our database, but as a part of another course in the same university. Help us make the link, if your unit is listed below, select it. If not, select <em>'my unit is not listed'</em></p>
-									<form action='select_unit_process.php' method="post">
+									<form action='select_unit_process.php?makeconnection=true' method="post">
 									<div class="12u$" style="margin-bottom:20px">
 									<select name='selectedUnit'>
 										<?php 
@@ -184,7 +184,7 @@
 					<span class="image"><img src="images/select_unit_not_found.png" alt="" /></span>
 					<div class="content">
 									<h3>We couldnt find any units</h3>
-									<p>Looks like there's no records of any units that served as a part of this course in our database. Don't worry, enter the details of your unit and continue right away</p>
+									<p>Looks like there's no records of any units in this course in our database. Don't worry, enter the details of your unit and continue right away</p>
 									<form action='create_unit.php' method="post">
 									<div class="12u$" style="margin-bottom:20px">
 									</div>
