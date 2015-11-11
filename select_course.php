@@ -28,7 +28,6 @@
 		$universityID = $_SESSION['u_university'];
 		$query = "SELECT * FROM Course WHERE UniversityID='$universityID'";
 		$result = @mysqli_query($conn, $query);
-		$row = mysqli_fetch_assoc($result);
 	}
 	else
 	{
@@ -79,7 +78,7 @@
 					?>
 					<div class="content">
 							<?php
-								if($row && !isset($_GET['not'])&& !isset($_GET['duplicate']))
+								if($result && !isset($_GET['not'])&& !isset($_GET['duplicate']))
 								{
 							?>
 									<h3>Join your peers!</h3>
