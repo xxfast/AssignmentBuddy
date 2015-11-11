@@ -81,12 +81,13 @@
 					<h2>Select your Unit</h2>
 				<div>
 				<article class="feature left">
-					<span class="image"><img src="images/select_unit.png" alt="" /></span>
-					<div class="content">
+					
 							<?php
-								if(!isset($_GET['duplicate'])&& $row)
+								if(!isset($_GET['duplicate'])&& $result)
 								{
 							?>
+					<span class="image"><img src="images/select_unit.png" alt="" /></span>
+					<div class="content">
 									<h3>Set Unit</h3>
 									<p>Select the unit this assignment group belongs to</p>
 									<form action='select_course_process.php' method="post">
@@ -116,6 +117,8 @@
 								else if(isset($_GET['duplicate'])&& isset($_SESSION['temp_duplicateCode']))
 								{
 							?>
+					<span class="image"><img src="images/select_unit_not_found.png" alt="" /></span>
+					<div class="content">
 									<h3>We found a similar unit!</h3>
 									<p>Looks like the details you entered already match a unit that exist in our database. Is this your unit?</p>
 									<form action='select_unit_process.php' method="post">
@@ -140,6 +143,8 @@
 								else 
 								{
 							?>
+					<span class="image"><img src="images/select_unit_not_found.png" alt="" /></span>
+					<div class="content">
 									<h3>We couldnt find any units</h3>
 									<p>Looks like there's no records of any units that served as a part of this course in our database. Don't worry, enter the details of your unit and continue right away</p>
 									<form action='create_unit.php' method="post">
