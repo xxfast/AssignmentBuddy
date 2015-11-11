@@ -40,7 +40,7 @@
 	$email = $_SESSION['username'];
 
 
-	if(isset($_GET('makeconnection')))
+	if(isset($_GET['makeconnection']))
 	{
 		//user's course has to be linked with this course
 		include_once "settings.php";
