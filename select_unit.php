@@ -2,30 +2,30 @@
 	session_start();
 	if (!isset($_SESSION["username"])) {
 		//invalid request, redirects to
-		//header("location:error.php?type=unauthorized");
-		//die();
+		header("location:error.php?type=unauthorized");
+		die();
 	}
 
 	if($_SESSION["username"]=="guest")
 	{
 		//no guest is allowed
-		//header("location:error.php?type=unauthorized");
-		//die();
+		header("location:error.php?type=unauthorized");
+		die();
 	}
 
 
 	if($_SESSION["u_course"]==NULL)
 	{
 		//user hasnt selected the course
-		//header("location:select_course.php");
-		//die();
+		header("location:select_course.php");
+		die();
 	}
 
 	if($_SESSION["u_university"]==NULL)
 	{
 		//user hasnt selected the university
-		//header("location:select_university.php");
-		//die();
+		header("location:select_university.php");
+		die();
 	}
 
 	include_once "settings.php";
@@ -34,8 +34,8 @@
 	if(!$conn)
 	{
 		//no database :(
-		//header("location:error.php?type=database");
-		//die();
+		header("location:error.php?type=database");
+		die();
 	}
 
 	if (!isset($_GET['duplicate'])) 
@@ -92,7 +92,7 @@
 									<p>Select the unit this assignment group belongs to</p>
 									<form action='select_course_process.php' method="post">
 									<div class="12u$" style="margin-bottom:20px">
-									<select name='selectedCourse'>
+									<select name='selectedUnit'>
 							<?php
 									while ($row = mysqli_fetch_assoc($result)) { 
 										$unitCode = $row['UnitCode'];
@@ -104,20 +104,20 @@
 									</select>
 									</div>
 									<div class="12u$" style="margin-bottom:20px">
-										<input type="submit" class="special" value="This is my Course" />
+										<input type="submit" class="special" value="This is my Unit" />
 									</div>
 
 									<div style='height:20px;'>
-										<a href="select_unit.php?not=true">My unit is not listed</a>
+										<a href="create_unit.php">My unit is not listed</a>
 									</div>	
 									</form>
 							<?php	
 								}
-								else if(isset($_GET['duplicate']) && isset($_SESSION['temp_duplicateCode']))
+								else if(isset($_GET['duplicate'])&& isset($_SESSION['temp_duplicateCode']))
 								{
 							?>
-									<h3>We found a match!</h3>
-									<p>Looks like the details you entered already match a unit that exist in our database. Is this your course?</p>
+									<h3>We found a similar unit!</h3>
+									<p>Looks like the details you entered already match a unit that exist in our database. Is this your unit?</p>
 									<form action='select_unit_process.php' method="post">
 									<div class="12u$" style="margin-bottom:20px">
 										<?php 
@@ -132,23 +132,10 @@
 										<input type="submit" class="special" value="This is my Unit" />
 									</div>
 									<div style='height:20px;'>
-										<a href="select_unit.php?not=true">This isn't my unit</a>
+										<a href="create_unit.php">This isn't my unit</a>
 									</div>
 									</form>	
-							<?php
-								}else{
-							?>
-								<h3>Couldn't find any units!</h3>
-								<p>We were unable to find your unit provided by your university. Don't worry, you can enter details about your unit and get started right away</p>
-								<form action='create_unit.php' method="post">
-									<div class="12u$" style='margin-bottom:20px'>
-						
-									</div>
-									<div class="12u$" style="margin-bottom:20px">
-										<input type="submit" class="special" value="Enter details of my unit" />
-									</div>
-								</form>
-							<?php
+							<?php 
 								}
 							?>
 						<br>
