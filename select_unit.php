@@ -2,15 +2,30 @@
 	session_start();
 	if (!isset($_SESSION["username"])) {
 		//invalid request, redirects to
-		header("location:error.php?type=unauthorized");
-		die();
+		//header("location:error.php?type=unauthorized");
+		//die();
 	}
 
 	if($_SESSION["username"]=="guest")
 	{
 		//no guest is allowed
-		header("location:error.php?type=unauthorized");
-		die();
+		//header("location:error.php?type=unauthorized");
+		//die();
+	}
+
+
+	if($_SESSION["u_course"]==NULL)
+	{
+		//user hasnt selected the course
+		//header("location:select_course.php");
+		//die();
+	}
+
+	if($_SESSION["u_university"]==NULL)
+	{
+		//user hasnt selected the university
+		//header("location:select_university.php");
+		//die();
 	}
 
 	include_once "settings.php";
@@ -19,22 +34,23 @@
 	if(!$conn)
 	{
 		//no database :(
-		header("location:error.php?type=database");
-		die();
+		//header("location:error.php?type=database");
+		//die();
 	}
 
 	if (!isset($_GET['duplicate'])) 
 	{
-		$unitID = $_SESSION['u_unit'];
-		$query = "SELECT * FROM Unit WHERE UnitID='$unitID'";
+		$universityID = $_SESSION['u_university'];
+		$courseID = $_SESSION["u_course"];
+		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE CourseID='$courseID'";
 		$result = @mysqli_query($conn, $query);
 		$row = mysqli_fetch_assoc($result);
 	}
 	else
 	{
 		$duplicateCode = $_SESSION['temp_duplicateCode'];
-		$unitID = $_SESSION['u_unit'];
-		$query = "SELECT * FROM Unit WHERE UnitCode='$duplicateCode' AND UnitID='$unitID'";
+		$universityID = $_SESSION['u_university'];
+		$query = "SELECT * FROM Unit WHERE UnitCode='$duplicateCode' AND UniversityID='$universityID'";
 		$result = @mysqli_query($conn, $query);
 		$row = mysqli_fetch_assoc($result);
 	}
@@ -79,13 +95,11 @@
 					?>
 					<div class="content">
 							<?php
-								if($row && !isset($_GET['not'])&& !isset($_GET['duplicate']))
+								if(!isset($_GET['duplicate']))
 								{
 							?>
-									<h3>Join your peers!</h3>
-							<?php 
-									echo "<p>Select the unit you're currently enrolled in</p>";
-							?>
+									<h3>Set Unit</h3>
+									<p>Select the unit this assignment group belongs to</p>
 									<form action='select_course_process.php' method="post">
 									<div class="12u$" style="margin-bottom:20px">
 									<select name='selectedCourse'>
