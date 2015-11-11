@@ -117,7 +117,7 @@
 
 		//no duplicate found, good to go
 		//insert data to database
-		$query = "INSERT INTO University (UniversityName, Location, Website) VALUES ('$i_uname', '$i_ucountry', '$i_uwebsite')";
+		$query = "INSERT INTO Unit (UnitCode, UnitName) VALUES ('$i_ucode', '$i_uname')";
 		$result = @mysqli_query($conn, $query);
 		if(!$result)
 		{
@@ -125,7 +125,7 @@
 			die();
 		}
 
-		$query = "SELECT * FROM University WHERE UniversityName='$i_uname' AND Website='$i_uwebsite'AND Location='$i_ucountry';";
+		$query = "SELECT * FROM Unit WHERE UnitCode='$i_uname' AND UnitName='$i_uname';";
 		$result = @mysqli_query($conn, $query);
 		
 		if(!$result)
@@ -135,10 +135,10 @@
 		}
 
 		$row = mysqli_fetch_assoc($result);
-		$_SESSION['selectedUni']=$row['UniversityID'];
+		$_SESSION['selectedUnit']=$row['UnitID'];
+
 		//and redirect to verify page
-		
-		header("location:select_university_process.php");
+		header("location:select_assignment.php");
 	}
 ?>
 	
