@@ -96,7 +96,7 @@
 		}
 		
 		$universityID = $_SESSION['u_university'];
-		$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu NATURAL JOIN Course c NATURAL JOIN University uni WHERE UniversityID = '$universityID';";
+		$query = "SELECT * FROM Unit u NATURAL JOIN CourseUnit cu NATURAL JOIN Course c NATURAL JOIN University uni WHERE UniversityID = '$universityID' AND u.UnitCode = '$i_ucode';";
 		$result = mysqli_query($conn, $query);
 		$row = mysqli_fetch_assoc($result);
 
@@ -138,7 +138,7 @@
 		$_SESSION['selectedUnit']=$row['UnitID'];
 
 		//and redirect to verify page
-		header("location:select_assignment.php");
+		header("location:select_unit_process.php");
 	}
 ?>
 	
