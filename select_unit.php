@@ -40,14 +40,6 @@
 
 	if (!isset($_GET['duplicate'])) 
 	{
-		//duplicate requesst is here
-		if(!isset($_SESSION['u_university']))
-		{
-			//fake duplicate request
-			header("location:select_unit.php");
-			die();
-		}
-		
 		$universityID = $_SESSION['u_university'];
 		$courseID = $_SESSION["u_course"];
 		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE CourseID='$courseID'";
@@ -55,11 +47,19 @@
 	}
 	else
 	{
-		$duplicateCode = $_SESSION['temp_duplicateCode'];
+		//invalid duplicate request.. get lost hacker
+		if(!isset($_SESSION['temp_duplicateId']))
+		{
+			header("location:select_unit.php");
+			die();
+		}
+
 		$universityID = $_SESSION['u_university'];
-		$query = "SELECT * FROM Unit WHERE UnitCode='$duplicateCode' AND UniversityID='$universityID'";
+		$duplicateID = $_SESSION['temp_duplicateId'];
+		$duplicateCode = $_SESSION['temp_duplicateCode'];
+		$query = "SELECT * FROM Unit NATURAL JOIN CourseUnit cu NATURAL JOIN Course c WHERE UnitCode='$duplicateCode' AND UniversityID='$universityID'";
 		$result = @mysqli_query($conn, $query);
-		$row = mysqli_fetch_assoc($result);
+		
 	}
 ?>
 
@@ -117,7 +117,7 @@
 									</div>
 
 									<div style='height:20px;'>
-										<a href="create_unit.php">My unit is not listed</a>
+										<a href="select_unit.php?not=true">My unit is not listed</a>
 									</div>	
 									</form>
 							<?php	
@@ -144,6 +144,34 @@
 									</div>
 									<div style='height:20px;'>
 										<a href="create_unit.php">This isn't my unit</a>
+									</div>
+									</form>	
+							<?php 
+								}
+								else if(isset($_GET['not']))
+								{
+							?>
+					<span class="image"><img src="images/select_unit_not_found.png" alt="" /></span>
+					<div class="content">
+									<h3>Check if the unit is part of another course</h3>
+									<p>Perhaps your unit already exist in our database, but as a part of another course in the same university. Help us make the link, if your university is listed below, select it. If not, select <em>'my unit is not listed'</em></p>
+									<form action='select_unit_process.php' method="post">
+									<div class="12u$" style="margin-bottom:20px">
+										<?php 
+											while ($row = mysqli_fetch_assoc($result)) 
+											{ 
+												$unitCode = $row['UnitCode'];
+												$unitName = $row['UnitName'];
+												$unitID = $row['UnitID'];
+												echo "<option value='$unitID'>$unitCode - $unitName</option>";
+											}
+										?>
+									</div>
+									<div class="12u$" style="margin-bottom:20px">
+										<input type="submit" class="special" value="This is my Unit" />
+									</div>
+									<div style='height:20px;'>
+										<a href="create_unit.php">my unit is not listed</a>
 									</div>
 									</form>	
 							<?php 
