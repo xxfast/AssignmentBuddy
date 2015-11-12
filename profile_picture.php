@@ -1,15 +1,9 @@
 <?php 
 	session_start();
-	if (isset($_SESSION["username"])) {
+	if (!isset($_SESSION["username"])) {
 		//problamatic request, redirects to
-		header("location:error.php?type=already-verfied");
-		die();
-	}
-
-	if (!isset($_SESSION["i_email"])) {
-		//invalid request, redirects to
-		header("location:error.php?type=unauthorized");
-		die();
+		//header("location:error.php?type=unauthorized");
+		//die();
 	}
 
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
@@ -44,7 +38,7 @@
 						<h2>Upload a Profile Picture!</h2>
 					<div>
 					<article class="feature right">
-						<span class="image"> _ <img src="images/profile_picture.png" alt="" />_</span>
+						<span class="image"> <img src="images/profile_picture.png" alt="" /></span>
 						<div class="content">
 							<form method="post" action="profile_picture_upload.php" enctype="multipart/form-data">
 								<div class="row uniform 50%">
@@ -67,12 +61,16 @@
 									</div>
 
 									<div class="12u$">
-										<p>Please select an image atleast 250x250</p>
+										<p>Please select an image atleast 250x250 and less than 2mb</p>
 									</div>
 
 									<div class="12u$">
-										<input type="submit" class="special" value="Verify" />
-										<input type="submit" class="alt" value="Later" />
+										<input type="submit" class="special" value="Upload" />
+										<input type="reset" class="alt" value="Clear" />
+									</div>
+
+									<div class="12u$">
+										<a href="select_university.php">See If the university is already in the database</a>
 									</div>
 
 								</div>
