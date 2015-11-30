@@ -24,7 +24,8 @@
 	if(!isset($_POST["fileToUpload"]))
 	{
 		//invalid request, redirects to
-		header("location:create_university.php");
+		var_dump($_POST);
+		//header("location:profile_picture.php");
 		die();
 	}
 
