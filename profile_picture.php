@@ -1,9 +1,15 @@
 <?php 
 	session_start();
+
 	if (!isset($_SESSION["username"])) {
+		//problematic request, redirects to
+		header("location:error.php?type=unauthorized");
+		die();
+	}
+	if ($_SESSION["username"]=='guest') {
 		//problamatic request, redirects to
-		//header("location:error.php?type=unauthorized");
-		//die();
+		header("location:error.php?type=unauthorized");
+		die();
 	}
 
 	require_once 'unit_tests/classes/sanitiser.php'; // create sanitise objects
@@ -40,7 +46,7 @@
 					<article class="feature right">
 						<span class="image"> <img src="images/profile_picture.png" alt="" /></span>
 						<div class="content">
-							<form method="post" action="profile_picture_upload.php" enctype="multipart/form-data">
+							<form method="post" action="profile_picture_process.php" enctype="multipart/form-data">
 								<div class="row uniform 50%">
 									<div class="12u$">
 										<p>Customise your profile, give your profile a picture so others can see who they are talking to</p>
