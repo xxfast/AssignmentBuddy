@@ -87,7 +87,9 @@ class TestOfLogging extends UnitTestCase
 	
 	function TestInvalidAddress()
 	{
-        $this->assertTrue(1==1);
+		 $validator = new Validator();
+        $this->assertTrue(1==$validator->CheckValidAddress("Somers Street"));
+		$this->assertFalse(1==$validator->CheckValidAddress("skfri-!;"));
 	}
 }
 ?>
